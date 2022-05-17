@@ -23,7 +23,7 @@
             "allowedCommonJsDependencies": [
               "rxjs-compat"
             ],
-            "outputPath": "../api/public",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
