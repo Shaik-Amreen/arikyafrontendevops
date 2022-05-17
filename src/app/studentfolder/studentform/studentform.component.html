@@ -1,0 +1,143 @@
+<div *ngIf="nodata else nodat">
+    <br><br>
+    <h5 style="color: #1b1c1e;margin-left: 1rem;"><strong>TO PROCEED FURTHER PLEASE FILL .</strong></h5>
+    <form [formGroup]="studentdata" (ngSubmit)="save()">
+        <div *ngFor="let k of studentform">
+            <span *ngIf="k.tags=='input'">
+                <strong>
+
+
+                    {{k.label}}
+
+                    <sup *ngIf="k.valid" style="color: #a5081a;">*</sup>
+
+                </strong><br>
+                <input class="form-control shadow-none"
+                    [ngClass]="studentdata.controls[k.formname].status=='INVALID' && studentformvalue==true ? 'form-control shadow-none invalidstyle' : 'form-control shadow-none'"
+                    id={{k.formname}} formControlName="{{k.formname}}" placeholder={{k.placeholder}} type={{k.type}} />
+                <span style="color: #a5081a;" *ngIf="studentdata.controls[k.formname].errors && studentformvalue==true">
+                    <span *ngIf="studentdata.controls[k.formname].errors?.required">
+                        please fill this field
+                    </span>
+                    <span *ngIf="studentdata.controls[k.formname].errors?.pattern">
+                        {{k.patternerror}} ,
+                    </span>
+                </span>
+            </span>
+            <span *ngIf="k.tags=='select'">
+                <strong>{{k.label}}
+
+
+                    <sup *ngIf="k.valid" style="color: #a5081a;">*</sup>
+                </strong><br>
+                <select class="form-select"
+                    [ngClass]="studentdata.controls[k.formname].status=='INVALID' && studentformvalue==true ? 'form-select invalidstyle' : 'form-select'"
+                    id={{k.formname}} formControlName="{{k.formname}}">
+                    <option value="" selected disabled>please select</option>
+                    <option value="{{i.value}}" *ngFor="let i of k.options">{{i.label}}</option>
+                </select>
+                <span style="color: #a5081a;"
+                    *ngIf="studentdata.controls[k.formname].status=='INVALID' && studentformvalue==true">
+                    Please select this field
+                </span><br>
+                <!-- <span style="color: #a5081a;" *ngIf="studentdata.controls[k.formname].errors && studentformvalue==true">
+                    <span *ngIf="studentdata.controls[k.formname].errors?.required">
+                             Please select this field
+                    </span>
+                    <span *ngIf="studentdata.controls[k.formname].errors?.pattern">
+                       {{k.patternerror}}
+                    </span>
+                </span> -->
+            </span>
+            <span class="row" *ngIf="k.tags=='combine'">
+                <span class="{{k.cname}}" *ngFor="let c of k.fields">
+                    <span
+                        *ngIf="c.formname=='caste' || c.formname=='religion' || c.formname=='admissionquota'"><br /></span>
+                    <span *ngIf="c.tags=='input' ">
+                        <strong>{{c.label}}
+                            <sup *ngIf="c.valid" style="color: #a5081a;">*</sup>
+                        </strong><br>
+                        <input class="form-control shadow-none"
+                            [ngClass]="studentdata.controls[c.formname].status=='INVALID' && studentformvalue==true ? 'form-control shadow-none invalidstyle' : 'form-control shadow-none'"
+                            id={{c.formname}} formControlName="{{c.formname}}" placeholder={{c.placeholder}}
+                            type={{c.type}} />
+                        <!-- <span style="color: #a5081a;"
+                            *ngIf="studentdata.controls[c.formname].status=='INVALID' && studentformvalue==true">
+                            please fill this field
+                        </span><br> -->
+                        <span style="color: #a5081a;"
+                            *ngIf="studentdata.controls[c.formname].errors && studentformvalue==true">
+                            <span *ngIf="studentdata.controls[c.formname].errors?.required">
+                                please fill this field
+                            </span>
+                            <span *ngIf="studentdata.controls[c.formname].errors?.pattern">
+                                {{c.patternerror}} ,
+                            </span>
+                            <span *ngIf="studentdata.controls[c.formname].errors?.min">
+                                {{c.patternerror}} ,
+                            </span>
+                            <span *ngIf="studentdata.controls[c.formname].errors?.max">
+                                {{c.patternerror}} ,
+                            </span>
+                            <span *ngIf="studentdata.controls[c.formname].errors?.minlength">
+                                {{c.label | lowercase}} must must be greater than
+                                {{studentdata.controls[c.formname].errors?.minlength.requiredLength}} digits
+                            </span>
+                            <span *ngIf="studentdata.controls[c.formname].errors?.maxlength">
+                                {{c.label | lowercase}} must must not be greater than
+                                {{studentdata.controls[c.formname].errors?.maxlength.requiredLength}} digits
+                            </span>
+
+                        </span>
+                    </span>
+                    <span *ngIf="c.tags=='select'">
+                        <strong>{{c.label}}
+
+                            <sup *ngIf="c.valid" style="color: #a5081a;">*</sup>
+                        </strong><br>
+                        <select class="form-select"
+                            [ngClass]="studentdata.controls[c.formname].status=='INVALID' && studentformvalue==true ? 'form-select invalidstyle' : 'form-select'"
+                            id={{c.formname}} formControlName="{{c.formname}}">
+                            <option value="" selected disabled>please select</option>
+                            <option value="{{i.value}}" *ngFor="let i of c.options">{{i.label}}</option>
+                        </select>
+                        <span style="color: #a5081a;"
+                            *ngIf="studentdata.controls[c.formname].status=='INVALID' && studentformvalue==true">
+                            <span *ngIf="studentdata.controls[c.formname].errors?.required">
+                                Please select this field
+                            </span>
+                        </span><br>
+                    </span>
+                </span>
+            </span>
+            <span *ngIf="k.type=='display'">
+                <br> <strong style="font-size: 1rem;">{{k.label}}<br></strong><br>
+            </span>
+        </div>
+        <br> <button class="btn btn-primary" style="background-color: #00b0ff;" type="submit">Save</button>
+        <div *ngIf="displaypopup" [ngClass]="{'view':displaypopup}">
+            <strong>{{popup}}</strong>
+            <span style="font-size: 1rem;">
+                <strong><i class='bx bxs-chevron-down-circle'></i>{{popup}}</strong>
+            </span>
+        </div>
+    </form>
+</div>
+<div *ngIf="display" [ngClass]="{'view':display}">
+    <span style="font-size: 1.2rem;">
+        <span style="font-size: 1.3rem;">
+            <i class="fa fa-warning"></i>
+        </span>
+        &nbsp;<strong>INVALID INPUT DATA</strong>&nbsp;
+        <!-- <div class="btn btn1"><i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i></div> -->
+    </span>
+</div>
+<ng-template #nodat>
+    <div style="display: flex;justify-content: center;align-items: center;height: 100vh;background-color: #f4f7fb;">
+        <div style="text-align: center;">
+            <img src="../../../assets/loading.gif"><br>
+            <h5><strong>Your profile is on the way . Time to relax !!!</strong></h5>
+        </div>
+    </div>
+
+</ng-template>

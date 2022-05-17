@@ -1,0 +1,272 @@
+<!-- <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+<script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
+
+<!-- <div class="layout table-responsive">
+  <div *ngFor="let a of topics ;index as i">
+    <button id="c" class="row" (click)="(!viewRating[i])?attendquiz(a.topic):viewquiz(a.topic)"
+      *ngIf="topics[0]!=0 && topics.length>0">
+      <strong class="col-9"><span *ngIf="!viewRating[i]">ATTEMPT</span> {{a.topic | uppercase}}
+      </strong>
+      <span *ngIf="viewRating[i]" class="progress"
+        style="background-color: rgb(201, 83, 83);border-radius: 30px;padding: 0%;" class="col">
+        <span class="progress-bar" id="in" role="progressbar" [ngStyle]="{ width: currentValue[i]}"
+          aria-valuenow="currentValue[i]" aria-valuemin="0" aria-valuemax="100">{{currentValue[i]}}</span>
+      </span>
+    </button><br>
+  </div>
+  <div *ngIf="topics.length==0">
+    No practice questions are uploaded yet !
+  </div>
+  <div *ngIf="topics[0]==0">
+    <h5><div style="display: flex;justify-content: center;align-items: center;height: 95vh;">
+        <div style="text-align: center;">
+            <img src="../../../assets/loading.gif"><br>
+            
+        </div>
+    </div></h5>
+  </div>
+</div> -->
+
+
+<div class="layout">
+  <div class="row" style="padding: 1vw;" *ngIf="topics[0]!=0 && topics.length>0">
+    <h4 style="color: #1b1c1e;"><strong>QUIZ TOPICS</strong>
+      <div
+        style="background-color: #fff;border-radius: 7px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;display: flex;justify-content: center;align-items: center;float: right;width: 20vw;">
+        <input [(ngModel)]="searchtopic" type="text" name="searchtopic" class="form-control shadow-none"
+          placeholder="start typing topic name" style="border: none;background-color: #fff;font-size: 0.8rem;" />
+        <i class="bx bx-search" style="font-size: 1rem;font-weight: 600"></i>&nbsp;
+
+      </div>
+    </h4>
+
+    <div class="row">
+
+      <div class="col-sm-6" style="height: 90vh;">
+        <br /><br /><br />
+        <div echarts [options]="quizoption"></div>
+      </div>
+
+      <div class="col-sm-6 table-responsive" style="height: 86vh;">
+        <span *ngFor="let a of topics ;index as i">
+          <div *ngIf="a.topic.includes(searchtopic) || searchtopic==''"
+            style="cursor: pointer;background-color: #fff;padding:1rem;margin: 0.5rem;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border-radius: 7px;"
+            (click)="(!viewRating[i])?attendquiz(a):viewquiz(a)">
+            <strong style="font-size: 1.1rem;color: #3f4043;margin: 1rem;margin-left: 0rem;"><span
+                *ngIf="!viewRating[i]">ATTEMPT</span>
+              {{a.topic | uppercase}}</strong>
+
+            <span style="color: grey;font-size: 0.7rem;float:'right'" *ngIf="viewRating[i]">Click to view solutions
+              .</span>
+            <span style="color: grey;font-size: 0.7rem;float: right;" *ngIf="!viewRating[i]">Click to start test
+              .</span>
+
+
+            <br><br>
+
+            <div *ngIf="viewRating[i]=='notattempted' else attempted">
+              <div class="row">
+
+                <div class="col-sm-3">
+                  <img src="assets/noexam.gif" style="height:100px ;" />
+                </div>
+                <div class="col-sm" style="padding-top: 1rem;margin: 0.5rem;"><strong
+                    style="color:#424346;font-size: 1.2rem;">You
+                    didn't attempt the test.
+                  </strong><br>
+                  <span style="color: grey;font-size: 0.8rem;">Make sure not to skip the tests</span>
+                </div>
+              </div>
+            </div>
+            <ng-template #attempted>
+              <div *ngIf="!viewRating[i]">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <img src="assets/best.gif" style="height:100px ;" />
+
+
+                  </div>
+                  <div class="col-sm" style="padding: 1rem;margin: 0.5rem;"><strong
+                      style="color:#00b0ff;font-size: 1.2rem;">Good luck
+                      .</strong><br>
+                    <span style="color: grey;font-size: 0.8rem;">Hope for the best !</span>
+                  </div>
+                </div>
+                <br>
+
+
+              </div>
+              <div *ngIf="viewRating[i]">
+                <div class="row" *ngIf="currentValue[i] > 41 && currentValue[i] < 71">
+                  <div class="col-sm-3">
+                    <img src="assets/average.gif" style="height:100px ;" />
+
+                  </div>
+                  <div class="col-sm" style="padding: 1rem;margin: 0.5rem;"><strong
+                      style="color:gold;font-size: 1.2rem;">Could be better
+                      .</strong><br>
+                    <span style="color: grey;font-size: 0.8rem;">You have scored <span
+                        style="font-size: 0.9rem;font-weight: 600;">{{currentValue[i]}} %</span></span>
+                  </div>
+                </div>
+                <div class="row" *ngIf="currentValue[i] < 40  && currentValue[i]>-1">
+                  <div class="col-sm-3">
+                    <img src="assets/sad.gif" style="height:100px ;" />
+
+
+                  </div>
+                  <div class="col-sm" style="padding: 1rem;margin: 0.5rem;"><strong
+                      style="color:#a5081a;font-size: 1.2rem;">Work smart
+                      .</strong><br>
+                    <span style="color: grey;font-size: 0.8rem;">You have scored <span
+                        style="font-size: 0.9rem;font-weight: 600;">{{currentValue[i]}} %</span></span>
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="currentValue[i] > 69   ">
+                  <div class="col-sm-3">
+                    <img src="assets/super.gif" style="height:100px ;" />
+                  </div>
+                  <div class="col-sm" style="padding: 1rem;margin: 0.5rem;"><strong
+                      style="color:rgb(41, 209, 41);font-size: 1.2rem;">Congratulations
+                      !</strong><br>
+                    <span style="color: grey;font-size: 0.8rem;">You have scored <span
+                        style="font-size: 0.9rem;font-weight: 600;">{{currentValue[i]}} %</span></span>
+                  </div>
+                </div><br>
+
+              </div>
+            </ng-template>
+
+
+
+
+            <!-- <button id="c" class="row" (click)="(!viewRating[i])?attendquiz(a.topic):viewquiz(a.topic)"
+      *ngIf="topics[0]!=0 && topics.length>0">
+      <strong class="col-9"><span *ngIf="!viewRating[i]">ATTEMPT</span> {{a.topic | uppercase}}
+      </strong>
+       <button class="btn btn-primary" *ngIf="date>a.endson" (click)="viewquiz(a)"
+        style="background-color: #0a1afa;"><strong>View
+        </strong></button> 
+      <span *ngIf="viewRating[i]" class="progress"
+        style="background-color: rgb(208, 204, 204);border-radius: 30px;padding: 0%; box-shadow: 0px 0px 10px 2px rgb(122, 114, 114);"
+        class="col">
+        
+        <div class="progress-bar progress-bar-striped progress-bar-animated" id="in" role="progressbar"
+          [ngStyle]="{ width: currentValue[i]}" aria-valuenow="currentValue[i]" aria-valuemin="0" aria-valuemax="100">
+          {{currentValue[i]}}
+        </div>
+      </span>
+    </button><br> -->
+
+          </div>
+        </span>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="topics.length==0">
+    <div style="display: flex;justify-content: center;align-items: center;height: 100vh;background-color: #f4f7fb;">
+      <div style="text-align: center;">
+        <img src="assets/search.gif" style="max-height:300px"><br>
+        <h5><strong>Sorry ! we could not find any results .</strong></h5>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="topics[0]==0">
+    <h5>
+      <div style="display: flex;justify-content: center;align-items: center;height: 100vh;background-color: #f4f7fb;">
+        <div style="text-align: center;">
+          <img src="../../../assets/loading.gif"><br>
+
+        </div>
+      </div>
+    </h5>
+  </div>
+</div>
+<div class="row" *ngIf="display" [ngClass]="{'view':display}">
+  <!-- <strong>{{popup}}</strong> -->
+  <strong style="font-size: 1rem;">
+    <span style="font-size: 1.3rem; " *ngIf="!quizsubmit"><i class='bx bx-error'></i>&nbsp;
+    </span>{{popup}}
+    <div class="btn" *ngIf="quizsubmit"><i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i></div>
+  </strong>
+</div>
+
+<!-- <br><br>
+  <div class="container" >
+    <h3>Pratice your skill with a Quiz:</h3>
+    <hr>
+    <button class="form-control shadow-none" style="width: 15%; margin-left: 1%;background: #00b0ff;color: white;" routerLink="/student" routerLinkActive = "clicked" [routerLinkActiveOptions]='{exact:true}' >Attemp a Quiz</button>
+    <hr><br><br><br>
+    <h3>Make view of attempted Quizzes</h3>
+    <hr>
+    <br>
+    <select class="form-control shadow-none" [(ngModel)]="topicname">
+      <option value="" hidden>Choose an attempted quiz to view</option>
+      <option *ngFor="let quiz of attemptedquizzes">
+        {{quiz.topic}}
+      </option>
+    </select><br>
+    <button class="form-control shadow-none" style="width: 15%; margin-left: 1%; background: #00b0ff;color: white;" routerLink="/viewquiz" routerLinkActive="clicked" [routerLinkActiveOptions]='{exact:true}' [disabled]="!topicname" (click)="viewresults()">View Solutions</button>
+  </div> 
+  <router-outlet></router-outlet> -->
+<!-- to bind data to other component use can use data @Input and @output decorators -->
+<!-- and also data is stored in local storage -->
+<!-- also data stored through services and here we use service methods to bind -->
+<!-- <div class="container"  *ngIf="viewquiz">
+    <div *ngFor="let each of quizdata.questions;index as i">
+      <div>  -->
+<!-- {{each | json}} -->
+<!-- [ngClass]="correct: each.correct==='option1'" -->
+<!-- <hr>
+        &nbsp;&nbsp;
+        <label ><h3>{{i+1}}.{{each.questionis}}</h3></label><br>
+        <label [ngClass]="{'correct':each.correct=='option1', 'wrong':each.correct!='option1'&&each.answeredoption=='option1','optionstyle':each.correct!='option1'&&each.answeredoption!='option1'}" ><input type="radio" class="radio"
+            [disabled]="each.answeredoption=='option1'||each.correct==='option1'?false:true"
+            [checked]="each.answeredoption==='option1'||each.correct==='option1'?true:false">{{each.option1}}</label><br>
+        <label [ngClass]="{'correct':each.correct=='option2','wrong':each.correct!='option2'&&each.answeredoption=='option2','optionstyle':each.correct!='option2'&&each.answeredoption!='option2'}" ><input type="radio" class="radio"
+            [disabled]="each.answeredoption=='option2'||each.correct==='option2'?false:true"
+            [checked]="each.answeredoption==='option2'||each.correct==='option2'?true:false">{{each.option2}}</label><br>
+        <label  [ngClass]="{'correct':each.correct=='option3','wrong':each.correct!='option3'&&each.answeredoption=='option3','optionstyle':each.correct!='option3'&&each.answeredoption!='option3'}" ><input type="radio" class="radio"
+            [disabled]="each.answeredoption=='option3'||each.correct==='option3'?false:true"
+            [checked]="each.answeredoption==='option3'||each.correct==='option3'?true:false">{{each.option3}}</label><br>
+        <label   [ngClass]="{'correct':each.correct=='option4','wrong':each.correct!='option4'&&each.answeredoption=='option4','optionstyle':each.correct!='option4'&&each.answeredoption!='option4'}"><input type="radio" class="radio"
+            [disabled]="each.answeredoption=='option4'||each.correct==='option4'?false:true"
+            [checked]="each.answeredoption==='option4'||each.correct==='option4'?true:false">{{each.option4}}</label>
+      </div>
+    </div>
+  </div> -->
+
+
+
+
+<!-- <div style="width: 70vw;margin-left: 2vw;" formArrayName="questions">
+      <div class="table" *ngFor="let q of controls; index as i">
+        <div [formGroupName]="i"><br>
+            <div style="display: flex;text-align: center;">
+              <span style="display: flex;">{{i+1}}.</span> 
+              <textarea class="form-control shadow-none" placeholder="ENTER QUESTION" formControlName="questionis" style="border-bottom: 1px solid lightgrey;"></textarea>
+            </div>
+             <br>
+             <div class="col" style="margin-left: 1vw;">
+              <div style="display: flex; align-items: center;">
+              <input type="radio" id="radiobutton"   value = "option1" formControlName="correct" >
+              <input type="text" formControlName="option1" class="form-control shadow-none" placeholder="Enter  first option and choose if correct"/><br></div>
+              <div style="display: flex; align-items: center;">
+                <input type="radio" id="radiobutton"  value = "option2" formControlName="correct" >
+                <input type="text" formControlName="option2" class="form-control shadow-none" placeholder="Enter  second option and choose if correct" /><br></div>
+              <div style="display: flex; align-items: center;">
+                <input type="radio" id="radiobutton"  value = "option3" formControlName="correct" >
+                <input type="text" formControlName="option3" class="form-control shadow-none" placeholder="Enter  third option and choose if correct" /></div>
+              <div style="display: flex; align-items: center;">
+                <input type="radio" id="radiobutton"  value = "option4" formControlName="correct" >
+                <input type="text" formControlName="option4" class="form-control shadow-none" placeholder="Enter  fourth option and choose if correct" /></div><br>
+                <textarea class="form-control shadow-none" placeholder="Enter Answer Explanation" formControlName="explanation" style="border-bottom: 1px solid lightgrey;"></textarea><br>
+            </div>
+        </div>
+      </div>
+  </div> -->

@@ -1,0 +1,663 @@
+<div *ngIf="nodata else nodat">
+    <div class="layout">
+        <div
+            style="padding: 0.7rem;padding-left: 1rem;font-size: 0.8rem; box-shadow: 0px 0px 10px 2px rgb(122, 114, 114);background-color: #fff;">
+            <div class="row">
+                <div class="col-sm-1">
+                    <div class="imageup">
+                        <img class="imag" [src]="image" (click)="img.click()" style="cursor: pointer;" />
+                        <input style="display: none;" accept="image/png, image/jpeg" (change)="handleFileSelect($event)"
+                            type="file" #img>
+                    </div><br>
+                </div>
+                <div class="col-sm-3">
+                    <strong style="font-size: 1.2rem;color: #1b1c1e;">{{data.data.firstname| uppercase
+                        }}&nbsp;{{data.data.middlename |
+                        uppercase}}&nbsp;{{data.data.lastname|
+                        uppercase}}</strong><br>
+                    <span><strong>{{data.data.yearofjoining+4}}</strong> Passout batch
+                        <strong>| {{data.data.rollnumber}}</strong></span><br>
+                    <span><strong>{{data.data.currentyear}} </strong>YEAR <strong>, {{data.data.course |
+                            uppercase}}</strong></span>
+                    <br>
+                    <span>DEPARTMENT OF <strong>{{data.data.department | uppercase}}</strong></span>
+                </div>
+                <div class="col-sm-2">
+                    <span style="font-size: 2.5rem;" *ngIf="data.data.cgpa!=''">{{data.data.cgpa}}</span>
+                    <span style="font-size: 2.5rem;" *ngIf="data.data.cgpa==''">0</span><br>
+                    <span>CGPA</span>
+                </div>
+
+                <div class="col-sm-2">
+                    <span style="font-size: 2.5rem;" *ngIf="data.data.cgpa!=''">{{offers}}</span>
+                    <span style="font-size: 2.5rem;" *ngIf="data.data.cgpa==''">0</span><br>
+                    <span>OFFERS</span>
+                </div>
+                <div class="col-sm-2">
+                    <span style="font-size: 2.5rem;" *ngIf="data.data.cgpa!=''">{{applications}}</span>
+                    <span style="font-size: 2.5rem;" *ngIf="data.data.cgpa==''">0</span><br>
+                    <span>APPLICATIONS</span>
+                </div>
+                <!-- <div class="col-sm-1">
+                    <div *ngIf="data.data.verified=='yes'"><br /><br />
+                        <strong style="color: green;">
+                            <h6><strong>VERIFIED</strong></h6>
+                        </strong>
+                    </div>
+                    <div *ngIf="data.data.verified==''">
+                        <br /><br />
+                        <strong style="color:#00B0FF ;">
+                            <h6><strong>NOT YET VERIFIED</strong></h6>
+                        </strong>
+                    </div>
+                    <div *ngIf="data.data.verified=='no'"><br /><br />
+                        <strong style="color: #a5081a;">
+                            <h6><strong>NOT VERIFIED</strong></h6>
+                        </strong>
+                    </div>
+                </div> -->
+                <!-- <div class="col-sm-1" (click)="edit=!edit"><br />
+                    <i style="font-size: 2rem;float: right;color: #00B0FF;cursor: pointer;" class='bx bxs-pencil'></i>
+                </div> -->
+            </div>
+        </div><br>
+        <div class="table-responsive" style="max-height: 77vh;">
+            <div class="content" style="margin: 0rem 1.8rem;font-size: 0.8rem;margin-right: 1rem;">
+                <div class="row">
+                    <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;font-size: 0.9rem;"
+                        class="col-sm ">PERSONAL
+                        DETAILS</strong>
+                </div>
+                <div class="row" style="font-size: 0.8rem;">
+                    <div class="col-sm"
+                        style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.5rem;margin-right: 0.3rem;">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Roll number</td>
+                                    <td>{{data.data.rollnumber}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mail</td>
+                                    <td>{{data.data.mail}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>{{data.data.firstname }}&nbsp;{{data.data.middlename |
+                                        uppercase}}&nbsp;{{data.data.lastname|
+                                        uppercase}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Birth</td>
+                                    <td>{{data.data.dob | date}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Gender</td>
+                                    <td>{{data.data.gender }}</td>
+                                </tr>
+                                <!-- {{data.data | json}} -->
+                                <tr>
+                                    <td>AADHAR number</td>
+                                    <td>{{data.data.aadharno }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Pan Card Numer</td>
+                                    <td>{{data.data.panno }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Religion</td>
+                                    <td>{{data.data.religion }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Caste</td>
+                                    <td>{{data.data.caste }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm"
+                        style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.5rem;">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Contact</td>
+                                    <td>{{data.data.mobile}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Alternative mail</td>
+                                    <td>{{data.data.altmail }}</td>
+                                </tr>
+                                <tr>
+                                    <td>EAMCET RANK</td>
+                                    <td>{{data.data.rank }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Current address</td>
+                                    <td>{{data.data.currentaddress }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Permanent address</td>
+                                    <td>{{data.data.permanentaddress }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Father's Name</td>
+                                    <td>{{data.data.fathername }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mother's Name</td>
+                                    <td>{{data.data.mothername }}</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>Admission quota</td>
+                                    <td>{{data.data.admissionquota }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Having Laptop</td>
+                                    <td>{{data.data.havinglaptop }}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>IMPORTANT ACTIONS</td>
+                                    <td><button *ngIf="data.data.freeze=='no'" (click)="freeze()"
+                                            style="background-color:#a5081a;color: white;outline: none;border:none">Freeze
+                                            student</button>
+                                        <button *ngIf="data.data.freeze=='yes'" (click)="unfreeze()"
+                                            style="background-color:#00b0ff;color: white;outline: none;border:none">Unfreeze
+                                            student</button>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;font-size: 0.9rem;"
+                                class="col-sm ">ACADEMIC DETAILS</strong>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm"
+                                style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.3rem;">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Course</td>
+                                            <td>{{data.data.course | uppercase}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Department</td>
+                                            <td>{{data.data.department | uppercase}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Batch</td>
+                                            <td *ngIf="data.data.yearofjoining!=''">{{data.data.yearofjoining+4}}</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Ongoing backlogs</td>
+                                            <td>{{data.data.ongoingbacklogs}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total backlogs</td>
+                                            <td>{{data.data.totalbacklogs}}</td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+
+                            </div>
+                            <div class="col-sm"
+                                style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
+
+                                <table class="table table-bordered text-center" id="tb">
+                                    <tbody>
+                                        <tr>
+                                            <td>Standard</td>
+                                            <td>Board</td>
+                                            <td>Institute</td>
+                                            <td>Passing out year</td>
+                                            <td>Scored marks</td>
+                                        </tr>
+                                        <tr>
+                                            <td>X</td>
+                                            <td>{{data.data.tenthboard}}</td>
+                                            <td>{{data.data.tenthschoolname }}</td>
+                                            <td>{{data.data.tenyear}}</td>
+                                            <td>{{data.data.tenthcgpa}}/10</td>
+                                        </tr>
+                                        <tr>
+                                            <td>XII</td>
+                                            <td>{{data.data.interboard}}</td>
+                                            <td>{{data.data.interclgname }}</td>
+                                            <td>{{data.data.interyear}}</td>
+                                            <td>{{data.data.intercgpa}}/10</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" style="font-size: 0.8rem;" *ngIf="sgpa.length!=0">
+                    <strong style="padding: 0.9rem;margin-right: 0.3rem;color: #1b1c1e;">SEMESTER GRADES</strong><br>
+                    <div class="col-sm"
+                        style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.3rem;">
+
+                        <table class="table text-center" id="tb" *ngIf="sgpa.length!=0">
+                            <tbody>
+                                <tr
+                                    style="background-color: whitesmoke;box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;">
+                                    <td>COURSE</td>
+                                    <td>SEMESTER</td>
+                                    <td>GRADE POINTS</td>
+                                </tr>
+                                <br>
+                                <tr *ngFor="let c of sgpa;index as i ">
+                                    <td>{{data.data.course }}</td>
+                                    <td>{{i+1}}</td>
+                                    <td>{{c }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <strong style="padding: 0.5rem;margin-right: 0.7rem;color: #1b1c1e;font-size: 0.9rem;"
+                        class="col-sm ">
+
+                        <span style="font-size:1rem;">SKILL TEST </span> &nbsp;&nbsp;
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style="color: #4b4e54;">
+                            <span *ngIf="stdallratedata.main"> {{stdallratedata.main}}
+                            </span>
+                            <span *ngIf="!stdallratedata.main"> 0 </span>%</span>
+                        &nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <span style="color: #00B0FF;">
+                            <span *ngIf="stdallratedata.rank">{{stdallratedata.rank}}</span>
+                            <span *ngIf="!stdallratedata.rank">0</span> RANK
+                        </span>
+
+
+                    </strong>
+                </div>
+                <div class="row">
+                    <div class="col-sm"
+                        style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.7rem;">
+                        <table class="table text-center">
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                            class="col-sm ">
+                                            CODE TEST
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                            class="col-sm ">
+                                            <span *ngIf="stdallcodedata.main"> {{stdallcodedata.main}}
+                                            </span>
+                                            <span *ngIf="!stdallcodedata.main"> 0 </span>%
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                            class="col-sm ">
+                                            <span *ngIf="stdallcodedata.rank"> {{stdallcodedata.rank}}
+                                            </span>
+                                            <span *ngIf="!stdallcodedata.rank"> 0 </span>RANK
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let a of stdeachcoderate">
+                                    <td>{{a.topic}}</td>
+                                    <td>{{a.main}}%</td>
+                                    <td>{{a.rank}} Rank</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm"
+                        style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
+
+                        <table class="table text-center">
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                            class="col-sm ">
+                                            QUIZ TEST
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                            class="col-sm ">
+                                            <span *ngIf="stdallquizdata.main"> {{stdallquizdata.main}}
+                                            </span>
+                                            <span *ngIf="!stdallquizdata.main"> 0 </span>%
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                            class="col-sm ">
+                                            <span *ngIf="stdallquizdata.rank"> {{stdallquizdata.rank}}
+                                            </span>
+                                            <span *ngIf="!stdallquizdata.rank"> 0 </span>RANK
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let a of stdeachquizrate">
+                                    <td>{{a.topic}}</td>
+                                    <td>{{a.main}}%</td>
+                                    <td>{{a.rank}} Rank</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <!-- <div class="row">
+                    <span *ngIf="notdat==0 else pen">No pending requests</span>
+                    <ng-template #pen>
+                        <span *ngFor="let c of data.notifications"
+                            style="padding: 1vw;justify-content: left;align-items: left;">
+                            {{c.rollnumber}} {{c.mail}} changed
+                            <strong>{{c.field}}</strong> from <strong>{{c.prev}}</strong> to
+                            <strong>{{c.current}}</strong> on {{c.date }}<br><br>
+                            <button class="btn btn-primary" *ngIf="c.verified=='notyet'"
+                                (click)="accept(c,'accepted')">ACCEPT</button>&nbsp;&nbsp;
+                            <button class="btn btn-danger" *ngIf="c.verified=='notyet'"
+                                (click)="accept(c,'rejected')">REJECT</button>
+                            <br><br>
+
+                        </span>
+                    </ng-template>
+
+
+                </div><br> -->
+
+                <div class=" table-responsive row" style="background-color: #00B0FF;"><br>
+
+                    <div>
+                        <div *ngIf="getdata && data.data.resume!=''  else noresume"
+                            style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                            (click)="downloadofferPdf(data.data.resume,'resume')">
+                            <div class="row">
+                                <div class="col-8">
+                                    <a href=`${data.data.resumelink}`></a>
+                                    <strong style="color: #00b0ff;">{{data.data.firstname | uppercase}} RESUME
+                                    </strong><br>
+                                    <span style="color: grey;font-size: 10px;">Click here to download PDF</span>
+                                </div>
+                                <div class="col" style="color: #00b0ff;">
+                                    <h1><i class='bx bxs-down-arrow-alt bx-tada bx-rotate-90'></i></h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br><br>
+
+                        <div *ngIf="getdata && data.data.pan!=''  else nopan"
+                            style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                            (click)="downloadofferPdf(data.data.pan,'pan')">
+                            <div class="row">
+                                <div class="col-8">
+                                    <strong style="color: #00b0ff;">{{data.data.firstname | uppercase}} PAN
+                                    </strong><br>
+                                    <span style="color: grey;font-size: 10px;">Click here to download
+                                        PDF</span>
+                                </div>
+                                <div class="col" style="color: #00b0ff;">
+                                    <h1><i class='bx bxs-down-arrow-alt bx-tada bx-rotate-90'></i></h1>
+                                </div>
+                            </div>
+
+                        </div><br><br>
+
+                        <div *ngIf="getdata && data.data.aadhar!=''  else noaadhar"
+                            style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                            (click)="downloadofferPdf(data.data.aadhar,'aadhar')">
+                            <div class="row">
+                                <div class="col-8">
+                                    <strong style="color: #00b0ff;">{{data.data.firstname | uppercase}} Aadhar card
+                                    </strong><br>
+                                    <span style="color: grey;font-size: 10px;">Click here to download
+                                        PDF</span>
+                                </div>
+                                <div class="col" style="color: #00b0ff;">
+                                    <h1><i class='bx bxs-down-arrow-alt bx-tada bx-rotate-90'></i></h1>
+                                </div>
+                            </div>
+
+                        </div><br><br>
+
+                        <div *ngIf="getdata && data.data.tenthmarksheet!=''  else notenthmarksheet"
+                            style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                            (click)="downloadofferPdf(data.data.tenthmarksheet,'tenthmarksheet')">
+                            <div class="row">
+                                <div class="col-8">
+                                    <strong style="color: #00b0ff;">{{data.data.firstname | uppercase}} Tenthmarksheet
+                                    </strong><br>
+                                    <span style="color: grey;font-size: 10px;">Click here to download
+                                        PDF</span>
+                                </div>
+                                <div class="col" style="color: #00b0ff;">
+                                    <h1><i class='bx bxs-down-arrow-alt bx-tada bx-rotate-90'></i></h1>
+                                </div>
+                            </div>
+
+                        </div><br><br>
+
+                        <div *ngIf="getdata && data.data.intermarksheet!=''  else nointermarksheet"
+                            style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                            (click)="downloadofferPdf(data.data.intermarksheet,'intermarksheet')">
+                            <div class="row">
+                                <div class="col-8">
+                                    <strong style="color: #00b0ff;">{{data.data.firstname | uppercase}} intermarksheet
+                                    </strong><br>
+                                    <span style="color: grey;font-size: 10px;">Click here to download
+                                        PDF</span>
+                                </div>
+                                <div class="col" style="color: #00b0ff;">
+                                    <h1><i class='bx bxs-down-arrow-alt bx-tada bx-rotate-90'></i></h1>
+                                </div>
+                            </div>
+
+                        </div><br><br>
+                        <div *ngIf="getdata && data.data.graduationmarksheet!=''  else nograduationmarksheet"
+                            style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                            (click)="downloadofferPdf(data.data.graduationmarksheet,'graduationmarksheet')">
+                            <div class="row">
+                                <div class="col-8">
+                                    <strong style="color: #00b0ff;">{{data.data.firstname | uppercase}}
+                                        graduationmarksheet
+                                    </strong><br>
+                                    <span style="color: grey;font-size: 10px;">Click here to download
+                                        PDF</span>
+                                </div>
+                                <div class="col" style="color: #00b0ff;">
+                                    <h1><i class='bx bxs-down-arrow-alt bx-tada bx-rotate-90'></i></h1>
+                                </div>
+                            </div>
+
+                        </div><br><br>
+                    </div>
+                    <ng-template #noresume>
+                        RESUME IS NOT UPLOADED YET !
+                    </ng-template>
+                    <ng-template #nopan>
+                        PAN IS NOT UPLOADED YET !
+                    </ng-template>
+                    <ng-template #noaadhar>
+                        AADHAR IS NOT UPLOADED YET !
+                    </ng-template>
+                    <ng-template #notenthmarksheet>
+                        TENTH MARK SHEET IS NOT UPLOADED YET !
+                    </ng-template>
+                    <ng-template #nointermarksheet>
+                        INTER MARK SHEET IS NOT UPLOADED YET !
+                    </ng-template>
+                    <ng-template #nograduationmarksheet>
+                        GRADUATION MARK SHEET IS NOT UPLOADED YET !
+                    </ng-template>
+                    <br><br><br>
+                </div>
+
+                <ng-template #noresume>
+                    RESUME IS NOT UPLOADED YET !
+                </ng-template>
+                <ng-template #nopan>
+                    PAN IS NOT UPLOADED YET !
+                </ng-template>
+                <ng-template #noaadhar>
+                    AADHAR IS NOT UPLOADED YET !
+                </ng-template>
+                <ng-template #notenthmarksheet>
+                    TENTH MARK SHEET IS NOT UPLOADED YET !
+                </ng-template>
+                <ng-template #nointermarksheet>
+                    INTER MARK SHEET IS NOT UPLOADED YET !
+                </ng-template>
+                <ng-template #nograduationmarksheet>
+                    GRADUATION MARK SHEET IS NOT UPLOADED YET !
+                </ng-template>
+                <br><br><br>
+            </div>
+
+            <!-- <div class="row" style="width: 50vw;margin-left: 1.8vw;" *ngIf="getdata">
+                <div *ngIf="data.data.verified==''">
+                    <button class="btn" style="background-color: #00b0ff;color: white;" (click)='verify()'>MARK
+                        AS
+                        VERIFIED</button>
+                    &nbsp;<button class="btn" style="background-color: #a5081a;color: white;" (click)="resubmit()">ASK
+                        RESUBMISSION</button>
+                </div>
+                <button class="btn" *ngIf="data.data.verified=='yes'"
+                    style="background-color: #00b0ff;color: white;width: 20vw;">MARKED
+                    AS VERIFIED</button>
+                <button class="btn" *ngIf="data.data.verified=='no'"
+                    style="background-color: #a5081a;color: white;width: 20vw;">ASKED
+                    RESUBMISSION</button>
+            </div> -->
+            <br><br>
+        </div>
+    </div>
+    <div *ngIf="edit" style="max-height: 97vh;padding: 0.7rem;padding-left: 1rem;" class="table-responsive ">
+        <div *ngIf="overdata1!=[]">
+            <br><br>
+            <h5 style="color: #1b1c1e;margin-left: 1rem;"><strong>EDIT PROFILE .</strong></h5>
+            <form [formGroup]="studentForm">
+                <div *ngFor="let k of studentform">
+                    <span *ngIf="k.tags=='input'">
+                        <strong>{{k.label}}</strong><br>
+                        <input class="form-control shadow-none"
+                            [ngClass]="studentForm.controls[k.formname].status=='INVALID' && studentformvalue==true ? 'form-control shadow-none invalidstyle' : 'form-control shadow-none'"
+                            formControlName="{{k.formname}}" placeholder={{k.placeholder}} type={{k.type}} />
+                        <!-- <span style="color: #a5081a;"
+                            *ngIf="studentForm.controls[k.formname].status=='INVALID' && studentformvalue==true">
+                            please fill this field
+                        </span><br> -->
+                    </span>
+
+                    <span *ngIf="k.tags=='select'">
+                        <strong>{{k.label}}</strong><br>
+                        <select class="form-select"
+                            [ngClass]="studentForm.controls[k.formname].status=='INVALID' && studentformvalue==true ? 'form-select invalidstyle' : 'form-select'"
+                            formControlName="{{k.formname}}">
+                            <option value="" selected disabled>please select</option>
+                            <option value="{{i.value}}" *ngFor="let i of k.options">{{i.label}}</option>
+                        </select>
+                        <span style="color: #a5081a;"
+                            *ngIf="studentForm.controls[k.formname].status=='INVALID' && studentformvalue==true">
+                            please fill this field
+                        </span><br>
+                    </span>
+                    <span class="row" *ngIf="k.tags=='combine'">
+                        <span class="{{k.cname}}" *ngFor="let c of k.fields">
+                            <span *ngIf="c.tags=='input' ">
+                                <strong>{{c.label}}</strong><br>
+                                <input class="form-control shadow-none"
+                                    [ngClass]="studentForm.controls[c.formname].status=='INVALID' && studentformvalue==true ? 'form-control shadow-none invalidstyle' : 'form-control shadow-none'"
+                                    formControlName="{{c.formname}}" placeholder={{c.placeholder}} type={{c.type}} />
+                                <!-- <span style="color: #a5081a;"
+                                    *ngIf="studentForm.controls[c.formname].status=='INVALID' && studentformvalue==true">
+                                    please fill this field
+                                </span><br> -->
+                                <span style="color: #a5081a;"
+                                    *ngIf="studentForm.controls[c.formname].errors && studentformvalue==true">
+                                    <span *ngIf="studentForm.controls[c.formname].errors?.required">
+                                        please fill this field
+                                    </span>
+                                    <span *ngIf="studentForm.controls[c.formname].errors?.pattern">
+                                        {{c.patternerror}}
+                                    </span>
+                                    <span *ngIf="studentForm.controls[c.formname].errors?.mustMatch">
+                                        {{c.patternerror}}
+                                    </span>
+                                </span><br>
+                            </span>
+                            <span *ngIf="c.tags=='select'">
+                                <strong>{{c.label}}</strong><br>
+                                <select class="form-select"
+                                    [ngClass]="studentForm.controls[c.formname].status=='INVALID' && studentformvalue==true ? 'form-select invalidstyle' : 'form-select'"
+                                    formControlName="{{c.formname}}">
+                                    <option value="" selected disabled>please select</option>
+                                    <option value="{{i.value}}" *ngFor="let i of c.options">{{i.label}}</option>
+                                </select>
+                                <span style="color: #a5081a;"
+                                    *ngIf="studentForm.controls[c.formname].status=='INVALID' && studentformvalue==true">
+                                    Please select this field
+                                </span><br>
+                            </span>
+                        </span><br>
+                    </span>
+                    <span *ngIf="k.type=='display'">
+                        <br> <strong style="font-size: 1rem;">{{k.label}}<br></strong><br>
+                    </span>
+                </div>
+                <!-- <br> <button class="btn btn-primary" type="submit">Save</button>&nbsp;&nbsp; -->
+                <button class="btn btn-danger" type="button" routerLink="/student/studenthome">Close</button>
+            </form>
+        </div>
+        <!-- <ng-template #nodat>
+            <div style="display: flex;justify-content: center;align-items: center;height: 95vh;">
+                <div style="text-align: center;">
+                    <img src="../../../assets/loading.gif"><br>
+                    
+                </div>
+            </div>
+        </ng-template> -->
+    </div>
+</div>
+
+<ng-template #nodat>
+    <div style="display: flex;justify-content: center;align-items: center;height:90vh">
+        <div style="text-align: center;">
+            <img src="../../../assets/loading.gif"><br>
+            <h5><strong>Time to relax !!! Student details are on the way .</strong></h5>
+        </div>
+    </div>
+</ng-template>

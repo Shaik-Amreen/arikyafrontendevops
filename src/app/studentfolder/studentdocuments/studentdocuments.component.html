@@ -1,0 +1,589 @@
+<!-- <div class="layout table-responsive">
+    <div>
+        <br>
+        <div class="text-center"
+            style="margin: 4vw 4vw 0vw 4vw; background-color: #00b0ff;color: white; font-size: larger;">Resume</div>
+        <div style="margin-left: 10vw;" *ngIf="uploadresume==true && a !=0 else da">
+            <span *ngIf="resumesaved==false  else sav">
+                <form (ngSubmit)="save('resume')"><br>
+                     <strong>Enter Your Resume URL</strong><br><br>
+                    <input class="form-control shadow-none" type="url" style="width: 40vh;" [(ngModel)]="resumelink"
+                        required /><br><br>
+                    <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your Resume</strong><br><br>
+                    <input type="file" required #resume [disabled]="b==2||c==2||d==2||e==2||f==2"
+                        (change)="onFileSelected($event);a=2" accept="application/pdf" />
+                    &nbsp;&nbsp;
+                    <br><br>
+                    <div style="display: flex;" *ngIf="base64Output!='' && a==2">
+                        <button type="submit" class="b btn-primaryt><strong>SAVE </strong></button>
+                        &nbsp;&nbsp;<button (click)="resume.value='';base64Output='';a=1" type="button" class="btn btn-danger"><strong>CANCEL</strong></button>
+                    </div>
+                </form>
+            </span>
+            <ng-template #sav> SUCCESSFULLY SAVED</ng-template>
+        </div>
+        <ng-template #da><br>
+            <div *ngIf=" a !=0" style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+             0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                (click)="downloadPdf(data.resume,'r style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;"esume')"><br>
+                <div class="row">
+                    <div class="col-8">
+                        <strong >{{data.firstname | uppercase}} RESUME </strong><br>
+                        <span style="color: grey;font-size: 10px;" *ngIf=" a !=0">Click here to download PDF</span>
+                    </div>
+                    <div class="col" *ngIf=" a !=0" >
+                        <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+                    </div>
+                </div>
+            </div><br><br><button *ngIf=" a !=0" (click)="uploadresume=true;closestatus=true" class="btn btn-primary"
+                ><strong>EDIT RESUME&nbsp;
+                    <i class='bx bxs-edit-alt'></i></strong></button>
+        </ng-template>
+        <div style="margin: 4vw;" *ngIf=" a==0"><strong><div style="display: flex;justify-content: center;align-items: center;height: 95vh;">
+        <div style="text-align: center;">
+            <img src="../../../assets/loading.gif"><br>
+            
+        </div>
+    </div></strong></div>
+    </div>
+    <div>
+        <br>
+        <div class="text-center"
+            style="margin: 4vw 4vw 0vw 4vw; background-color: #00b0ff;color: white; font-size: larger;">Pan card</div>
+        <div style="margin-left: 10vw;" *ngIf="uploadpan==true && b!=0 else pan">
+            <span *ngIf="pansaved==false  else pansav">
+                <form (ngSubmit)="save('pan')"><br>
+                    <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your Pan</strong><br><br>
+                    <input type="file" required [disabled]="a==2||c==2||d==2||e==2||f==2"
+                        (change)="onFileSelected($event);b=2" #pan accept="application/pdf" />
+                    &nbsp;&nbsp;
+                    <br><br>
+                    <div style="display: flex;" *ngIf="base64Output!='' && b==2">
+                        <button type="submit" class="b btn-primaryt><strong>SAVE </strong></button>&nbsp;&nbsp;
+                        <br><br><button (click)="pan.value='';base64Output='';b=1" type="button" class="btn btn-danger"><strong>CANCEL</strong></button>
+                    </div>
+                </form>
+            </span>
+            <ng-template #pansav> SUCCESSFULLY SAVED</ng-template>
+        </div>
+        <ng-template #pan><br>
+            <div *ngIf=" b !=0" style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+             0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                (click)="downloadPdf(data.pan,'pan' style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;")"><br>
+                <div class="row">
+                    <div class="col-8">
+                        <strong >{{data.firstname | uppercase}} OFFER </strong><br>
+                        <span style="color: grey;font-size: 10px;" *ngIf=" b !=0">Click here to download PDF</span>
+                    </div>
+                    <div class="col" *ngIf=" b !=0" >
+                        <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+                    </div>
+                </div>
+            </div><br><br><button *ngIf=" b !=0" (click)="uploadpan=true;closestatus=true" class="btn btn-primary"
+                ><strong>EDIT OFFER&nbsp;<i
+                        class='bx bxs-edit-alt'></i></strong></button>
+        </ng-template>
+    </div>
+
+    <div>
+        <br>
+        <div class="text-center"
+            style="margin: 4vw 4vw 0vw 4vw; background-color: #00b0ff;color: white; font-size: larger;">Aadhar card
+        </div>
+        <div style="margin-left: 10vw;" *ngIf="uploadaadhar==true && c!=0 else aadhar">
+            <span *ngIf="aadharsaved==false  else aadharsav">
+                <form (ngSubmit)="save('aadhar')"><br>
+                    <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your aadhar</strong><br><br>
+                    <input type="file" [disabled]="a==2||b==2||d==2||e==2||f==2" required
+                        (change)="onFileSelected($event);c=2" #aadhar accept="application/pdf" />
+                    &nbsp;&nbsp;
+                    <br><br>
+                    <div style="display: flex;" *ngIf="base64Output!='' && c==2">
+                        <button type="submit" class="b btn-primaryt><strong>SAVE </strong></button>&nbsp;&nbsp;
+                        <br><br><button (click)="aadhar.value='';base64Output='';c=1" type="button" class="btn btn-danger"><strong>CANCEL</strong></button>
+                    </div>
+                </form>
+            </span>
+            <ng-template #aadharsav> SUCCESSFULLY SAVED</ng-template>
+        </div>
+        <ng-template #aadhar><br>
+            <div *ngIf=" c!=0" style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+             0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                (click)="downloadPdf(data.aadhar,'a style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;"adhar')"><br>
+                <div class="row">
+                    <div class="col-8">
+                        <strong >{{data.firstname | uppercase}} OFFER </strong><br>
+                        <span style="color: grey;font-size: 10px;" *ngIf=" c!=0">Click here to download PDF</span>
+                    </div>
+                    <div class="col" *ngIf=" c!=0" >
+                        <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+                    </div>
+                </div>
+            </div><br><br><button *ngIf=" c!=0" (click)="uploadaadhar=true;closestatus=true" class="btn btn-primary"
+                ><strong>EDIT Aadhar&nbsp;<i
+                        class='bx bxs-edit-alt'></i></strong></button>
+        </ng-template>
+    </div>
+
+    <div>
+        <br>
+        <div class="text-center"
+            style="margin: 4vw 4vw 0vw 4vw; background-color: #00b0ff;color: white; font-size: larger;">Tenthmarksheet
+            card</div>
+        <div style="margin-left: 10vw;" *ngIf="uploadtenthmarksheet==true && d!=0 else tenthmarksheet">
+            <span *ngIf="tenthmarksheetsaved==false  else tenthmarksheetsav">
+                <form (ngSubmit)="save('tenthmarksheet')"><br>
+                    <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your tenthmarksheet</strong><br>
+                    <input type="file" [disabled]="a==2||b==2||c==2||e==2||f==2" required
+                        (change)="onFileSelected($event);d=2" #tenthmarksheet accept="application/pdf" />
+                    &nbsp;&nbsp;
+                    <br><br>
+                    <div style="display: flex;" *ngIf="base64Output!='' && d==2">
+                        <button type="submit" class="b btn-primaryt><strong>SAVE </strong></button>&nbsp;&nbsp;
+                        <br><br><button (click)="tenthmarksheet.value='';base64Output='';d=1" type="button" class="btn btn-danger"><strong>CANCEL</strong></button>
+                    </div>
+                </form>
+            </span>
+            <ng-template #tenthmarksheetsav> SUCCESSFULLY SAVED</ng-template>
+        </div>
+        <ng-template #tenthmarksheet><br>
+            <div *ngIf="d!=0" style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+             0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                (click)="downloadPdf(data.tenthmark style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;"sheet,'tenthmarksheet')"><br>
+                <div class="row">
+                    <div class="col-8">
+                        <strong >{{data.firstname | uppercase}} Tenthmarksheet </strong><br>
+                        <span style="color: grey;font-size: 10px;" *ngIf=" d!=0">Click here to download PDF</span>
+                    </div>
+                    <div class="col" *ngIf=" d!=0" >
+                        <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+                    </div>
+                </div>
+            </div><br><br><button *ngIf=" d!=0" (click)="uploadtenthmarksheet=true;closestatus=true" class="btn btn-primary"
+                ><strong>EDIT tenthmarksheet&nbsp;<i
+                        class='bx bxs-edit-alt'></i></strong></button>
+        </ng-template>
+    </div>
+
+    <div>
+        <br>
+        <div class="text-center"
+            style="margin: 4vw 4vw 0vw 4vw; background-color: #00b0ff;color: white; font-size: larger;">Intermarksheet
+            card</div>
+        <div style="margin-left: 10vw;" *ngIf="uploadintermarksheet==true && e!=0 else intermarksheet">
+            <span *ngIf="intermarksheetsaved==false  else intermarksheetsav">
+                <form (ngSubmit)="save('intermarksheet')"><br>
+                    <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your intermarksheet</strong><br>
+                    <input type="file" [disabled]="a==2||b==2||c==2||d==2||f==2" required
+                        (change)="onFileSelected($event);e=2" #intermarksheet accept="application/pdf" />
+                    &nbsp;&nbsp;
+                    <br><br>
+                    <div style="display: flex;" *ngIf="base64Output!='' && e==2">
+                        <button type="submit" class="b btn-primaryt><strong>SAVE </strong></button>&nbsp;&nbsp;
+                        <br><br><button (click)="intermarksheet.value='';base64Output='';e=1" type="button" class="btn btn-danger"><strong>CANCEL</strong></button>
+                    </div>
+                </form>
+            </span>
+            <ng-template #intermarksheetsav> SUCCESSFULLY SAVED</ng-template>
+        </div>
+        <ng-template #intermarksheet><br>
+            <div *ngIf="e!=0" style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+             0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                (click)="downloadPdf(data.intermark style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;"sheet,'intermarksheet')"><br>
+                <div class="row">
+                    <div class="col-8">
+                        <strong >{{data.firstname | uppercase}} intermarksheet </strong><br>
+                        <span style="color: grey;font-size: 10px;" *ngIf=" e!=0">Click here to download PDF</span>
+                    </div>
+                    <div class="col" *ngIf=" e!=0" >
+                        <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+                    </div>
+                </div>
+            </div><br><br><button *ngIf=" e!=0" (click)="uploadintermarksheet=true;closestatus=true" class="btn btn-primary"
+                ><strong>EDIT intermarksheet&nbsp;<i
+                        class='bx bxs-edit-alt'></i></strong></button>
+        </ng-template>
+    </div>
+
+    <div>
+        <br>
+        <div class="text-center"
+            style="margin: 4vw 4vw 0vw 4vw; background-color: #00b0ff;color: white; font-size: larger;">
+            Graduationmarksheet card</div>
+        <div style="margin-left: 10vw;" *ngIf="uploadgraduationmarksheet==true && f!=0 else graduationmarksheet">
+            <span *ngIf="graduationmarksheetsaved==false  else graduationmarksheetsav">
+                <form (ngSubmit)="save('graduationmarksheet')"><br>
+                    <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your graduationmarksheet</strong><br>
+                    <input type="file" required [disabled]="a==2||b==2||c==2||d==2||e==2"
+                        (change)="onFileSelected($event);f=2" #graduationmarksheet accept="application/pdf" />
+                    &nbsp;&nbsp;
+                    <br><br>
+                    <div style="display: flex;" *ngIf="base64Output!='' && f==2">
+                        <button type="submit" class="b btn-primaryt><strong>SAVE </strong></button>&nbsp;&nbsp;
+                        <br><br><button (click)="graduationmarksheet.value='';base64Output='';f=1" type="button" class="btn btn-danger"><strong>CANCEL</strong></button>
+                    </div>
+                </form>
+            </span>
+            <ng-template #graduationmarksheetsav> SUCCESSFULLY SAVED</ng-template>
+        </div>
+        <ng-template #graduationmarksheet><br>
+            <div *ngIf="e!=0" style="box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+             0 10px 10px rgba(0,0,0,0.22); padding:2%; margin:4vw;width:20vw;cursor: pointer;"
+                (click)="downloadPdf(data.graduationmarksheet,'graduationmarksheet')"><br>
+                <div class="row" style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+                    <div class="col-8">
+                        <strong >{{data.firstname | uppercase}} graduationmarksheet
+                        </strong><br>
+                        <span style="color: grey;font-size: 10px;" *ngIf=" f!=0">Click here to download PDF</span>
+                    </div>
+                    <div class="col" *ngIf=" f!=0" >
+                        <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+                    </div>
+                </div>
+            </div><br><br><button *ngIf=" f!=0" (click)="uploadgraduationmarksheet=true;closestatus=true" class="btn btn-primary"
+                ><strong>Edit
+                    graduationmarksheet&nbsp;<i class='bx bxs-edit-alt'></i></strong></button>
+        </ng-template>
+    </div>
+</div> -->
+
+<!-- <input type="file" (change)="onFileSelected($event)"  accept="application/pdf"/>
+    &nbsp;&nbsp;
+        <button style="display: flex;" *ngIf="base64Output!=''"  btn-primaryc (click)="save()"><strong>SAVE </strong></button>&nbsp;&nbsp;
+       
+    <br><br><button (click)="uploadresume=false;closestatus=false" class="btn" *ngIf="data btn-danger.><strong>CANCEL</strong></button> -->
+
+
+
+
+
+<div class="layout table-responsive">
+    <div style="margin: 4vw;" *ngIf=" a==0"><strong>
+            <div
+                style="display: flex;justify-content: center;align-items: center;height: 95vh;background-color: #f4f7fb;">
+                <div style="text-align: center;">
+                    <img src="../../../assets/loading.gif"><br>
+                </div>
+            </div>
+        </strong></div>
+    <div class="row" style="margin: 1rem;margin-bottom: 0rem;">
+        <div class="col-sm"
+            style="background-color: #fff;padding: 2rem;border-radius: 2px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;margin: 1rem;">
+            <strong style="color:#00B0FF;font-size: 1rem;">RESUME</strong><br>
+            <div *ngIf="uploadresume==true && a !=0 else da">
+                <span *ngIf="resumesaved==false  else sav">
+                    <form (ngSubmit)="save('resume')">
+                        <!-- <strong style="font-size: 0.8rem;">Enter Your Resume URL</strong> --><br>
+                        <!-- <input class="form-control shadow-none" placeholder="Enter Your Resume URL" type="url" style="width: 40vh;" [(ngModel)]="resumelink"
+                            required /> -->
+                        <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your Resume</strong>
+                        <input type="file" required #resume [disabled]="b==2||c==2||d==2||e==2||f==2"
+                            (change)="onFileSelected($event);a=2" accept="application/pdf" />
+                        &nbsp;&nbsp;
+                        <br>
+                        <div style="display: flex;margin-top: 1rem;">
+                            <button class="btn btn-dark" *ngIf="data.resume && closestatus"
+                                (click)="uploadresume=false;closestatus=false"><strong>Close
+                                </strong></button>&nbsp;&nbsp;
+                            <div style="display: flex;" *ngIf="base64Output!='' && a==2">
+                                <button type="submit" class="btn btn-primary"
+                                    style="background-color: #00B0FF;"><strong>Save</strong></button>
+                                &nbsp;&nbsp;<button (click)="resume.value='';base64Output='';a=1" type="button"
+                                    class="btn btn-danger"><strong>Cancel</strong></button>
+                            </div>
+                        </div>
+
+                    </form>
+                </span>
+                <ng-template #sav> SUCCESSFULLY SAVED</ng-template>
+            </div>
+            <ng-template #da>
+                <div *ngIf=" a !=0" style="padding: 2rem; cursor: pointer;" (click)="downloadPdf(data.resume,'resume')">
+
+                    <div class="row"
+                        style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+                        <div class="col-8">
+                            <strong style="color: #1b1c1e;"> {{data.firstname | uppercase}} RESUME </strong><br>
+                            <span style="color: grey;font-size: 10px;" *ngIf=" a !=0">Click here to download
+                                PDF</span>
+                        </div>
+                        <div class="col" *ngIf=" a !=0">
+                            <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+                        </div>
+                    </div>
+                </div>
+                <button *ngIf=" a !=0" (click)="uploadresume=true;closestatus=true" class="btn btn-primary"
+                    style="background-color: #00B0FF;"><strong>EDIT
+                        RESUME&nbsp;
+                        <i class='bx bxs-edit-alt'></i></strong>
+                </button>
+            </ng-template>
+        </div>
+        <div class="col-sm"
+            style="background-color: #fff;padding: 2rem;border-radius: 2px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;margin: 1rem;">
+            <strong style="color:#00B0FF;font-size: 1rem;">PAN CARD</strong><br>
+            <div *ngIf="uploadpan==true && b!=0 else pan">
+                <span *ngIf="pansaved==false  else pansav">
+                    <form (ngSubmit)="save('pan')"><br>
+                        <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload your pan card</strong><br><br>
+                        <input type="file" required [disabled]="a==2||c==2||d==2||e==2||f==2"
+                            (change)="onFileSelected($event);b=2" #pan accept="application/pdf" />
+                        &nbsp;&nbsp;
+                        <br><br>
+                        <div style="display: flex;margin-top: 1rem;">
+                            <button class="btn btn-dark" *ngIf="data.pan && closestatus"
+                                (click)="uploadpan=false;closestatus=false"><strong>Close
+                                </strong></button>&nbsp;&nbsp;
+                            <div style="display: flex;" *ngIf="base64Output!='' && b==2">
+                                <button type="submit" class="btn btn-primary"
+                                    style="background-color: #00B0FF;"><strong>Save
+                                    </strong></button>&nbsp;&nbsp;
+                                <br><br><button (click)="pan.value='';base64Output='';b=1" type="button"
+                                    class="btn btn-danger"><strong>Cancel</strong></button>
+                            </div>
+                        </div>
+
+                    </form>
+                </span>
+                <ng-template #pansav> SUCCESSFULLY SAVED</ng-template>
+            </div>
+            <ng-template #pan>
+                <div style="cursor: pointer;">
+                    <br>
+                    <div *ngIf=" b !=0" (click)="downloadPdf(data.pan,'pan')"><br>
+                        <div class="row"
+                            style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+                            <div class="col-8">
+                                <strong style="color: #1b1c1e;"> {{data.firstname | uppercase}} PAN </strong><br>
+                                <span style="color: grey;font-size: 10px;" *ngIf=" b !=0">Click here to download
+                                    PDF</span>
+                            </div>
+                            <div class="col" *ngIf=" b !=0">
+                                <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+                            </div>
+                        </div>
+                    </div><br><button *ngIf=" b !=0" (click)="uploadpan=true;closestatus=true" class="btn"
+                        style="color: white;background-color: #00B0FF;"><strong>EDIT PAN&nbsp;<i
+                                class='bx bxs-edit-alt'></i></strong></button>
+                </div>
+            </ng-template>
+        </div>
+        <div class="col-sm"
+            style="background-color: #fff;padding: 2rem;border-radius: 2px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;margin: 1rem;">
+            <strong style="color:#00B0FF;font-size: 1rem;">AADHAR </strong><br>
+
+            <div>
+                <div *ngIf="uploadaadhar==true && c!=0 else aadhar">
+                    <span *ngIf="aadharsaved==false  else aadharsav">
+                        <form (ngSubmit)="save('aadhar')"><br>
+                            <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your aadhar</strong><br><br>
+                            <input type="file" [disabled]="a==2||b==2||d==2||e==2||f==2" required
+                                (change)="onFileSelected($event);c=2" #aadhar accept="application/pdf" />
+                            &nbsp;&nbsp;
+                            <br><br>
+                            <div style="display: flex;margin-top: 1rem;">
+                                <button class="btn btn-dark" *ngIf="data.aadhar && closestatus"
+                                    (click)="uploadaadhar=false;closestatus=false"><strong>Close
+                                    </strong></button>&nbsp;&nbsp;
+                                <div style="display: flex;" *ngIf="base64Output!='' && c==2">
+                                    <button type="submit" class="btn btn-primary"
+                                        style="background-color: #00B0FF;"><strong>SAVE
+                                        </strong></button>&nbsp;&nbsp;
+                                    <br><br><button (click)="aadhar.value='';base64Output='';c=1" type="button"
+                                        class="btn btn-danger"><strong>CANCEL</strong></button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </span>
+                    <ng-template #aadharsav> SUCCESSFULLY SAVED</ng-template>
+                </div>
+                <ng-template #aadhar><br>
+                    <div style="cursor: pointer;">
+
+                        <div *ngIf=" c!=0" style="cursor: pointer;" (click)="downloadPdf(data.aadhar,'aadhar')"><br>
+                            <div class="row"
+                                style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+                                <div class="col-8">
+                                    <strong style="color: #1b1c1e;"> {{data.firstname | uppercase}} AADHAR </strong><br>
+                                    <span style="color: grey;font-size: 10px;" *ngIf=" c!=0">Click here to download
+                                        PDF</span>
+                                </div>
+                                <div class="col" *ngIf=" c!=0">
+                                    <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+
+                                </div>
+                            </div>
+                        </div><br>
+                        <button *ngIf=" c!=0" (click)="uploadaadhar=true;closestatus=true" class="btn btn-primary"
+                            style="background-color: #00B0FF;"><strong>EDIT
+                                Aadhar&nbsp;<i class='bx bxs-edit-alt'></i></strong></button>
+
+                    </div>
+                </ng-template>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row" style="margin: 1rem;margin-top: 0%;">
+        <div class="col-sm"
+            style="background-color: #fff;padding: 2rem;border-radius: 2px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;margin: 1rem;">
+            <strong style="color:#00B0FF;font-size: 1rem;">X MARK SHEET</strong><br>
+            <div *ngIf="uploadtenthmarksheet==true && d!=0 else tenthmarksheet">
+                <span *ngIf="tenthmarksheetsaved==false  else tenthmarksheetsav">
+                    <form (ngSubmit)="save('tenthmarksheet')"><br>
+                        <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your tenth mark sheet</strong><br><br>
+                        <input type="file" [disabled]="a==2||b==2||c==2||e==2||f==2" required
+                            (change)="onFileSelected($event);d=2" #tenthmarksheet accept="application/pdf" />
+                        &nbsp;&nbsp;
+                        <br><br>
+                        <div style="display: flex;margin-top: 1rem;">
+                            <button class="btn btn-dark" *ngIf="data.tenthmarksheet && closestatus"
+                                (click)="uploadtenthmarksheet=false;closestatus=false"><strong>Close
+                                </strong></button>&nbsp;&nbsp;
+                            <div style="display: flex;" *ngIf="base64Output!='' && d==2">
+                                <button type="submit" class="btn btn-primary"
+                                    style="background-color: #00B0FF;"><strong>SAVE
+                                    </strong></button>&nbsp;&nbsp;
+                                <br><br><button (click)="tenthmarksheet.value='';base64Output='';d=1" type="button"
+                                    class="btn btn-danger"><strong>CANCEL</strong></button>
+                            </div>
+                        </div>
+
+                    </form>
+                </span>
+                <ng-template #tenthmarksheetsav> SUCCESSFULLY SAVED</ng-template>
+            </div>
+            <ng-template #tenthmarksheet><br>
+                <div *ngIf="d!=0" style="cursor: pointer;" (click)="downloadPdf(data.tenthmarksheet,'tenthmarksheet')">
+                    <br>
+                    <div class="row"
+                        style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+                        <div class="col-8">
+                            <strong style="color: #1b1c1e;"> {{data.firstname | uppercase}} Tenthmarksheet </strong><br>
+                            <span style="color: grey;font-size: 10px;" *ngIf=" d!=0">Click here to download
+                                PDF</span>
+                        </div>
+                        <div class="col" *ngIf=" d!=0">
+                            <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+                        </div>
+                    </div>
+                </div><br><button *ngIf=" d!=0" (click)="uploadtenthmarksheet=true;closestatus=true"
+                    class="btn btn-primary" style="background-color: #00B0FF;"><strong>EDIT
+                        tenthmarksheet&nbsp;<i class='bx bxs-edit-alt'></i></strong></button>
+            </ng-template>
+
+        </div>
+
+        <div class="col-sm"
+            style="background-color: #fff;padding: 2rem;border-radius: 2px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;margin: 1rem;">
+            <strong style="color:#00B0FF;font-size: 1rem;">XII MARK SHEET</strong><br>
+            <div>
+
+                <div *ngIf="uploadintermarksheet==true && e!=0 else intermarksheet">
+                    <span *ngIf="intermarksheetsaved==false  else intermarksheetsav">
+                        <form (ngSubmit)="save('intermarksheet')"><br>
+                            <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your intermarksheet</strong><br><br>
+                            <input type="file" [disabled]="a==2||b==2||c==2||d==2||f==2" required
+                                (change)="onFileSelected($event);e=2" #intermarksheet accept="application/pdf" />
+                            &nbsp;&nbsp;
+                            <br><br>
+                            <div style="display: flex;margin-top: 1rem;">
+                                <button class="btn btn-dark" *ngIf="data.intermarksheet && closestatus"
+                                    (click)="uploadintermarksheet=false;closestatus=false"><strong>Close
+                                    </strong></button>&nbsp;&nbsp;
+                                <div style="display: flex;" *ngIf="base64Output!='' && e==2">
+                                    <button type="submit" class="btn btn-primary"
+                                        style="background-color: #00B0FF;"><strong>SAVE
+                                        </strong></button>&nbsp;&nbsp;
+                                    <br><br><button (click)="intermarksheet.value='';base64Output='';e=1" type="button"
+                                        class="btn btn-danger"><strong>CANCEL</strong></button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </span>
+                    <ng-template #intermarksheetsav> SUCCESSFULLY SAVED</ng-template>
+                </div>
+                <ng-template #intermarksheet><br>
+                    <div *ngIf="e!=0" style="cursor: pointer;"
+                        (click)="downloadPdf(data.intermarksheet,'intermarksheet')"><br>
+                        <div class="row">
+                            <div class="col-8"
+                                style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+                                <strong style="color: #1b1c1e;"> {{data.firstname | uppercase}} intermarksheet
+                                </strong><br>
+                                <span style="color: grey;font-size: 10px;" *ngIf=" e!=0">Click here to download
+                                    PDF</span>
+                            </div>
+                            <div class="col" *ngIf=" e!=0">
+                                <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+
+                            </div>
+                        </div>
+                    </div><br><button *ngIf=" e!=0" (click)="uploadintermarksheet=true;closestatus=true"
+                        class="btn btn-primary" style="background-color: #00B0FF;"><strong>EDIT
+                            intermarksheet&nbsp;<i class='bx bxs-edit-alt'></i></strong></button>
+                </ng-template>
+            </div>
+        </div>
+        <div class="col-sm"
+            style="background-color: #fff;padding: 2rem;border-radius: 2px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;margin: 1rem;">
+            <strong style="color:#00B0FF;font-size: 1rem;">GRADUATION MARK SHEET</strong><br>
+            <div>
+
+                <div *ngIf="uploadgraduationmarksheet==true && f!=0 else graduationmarksheet">
+                    <span *ngIf="graduationmarksheetsaved==false  else graduationmarksheetsav">
+                        <form (ngSubmit)="save('graduationmarksheet')"><br>
+                            <strong style="color:#1b1c1e;font-size: 0.8rem;">Upload Your
+                                graduationmarksheet</strong><br><br>
+                            <input type="file" required [disabled]="a==2||b==2||c==2||d==2||e==2"
+                                (change)="onFileSelected($event);f=2" #graduationmarksheet accept="application/pdf" />
+                            &nbsp;&nbsp;
+                            <br><br>
+                            <div style="display: flex;margin-top: 1rem;">
+                                <button class="btn btn-dark" *ngIf="data.graduationmarksheet && closestatus"
+                                    (click)="uploadgraduationmarksheet=false;closestatus=false"><strong>Close
+                                    </strong></button>&nbsp;&nbsp;
+                                <div style="display: flex;" *ngIf="base64Output!='' && f==2">
+                                    <button type="submit" class="btn btn-primary"
+                                        style="background-color: #00B0FF;"><strong>SAVE
+                                        </strong></button>&nbsp;&nbsp;
+                                    <br><br><button (click)="graduationmarksheet.value='';base64Output='';f=1"
+                                        type="button" class="btn btn-danger"><strong>CANCEL</strong></button>
+                                </div>
+                            </div>
+                        </form>
+                    </span>
+                    <ng-template #graduationmarksheetsav> SUCCESSFULLY SAVED</ng-template>
+                </div>
+                <ng-template #graduationmarksheet><br>
+                    <div *ngIf="e!=0" style="cursor: pointer;"
+                        (click)="downloadPdf(data.graduationmarksheet,'graduationmarksheet')"><br>
+                        <div class="row">
+                            <div class="col-8"
+                                style="background-color: #fff;border-radius: 4px;padding: 1rem;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+                                <strong style="color: #1b1c1e;"> {{data.firstname | uppercase}} graduationmarksheet
+                                </strong><br>
+                                <span style="color: grey;font-size: 10px;" *ngIf=" f!=0">Click here to download
+                                    PDF</span>
+                            </div>
+                            <div class="col" *ngIf=" f!=0">
+                                <h1><i style="color: #1b1c1e;" class='bx bxs-downvote'></i></h1>
+
+                            </div>
+                        </div>
+                    </div><br><button *ngIf=" f!=0" (click)="uploadgraduationmarksheet=true;closestatus=true"
+                        class="btn btn-primary" style="background-color: #00B0FF;"><strong>Edit
+                            graduationmarksheet&nbsp;<i class='bx bxs-edit-alt'></i></strong></button>
+                </ng-template>
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,19 @@
+.layout {
+    margin: 2rem;
+    margin-top: 0%;
+}
+
+select {
+    font-size: 0.8rem;
+}
+
+form {
+    padding: 4rem;
+    padding-top: 1.5rem;
+    border-radius: 5px;
+}
+
+.invalidstyle {
+    /*background-color: rgb(238, 51, 51); */
+    border-color: rgb(235, 83, 83);
+}

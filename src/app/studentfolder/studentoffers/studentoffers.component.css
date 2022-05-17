@@ -1,0 +1,16 @@
+table {
+    padding: 0.5rem;
+    color: grey;
+}
+
+td {
+    padding: 0.4rem
+}
+
+tr {
+    border: 1px solid whitesmoke;
+}
+
+.back {
+    background-color: #f4f5fb;
+}

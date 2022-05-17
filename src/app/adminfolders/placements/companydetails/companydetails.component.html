@@ -1,0 +1,536 @@
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':imagemodal}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="display: flex;justify-content: center;align-items: center;">
+                <h4 class="modal-title">
+                    <img class="imag1" [src]="tempimg" (click)="img.click()" style="cursor: pointer;" />
+                    <input style="display: none;" accept="image/png, image/jpeg" (change)="handleFileSelect($event)"
+                        type="file" #img>
+                </h4>
+                <div style="position: absolute;top: 5%;right: 5%;font-size: 1.5rem;cursor: pointer;" (click)="remove()">
+                    <i class="fa fa-trash"></i>
+                </div>
+            </div>
+            <div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="imagemodal='none';">cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="save()">{{saveimg}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="nodata else nodat">
+    <div style="padding: 1rem;font-size: 0.8rem;padding-bottom: 0.2rem;"><span style="cursor:pointer"
+            [routerLink]="['/admin/placements']">
+            <strong style="font-size: 0.8rem;color: #1b1c1e;">PLACEMENTS > </strong>
+        </span> <strong [routerLink]="['/admin/placements/placementsdetails']"
+            style="font-size: 0.8rem;cursor: pointer;">PLACEMENT DETAILS</strong> > COMPANY DETAILS</div>
+    <div style="margin: 0rem 1.8rem;font-size: 0.8rem; box-shadow: 0px 0px 10px 2px rgb(177, 172, 172);">
+        <div class="row"
+            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.5rem;padding-bottom: 5px; align-items: center;">
+            <div class="col-sm-1">
+                <div class="imageup">
+                    <img class="imag" [src]="image" (click)="imagemodal='block';tempimg=image"
+                        style="cursor: pointer;" />
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <strong style="font-size: 1.1rem;">{{companydetails.companyprofiletitle | uppercase}}</strong><br>
+                <span>{{companydetails.companyname}}</span><br>
+                <span style="font-size: 0.8rem;">{{companydetails.placementcyclename }}</span>
+            </div>
+            <div class="col-sm-3">Date of visit :
+                <span *ngIf="companydetails.dateofvisit!=='not updated' else da">
+                    {{companydetails.dateofvisit | date}}</span>
+                <ng-template #da>{{companydetails.dateofvisit}}</ng-template>
+
+
+                <br>{{companydetails.positiontype}}<br>
+                {{companydetails.companyprofilesource}}<br>
+            </div>
+            <div class="col-sm-3 ">
+                <span style="color:#00b0ff;font-weight: 600;">{{placed}} PLACED </span><br>
+                <span style="color:#00b0ff;font-weight: 600;">{{registered}} REGISTERED</span><br>
+                <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE</span><br>
+            </div>
+            <div class="col-sm"><br>
+                <i style="font-size: 2rem;float: right;color: #00B0FF;cursor: pointer;" (click)="switchedit()"
+                    class='bx bxs-pencil'></i>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive" style="max-height: 77vh;">
+
+        <div class="content" style="margin: 0rem 1.8rem;font-size: 0.8rem;margin-right: 1rem;">
+
+            <div class="row">
+                <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">SUMMARY</strong>
+                <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">COMPANY
+                    DETAILS</strong>
+            </div>
+
+            <div class="row" style="font-size: 0.7rem;">
+                <div class="col-sm"
+                    style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.5rem;margin-right: 0.3rem;">
+
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Placement cycle name</td>
+                                <td>{{companydetails.placementcyclename}}</td>
+                            </tr>
+                            <tr>
+                                <td>Company name</td>
+                                <td>{{companydetails.companyname}}</td>
+                            </tr>
+                            <tr>
+                                <td>Date of visit</td>
+                                <td *ngIf="companydetails.dateofvisit!='not updated' else updated">
+                                    {{companydetails.dateofvisit |
+                                    date }}</td>
+                                <ng-template #updated>
+                                    <td> {{companydetails.dateofvisit }}</td>
+                                </ng-template>
+
+
+                            </tr>
+                            <tr>
+                                <td>Created by</td>
+                                <td>{{companydetails.created}}</td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>{{companydetails.status}}</td>
+                            </tr>
+                            <tr>
+                                <td>Company contact</td>
+                                <td>{{companydetails.companycontact}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm"
+                    style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.5rem;">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Title</td>
+                                <td>{{companydetails.companyprofiletitle}}</td>
+                            </tr>
+                            <tr>
+                                <td>company Location</td>
+                                <td>{{companydetails.companylocation}}</td>
+                            </tr>
+                            <tr>
+                                <td>Position Type</td>
+                                <td>{{companydetails.positiontype}}</td>
+                            </tr>
+                            <tr>
+                                <td>company Function</td>
+                                <td>{{companydetails.companyfunction}}</td>
+                            </tr>
+                            <tr>
+                                <td>Category</td>
+                                <td>{{companydetails.category}}</td>
+                            </tr>
+                            <tr>
+                                <td>Cost to Company</td>
+                                <td>
+                                    <span
+                                        *ngIf="companydetails.minimum!=''">{{companydetails.minimum}}-{{companydetails.maximum}}&nbsp;{{companydetails.currency}}
+                                        per {{companydetails.interval}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">COURSE
+                            ELIGIBILITY
+                            CRITERIA</strong>
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">SCORE
+                            ELIGIBILITY
+                            CRITERIA</strong>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.3rem;">
+
+                            <div *ngFor=" let c of companydetails.eligibilties">
+                                {{c[0].course | uppercase}}&nbsp;&nbsp; {{c[0].ff | uppercase}}
+                            </div>
+                        </div>
+
+                        <div class="col-sm"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
+                            <strong> Applicants must have scored</strong><br><br>
+                            {{companydetails.undergraduate}} % marks in Undergraduate<br>
+                            <strong>AND</strong><br>
+                            {{companydetails.inter}} % marks in Class 12th <br>
+                            <strong>OR</strong><br>
+                            {{companydetails.diploma}} % marks in Diploma<br>
+                            <strong>AND</strong><br>
+                            {{companydetails.ten}} % marks in Class 10th<br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">GENDER
+                            ELIGIBILITY
+                            CRITERIA</strong>
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">BACKLOGS
+                            ELIGIBILITY
+                            CRITERIA</strong>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.3rem;">
+                            <div *ngIf="companydetails.gender!='malefemale' else backm">
+                                <strong>{{companydetails.gender | uppercase}}</strong>
+                                are eligible
+                            </div>
+                            <ng-template #backm>
+                                <div>All are eligible</div>
+                            </ng-template>
+                        </div>
+                        <div class="col-sm"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
+                            <strong>{{companydetails.ongoingbacklogs}} </strong> Ongoing backogs are allowed .<br>
+                            <strong>{{companydetails.totalbacklogs}} </strong> Total backlogs are allowed .
+                        </div>
+                    </div>
+                    <div class="row">
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">ADD
+                        </strong>
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">HIRING
+                            HIERARCHY</strong>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.3rem;">
+                            <strong>A single student</strong><br><br>
+                            <span *ngIf="companydetails.status=='opened' else failone">
+                                <input class="form-control" [(ngModel)]="singlestudent" (click)="single='ADD'"
+                                    width="50vw" /><br>
+                                <button class="btn" *ngIf="singlestudent.length==10" (click)="singlestudentmail()"
+                                    style="background-color: #00b0ff;border-radius: 7px;color: white;">{{single}}</button>
+                            </span>
+                            <ng-template #failone>You cannot add ! This company is not accepting the applications
+                                now .
+                            </ng-template><br><br>
+                            <strong> Students by company </strong><br>
+                            <div *ngIf="companydetails.status=='opened' else fail" class="p-3" style="display: flex;">
+                                <select [(ngModel)]="comselected" class="form-control w-50"
+                                    style="border-radius: 20px;">
+                                    <option value="" disabled>Please Select a company</option>
+                                    <option *ngFor="let c of allcom" value={{c.companyname}}
+                                        [disabled]="c.companyname ==companydetails.companyname">
+                                        {{c.companyname | uppercase}}</option>
+                                </select>&nbsp;&nbsp;
+                                <button *ngIf="comselected!=''"
+                                    style="background-color: #00b0ff;border-radius: 20px;color: white;"
+                                    (click)="addstu()">{{addstatus}}</button>
+                            </div>
+                            <ng-template #fail><br>You cannot add ! This company is not accepting the applications now .
+                            </ng-template>
+                        </div>
+
+                        <div class="col-sm table-responsive"
+                            style="border-radius:2px;max-height:40vh;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
+                            <div *ngFor="let level of companydetails.hiringworkflow;index as i">
+
+                                <strong>{{level[0].level}} </strong><span
+                                    style="font-size: 0.7rem;">{{level[0].sub}}</span>
+                                <span *ngIf="i!=companydetails.hiringworkflow.length-1"><br><i class='bx bxs-downvote'
+                                        style="font-size: 1rem;"></i></span>
+                                <br>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row" style="font-size: 0.8rem;">
+                        <strong style="padding: 0.9rem;margin-right: 0.3rem;color: #1b1c1e;">COMPANY
+                            DESCRIPTION</strong>
+                        <div class="col-sm-12"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.3rem;">
+
+                            <div [innerHTML]="companydetails.companydescription"></div>
+
+                        </div>
+                    </div>
+                    <br>
+
+                </div>
+                <div class="col-sm-3">
+                    <div style="padding: 0.2rem;margin: 0.2rem;color: #1b1c1e;">
+                        <strong>STATUS</strong>
+                    </div>
+                    <div class="table-responsive"
+                        style="max-height:'90vh';border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;padding: 1rem;padding-left: 2rem;text-align: center;">
+                        <div>
+                            <span style="color:#00b0ff;font-weight: 600;">{{placed}} PLACED </span><br>
+                            <span style="color:#00b0ff;font-weight: 600;">{{registered}} REGISTERED</span><br>
+                            <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE</span><br>
+                        </div>
+                        <hr>
+                        <div>
+                            <div *ngIf="ch==0  else dis">
+                                <div>
+                                    <span *ngIf="companydetails.deadline!='not updated'">{{companydetails.deadline |
+                                        date:'medium'}}<br></span>
+                                    <div *ngIf="companydetails.deadline=='not updated'">Deadline is
+                                        {{companydetails.deadline }}
+                                    </div>
+                                    <a style="color:#00B0FF; cursor: pointer;font-size: 0.7rem;"
+                                        (click)="ch=1"><strong>CHANGE
+                                            DEADLINE</strong></a>
+                                </div>
+                                <br>
+                                <div *ngIf="companydetails.status=='not updated'"><button class="btn btn-primary"
+                                        style="background-color: #00B0FF;" (click)="ch=1">Open
+                                        applications</button></div>
+                                <div *ngIf="companydetails.status=='closed'"><button class="btn btn-primary"
+                                        style="background-color: #00B0FF;" (click)="ch=1">Reopen
+                                        applications</button>
+                                    <br>or<br><button (click)="exportexcel()" class="btn"
+                                        style="background-color: #1b1c1e;color: white;">Download
+                                        Applicants </button>
+                                </div>
+
+                                <div *ngIf="companydetails.status=='opened'"><button class="btn btn-danger"
+                                        (click)="close()">Close
+                                        applications</button><br><br>
+                                    <button *ngIf="eligible!=0" class="btn btn-primary"
+                                        style="background-color: #00B0FF;" (click)="sendmail()">{{mailstatus}}</button>
+                                </div>
+                            </div>
+                            <ng-template #dis>
+                                <div style="margin:0rem 2rem">
+                                    <strong>SELECT DEADLINE<br> </strong><br>
+                                    <input class="form-control" [(ngModel)]="deadline" type="datetime-local"
+                                        (change)="errdate=''">
+                                </div>
+                                <div *ngIf="errdate!=''" style="color: #a5081a;">{{errdate}}</div>
+                                <br><button class="btn btn-primary" style="background-color:#00B0FF ;"
+                                    (click)="saveline()">Save</button>&nbsp;&nbsp;
+                                <button class="btn btn-danger" (click)="ch=0;">Close</button>
+                            </ng-template>
+                        </div>
+                        <hr>
+                        <div>
+
+                            <div class="table-responsive" *ngIf="registered>0">
+                                <span *ngFor="let level of hiringflow;index as i">
+                                    <div style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"
+                                        *ngIf="i&lt;=currentIndex+nextIndex && companydetails.status=='closed'">
+                                        <strong>{{level.level}}</strong><br />
+                                        <span style="font-size: 0.7rem;">{{level.sub}}</span>
+                                        <span
+                                            *ngIf="currentIndex==0 && relen==0  && companydetails.status=='closed'"><br>
+
+                                            <span *ngIf="mapping.length>0"> <br>
+                                                <!-- <button (click)="savethelist()" class="btn"
+                                                    style="background-color: #00B0FF;color: #fff;">Save</button>&nbsp; -->
+                                                <button class="btn btn-primary" style="background-color:#00B0FF ;"
+                                                    (click)="savethelist()">{{saveButton}}</button>&nbsp;&nbsp;
+                                                <button (click)="mapping=[];keys=[];" class="btn"
+                                                    style="color: white;background-color: #a5081a;">Close</button><br>
+                                            </span>
+                                            <input #file1 (click)="file1.value = ''" value="" style="display:none"
+                                                type="file" accept=".xlsx" (change)="onfilesubmit($event,i)">
+                                            <!-- this is displayed before uploding preplacemnets -->
+                                            <a *ngIf="mapping.length==0" (click)="file1.click()"
+                                                style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
+                                                <strong>Click
+                                                    to upload qualified students in above level</strong></a>
+                                            <br><br>
+                                            <div style="max-height:50vh" class="table-responsive">
+                                                <table class="table table-bordered"
+                                                    *ngIf=" uploadindex==i && mapping.length>0">
+                                                    <tbody>
+                                                        <tr style="background-color: whitesmoke;">
+                                                            <td>rollnumber</td>
+                                                        </tr>
+                                                        <tr *ngFor="let row of mapping">
+                                                            <td>{{row.rollnumber}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </span>
+                                        <span *ngIf="relen==1 && companydetails.status=='closed'">
+
+                                            <span *ngIf="i==currentIndex  && companydetails.status=='closed'"
+                                                style="cursor: pointer;">&nbsp;
+                                                <span style="font-size: 13px;"><i (click)="setedit=true"
+                                                        *ngIf="!setedit" class='bx bxs-pencil'></i>
+
+                                                    <i *ngIf="setedit" (click)="setedit=false" style="color: #a5081a;"
+                                                        class='bx bxs-x-circle'></i>
+                                                </span>
+                                                <span *ngIf="setedit">
+
+                                                    <span *ngIf="mapping.length>0"> <br>
+                                                        <span><br />
+                                                            <button class="btn btn-primary"
+                                                                style="background-color:#00B0FF ;"
+                                                                (click)="updatethelist()">Save</button>&nbsp;&nbsp;
+                                                            <!-- <button class="btn"
+                                                                style="background-color: white;color: #00b0ff;"
+                                                                (click)="updatethelist()">Save</button>&nbsp; -->
+                                                            <button (click)="setedit=false;mapping=[];keys=[]"
+                                                                class="btn"
+                                                                style="color: white;background-color: #a5081a;">Close</button>
+                                                        </span>
+                                                    </span><br />
+                                                    <!-- <input type="file" accept=".xlsx" multiple="false"
+                                                (change)="onfilesubmit($event,i)">
+                                                 -->
+                                                    <!-- after upload editing option view -->
+                                                    <input #file (click)="file.value = ''" value=""
+                                                        style="display: none;" type="file" accept=".xlsx"
+                                                        multiple="false" (change)="onfilesubmit($event,i)">
+                                                    <a *ngIf="mapping.length==0" (click)="file.click()"
+                                                        style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
+                                                        <strong>Click
+                                                            to upload qualified students in above
+                                                            level</strong></a><br />
+                                                    <div style="max-height:50vh" class="table-responsive">
+                                                        <table *ngIf="uploadindex==i && mapping.length>0"
+                                                            class="table text-center">
+                                                            <tbody>
+                                                                <tr style="background-color: whitesmoke;">
+                                                                    <td>rollnumber</td>
+                                                                </tr>
+                                                                <tr *ngFor="let row of mapping">
+                                                                    <td>{{row.rollnumber}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </span>
+                                            </span>
+                                            <span
+                                                *ngIf="i==currentIndex+1 && companydetails.status=='closed' && setedit==false">
+                                                <span *ngIf="mapping.length>0 && uploadindex==i"><br /><br />
+                                                    <button class="btn btn-primary"
+                                                        (click)="savethelist()">{{saveButton}}</button>&nbsp;&nbsp;
+                                                    <!-- <button (click)="savethelist()" class="btn"
+                                                        style="background-color: white;color: #00b0ff;">Save</button>&nbsp; -->
+                                                    <button (click)="mapping=[];keys=[]" class="btn"
+                                                        style="color: white;background-color: #a5081a;">Close</button><br>
+                                                </span><br />
+
+                                                <input #file2 style="display: none;" type="file" accept=".xlsx"
+                                                    multiple="false" (change)="onfilesubmit($event,i)">
+                                                <!-- <button (click)="file2.click()" style="background: #fff;border-bottom: 1px solid #00b0ff;cursor: pointer;">Browse File</button> -->
+                                                <a (click)="file2.click()" *ngIf="mapping.length==0"
+                                                    style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
+                                                    <strong>Click
+                                                        to upload qualified students in above level</strong></a>
+                                                <div style="max-height:50vh" class="table-responsive">
+                                                    <table *ngIf="uploadindex==i   && mapping.length>0"
+                                                        class="table text-center">
+                                                        <tbody>
+                                                            <tr style="background-color: whitesmoke;">
+                                                                <td>rollnumber</td>
+                                                            </tr>
+                                                            <tr *ngFor="let row of mapping">
+                                                                <td>{{row.rollnumber}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </span>
+                                            <br>
+                                        </span>
+
+
+
+                                    </div>
+                                    <br />
+                                </span>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<table id="excel-table" style="display: none;">
+    <tr>
+        <th>Name</th>
+        <th>Roll Number</th>
+        <th>Course</th>
+        <th>Department</th>
+        <th>Mobile</th>
+        <th>Email ID</th>
+        <th>DOB</th>
+        <th>Current Address</th>
+        <th>Permanent Address</th>
+        <th>Current Term Score</th>
+        <th>Xth percentage</th>
+        <th>Xth Board</th>
+        <th>Year of passing 10th</th>
+        <th>Inter / Diploma</th>
+        <th>XIIth Board</th>
+        <th>Year of passing 12th</th>
+        <th>Backlogs</th>
+
+    </tr>
+    <tr *ngFor="let sup of applicantslist">
+        <td>{{sup.firstname}}</td>
+        <td>{{ sup.rollnumber }}</td>
+        <td>{{ sup.course }}</td>
+        <td>{{ sup.department }}</td>
+        <td>{{sup.mobile}}</td>
+        <td>{{sup.mail}}</td>
+        <td>{{sup.dob}}</td>
+        <td>{{sup.currentaddress}}</td>
+        <td>{{sup.permanentaddress}}</td>
+        <td>{{sup.semcgpa}}</td>
+        <td>{{sup.tenthcgpa}}</td>
+        <td>{{sup.tenthschoolname}}</td>
+        <td>{{sup.tenyear}}</td>
+        <td>{{sup.intermpc}}</td>
+        <td>{{sup.interclgname}}</td>
+        <td>{{sup.intercgpa}}</td>
+        <td *ngIf="sup.ongoingbacklogs &gt; 0">YES</td>
+        <td *ngIf="sup.ongoingbacklogs &lt; 0 || sup.ongoingbacklogs == 0 ">NO</td>
+
+    </tr>
+</table>
+
+
+<ng-template #nodat>
+    <div style="display: flex;justify-content: center;align-items: center;height:90vh">
+        <div style="text-align: center;">
+            <img src="../../../assets/loading.gif"><br>
+            <h5><strong>Time to relax !!! Company details are on the way .</strong></h5>
+        </div>
+    </div>
+</ng-template>
+
+<div *ngIf="display" [ngClass]="{'view':display}">
+    <span style="font-size: 1rem;font-weight: bold;">
+        &nbsp;{{popup}}&nbsp;
+        <div class="btn"><i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i></div>
+        <!-- <div class="btn btn1"><i class="fa fa-check"></i></div> -->
+    </span>
+</div>

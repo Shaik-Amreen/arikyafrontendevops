@@ -1,0 +1,38 @@
+<div class="layout" style="height: 95vh;background-color: #f4f7fb;">
+    <div class="row" style="padding: 1rem;">
+        <div class="col-sm-3">
+            <div
+                style="background-color: #fff;border-radius: 7px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;display: flex;justify-content: center;align-items: center;float: right;width: 20vw;">
+                <input [(ngModel)]=" searchtopic" type="text" name="searchtopic" class="form-control shadow-none"
+                    placeholder="start typing topic name in dbms"
+                    style="border: none;background-color: #fff;font-size: 0.8rem;" />
+                <i class="bx bx-search" style="font-size: 1rem;font-weight: 600"></i>&nbsp;
+            </div>
+            <br /><br />
+            <div class="table-responsive"
+                style="height: 85vh;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border-radius: 7px;">
+                <div *ngFor="let t of topics;index as i">
+
+                    <div [id]="i" *ngIf="t.includes(searchtopic)" class="p-2 m-2" style="cursor: pointer;"
+                        [ngClass]="(currentpage==i)?'active':''" (click)="page(i)">
+                        {{t}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm"
+            style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;background:#fff;padding:1.5rem;border-radius: 7px;">
+
+            <div [innerHTML]="content[currentpage] " style="height: 82vh;color: #1b1c1e;" class="table-responsive"> </div>
+
+
+            <div class="btn btn-dark" (click)="previous()" *ngIf="currentpage>0" style="background-color: #1b1c1e;">
+                Previous</div>
+            <div class="btn btn-primary" (click)="next()" *ngIf="currentpage!=topics.length-1"
+                style="float: right;background-color: #00b0ff;">Next</div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,52 @@
+.endtest {
+  position: relative;
+
+  float: right;
+  width: 100px;
+  height: 40px;
+}
+
+#time {
+  font-size: 30px;
+  top: -45px;
+
+}
+
+.modal {
+  background: rgba(0, 0, 0, .5);
+}
+
+
+select {
+  width: 20%;
+  margin-left: 10%;
+  padding: 0.5%;
+  border: 1px solid lightgray;
+}
+
+.test {
+  padding: 0.5rem;
+  width: 7vw;
+  font-weight:550
+}
+
+.done {
+  background-color: whitesmoke;
+  color: grey;
+  font-weight: 600;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.empty {
+  background-color: rgb(190, 229, 202);
+  color: rgb(62, 179, 58);
+  font-weight: 600;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.sel {
+
+  background-color: #d4e4f8;
+  color: #00b0ff;
+  font-weight: 600;
+}

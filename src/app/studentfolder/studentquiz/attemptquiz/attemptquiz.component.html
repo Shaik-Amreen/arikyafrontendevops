@@ -1,0 +1,161 @@
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':reload}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" *ngIf="askfullscreen && display!='block'">
+            <div class="modal-header">
+                <h4 class="modal-title">{{msg}}</h4>
+                <!-- <button type="button" class="close" style="border: none;" aria-label="Close" (click)="onCloseHandled()">
+                    <span aria-hidden="true">&times;</span></button> -->
+                <!-- <button type="button" class="btn btn-danger" (click)="testtimeout()">CLOSE</button>-->
+            </div>
+            <div>
+                <div class="modal-body">
+                    <p>{{fullscreen}} </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="openFullscreen()">ENTER</button>
+                    <!-- <button type="button" class="btn btn-primary" (click)="onCloseHandled()">NO</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" *ngIf="!askfullscreen">
+                <h4 class="modal-title">{{msg}}</h4>
+                <button *ngIf="!timeout" type="button" class="close" style="border: none;" aria-label="Close"
+                    (click)="onCloseHandled()">
+                    <span aria-hidden="true">&times;</span></button>
+                <button *ngIf="timeout" type="button" class="btn btn-danger" (click)="testtimeout()">CLOSE</button>
+            </div>
+            <div *ngIf="!timeout">
+                <div class="modal-body">
+                    <p>Are you sure to end the test ? </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="Endtest()">YES</button>
+                    <button type="button" class="btn btn-primary" (click)="onCloseHandled()">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin: 1rem;">
+    <div *ngIf="get">
+        <span style="color: #a5081a;display: flex;justify-content: center;align-items: center;"> <strong>Test will be
+                ended if you try to disable FULL SCREEN .</strong></span>
+        <br>
+        <h3 style="float: right;margin-right: 2rem;font-weight: 900;"><span
+                *ngIf="minutes &lt; 10">0</span>{{minutes}}:<span *ngIf="seconds &lt;10">0</span>{{seconds}}</h3>
+        <h4 style="color: #1b1c1e"><strong>{{topic | uppercase}}</strong></h4>
+        <br />
+        <div class="row" style="margin-left: 0.6rem;">
+            <div class="col-8 table-responsive" oncopy=" return false" onpaste="return false" oncut="return false">
+
+
+                <div class=" table-responsive border-0 card"
+                    style="height: 75vh;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                    <br /> <span style="margin: 0.5rem;margin-left: 0.9rem;"><strong
+                            style="color: #00b0ff;font-size: 1rem;">Question
+                            {{questionno}}</strong>
+
+                        <br /><br />
+
+                        <div style="margin-left:2rem;" [innerHTML]="quiz['questions'][questionno-1][0]['questionis']">
+                        </div>
+
+
+                        <!-- <angular-editor [config]="editorConfig"
+                            [ngModel]="quiz['questions'][questionno-1][0]['questionis']">
+                        </angular-editor> -->
+
+                    </span>
+                    <div style="margin-left:4rem;">
+                        <div class="form-control" (click)="input1.click();answer(questionno,'option1')"
+                            style="width: 60%;cursor: pointer;"><input type="radio" #input1 style="margin-right: 5px;"
+                                name="option" [(ngModel)]="quiz['questions'][questionno-1][0]['answeredoption']"
+                                value="option1">{{quiz['questions'][questionno-1][0]['option1']}}</div><br>
+                        <div class="form-control" (click)="input2.click();answer(questionno,'option2')"
+                            style="width: 60%;cursor: pointer;"><input type="radio" #input2 style="margin-right: 5px;"
+                                name="option" [(ngModel)]="quiz['questions'][questionno-1][0]['answeredoption']"
+                                value="option2">{{quiz['questions'][questionno-1][0]['option2']}}</div><br>
+                        <div class="form-control" (click)="input3.click();answer(questionno,'option3')"
+                            style="width: 60%;cursor: pointer;"><input type="radio" #input3 style="margin-right: 5px;"
+                                name="option" [(ngModel)]="quiz['questions'][questionno-1][0]['answeredoption']"
+                                value="option3">{{quiz['questions'][questionno-1][0]['option3']}}</div><br>
+                        <div class="form-control" (click)="input4.click();answer(questionno,'option4')"
+                            style="width: 60%;cursor: pointer;"><input type="radio" #input4 style="margin-right: 5px;"
+                                name="option" [(ngModel)]="quiz['questions'][questionno-1][0]['answeredoption']"
+                                value="option4">{{quiz['questions'][questionno-1][0]['option4']}}</div><br><br>
+
+
+                    </div>
+                </div>
+
+
+
+                <div style="bottom: 1rem;">
+                    <button class="test btn btn-dark shadow-none"
+                        style="float:left;background-color: #1b1c1e;bottom: 1rem;position: fixed;left: 1rem;"
+                        *ngIf="previousview" (click)="previous()">PREVIOUS</button>
+
+                    <button class="test btn btn-primary shadow-none"
+                        style="float:right;background-color: #00b0ff;margin-right:1rem ;position: fixed;bottom: 1rem;right: 30vw;"
+                        *ngIf="nextview" (click)="next()">NEXT</button>
+                    <br>
+
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="row">
+                    <div class="col-sm">
+                        <button class="btn done" style="width: 5vw;;">{{quesvisit.notvisited}}</button>&nbsp;&nbsp;
+                        <strong> Not visited</strong>
+                    </div>
+                    <div class="col-sm">
+                        <button class="btn"
+                            style="width: 5vw;;font-weight: 900;background-color: rgb(230, 193, 200);color: #a5081a;">{{quesvisit.notanswered}}</button>&nbsp;&nbsp;
+                        <strong style="color: #a5081a;">Not answered</strong>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 0.5rem;">
+                    <div class="col-sm">
+                        <button class="btn"
+                            style="width: 5vw;;background-color: rgb(234, 225, 242);color: blueviolet;font-weight: 900;">{{quesvisit.visited}}</button>&nbsp;&nbsp;
+                        <strong> Visited</strong>
+                    </div>
+                    <div class="col-sm">
+                        <button class="btn empty"
+                            style="width: 5vw;;font-weight: 900;">{{quesvisit.answered}}</button>&nbsp;&nbsp;
+                        <strong style="color: green;">Answered</strong>
+                    </div>
+                </div><br />
+                <div style="height: 48vh" class="table-responsive">
+                    <strong style="color:#1b1c1e;font-size: 1.2rem;">QUESTIONS</strong><br><br />
+                    <span *ngFor="let c of quiz['questions'];index as i">
+                        <button class="btn" (click)="q(i)" style="margin-top:10px"
+                            [ngClass]=" c[0]['questionis']==quiz['questions'][questionno-1][0]['questionis']? 'sel' : c[0]['answeredoption'] ? 'empty' : 'done'">
+                            &nbsp;{{i+1}}&nbsp;</button>
+
+                        &nbsp;
+                    </span>
+
+                </div>
+                <!-- <video id="video"
+                    style="height: 120px;width: 250px;background-color: #1b1c1e;float: right;margin-top: 0.5rem;margin-bottom: 0.5rem;"
+                    autoplay></video> -->
+                <div style="bottom: 1rem;position: fixed;right:2rem;">
+                    <button class="test btn btn-danger" style="float:right;" (click)="openModal()">END
+                        TEST</button>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

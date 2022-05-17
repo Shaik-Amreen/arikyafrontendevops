@@ -1,0 +1,38 @@
+select,input{
+    padding: 0.2rem;
+    border-radius: 3px;
+}
+.input-icons i
+ {
+    position: absolute;
+    margin-left:0.5rem;
+} 
+.input-icons 
+{
+	display: flex;
+    align-items: center;
+} 
+input
+{
+    padding-left: 2rem;
+}
+span{
+    font-size: 0.9rem;
+}
+select{
+    margin-top: 0.2rem;
+}
+.btn
+{
+    font-size: 0.8rem;
+}
+table
+{
+    font-size: 0.8rem;
+    width: 80vw;
+}
+
+tr{
+    border-bottom: 2px solid whitesmoke;
+    cursor: pointer;
+}

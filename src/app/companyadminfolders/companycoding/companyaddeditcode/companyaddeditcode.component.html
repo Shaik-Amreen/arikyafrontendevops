@@ -1,0 +1,189 @@
+<div class="layout table-responsive">
+    <div class="content"><br>
+        <div style="display: flex;">
+            <strong routerLink="/admin/code"><i class='bx bx-arrow-back'
+                    style="font-size:1.5rem ;color: #00B0FF;cursor: pointer;"></i></strong>
+
+            <h5 style="color: #1b1c1e;margin-left: 1.5rem;"><strong>ADD CODING QUESTIONS</strong></h5>
+        </div>
+        <br>
+        <form [formGroup]="final" (ngSubmit)="onSubmit()" style="margin-left: 3.2rem;">
+            <div class="row" style="width: 90%">
+                <div class="col-sm"><label>Topic</label><br><input class="form-control shadow-none"
+                        formControlName="topic" placeholder="Enter topic of the coding questions">
+                    <span style="color: #a5081a;" *ngIf="final.controls.topic.status=='INVALID' && inputvalue==true">
+                        please fill this field
+                    </span>
+                    <!-- <span style="color: #a5081a;"
+                        *ngIf="final.value.questions[i].inputone=='' && inputvalue==true">
+                        please fill this field -->
+                    <!-- </span><br> -->
+                </div>
+                <div class="col-sm"><label>Start time</label><br><input class="form-control shadow-none"
+                        type="datetime-local" formControlName="startson">
+                    <span style="color: #a5081a;" *ngIf="final.controls.startson.status=='INVALID' && inputvalue==true">
+                        Please enter start time
+                    </span>
+                </div>
+                <div class="col-sm"><label>End time</label><br><input class="form-control shadow-none"
+                        type="datetime-local" formControlName="endson">
+                    <span style="color: #a5081a;" *ngIf="final.controls.endson.status=='INVALID' && inputvalue==true">
+                        Please enter end time
+                    </span>
+                </div>
+                <div class="col-sm"><label>Duration in min</label><br><input class="form-control shadow-none"
+                        type="number" min="0" max="500" formControlName="totaltime" placeholder="Enter time in minutes">
+                    <span style="color: #a5081a;"
+                        *ngIf="final.controls.totaltime.status=='INVALID' && inputvalue==true">
+                        Please enter test duration
+                    </span>
+                </div>
+            </div>
+            <br>
+            <div formArrayName="questions" style="width: 70vw;margin-left: 2rem;margin-bottom: 2vw;">
+                <div class="table" *ngFor="let q of controls; index as i">
+                    <div [formGroupName]="i"><br>
+                        <div style="display: flex;text-align: center;">
+                            <span style="display: flex;">{{i+1}}.</span>
+
+
+                            <angular-editor id="editor1" formControlName="questionis" [config]="config2"
+                                placeholder='ENTER QUESTION'>
+                            </angular-editor>
+
+                        </div>
+                        <span style="color: #a5081a;"
+                            *ngIf="final.value.questions[i].questionis=='' && inputvalue==true">
+                            Please type question
+                        </span>
+                        <!-- <div class="row" style="width: 90%;">
+                            <div class="col" style="margin-left: 3vw">
+                                <label>Input one</label>
+                                <input formControlName="inputone" class="form-control shadow-none"
+                                    [ngClass]="final.value.questions[i].inputone=='' && inputvalue==true ? 'form-control  shadow-none invalidstyle' : 'form-control  shadow-none'"
+                                    placeholder="Enter first test case input " />
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].inputone=='' && inputvalue==true">
+                                    please fill this field
+                                </span><br>
+                                <label>Input two</label>
+                                <input formControlName="inputtwo" class="form-control shadow-none"
+                                    [ngClass]="final.value.questions[i].inputtwo=='' && inputvalue==true ? 'form-control  shadow-none invalidstyle' : 'form-control  shadow-none'"
+                                    placeholder="Enter second test case input" />
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].inputtwo=='' && inputvalue==true">
+                                    please fill this field
+                                </span><br>
+                                <label>Input three</label>
+                                <input formControlName="inputthr" class="form-control shadow-none"
+                                    [ngClass]="final.value.questions[i].inputthr=='' && inputvalue==true ? 'form-control  shadow-none invalidstyle' : 'form-control  shadow-none'"
+                                    placeholder="Enter third test case input" />
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].inputthr=='' && inputvalue==true">
+                                    please fill this field
+                                </span><br>
+                            </div>
+                            <div class="col">
+                                <label>Output one</label>
+                                <textarea formControlName="outputone" class="form-control shadow-none"
+                                    [ngClass]="final.value.questions[i].outputone=='' && inputvalue==true ? 'form-control  shadow-none invalidstyle' : 'form-control  shadow-none'"
+                                    placeholder="Enter first test case output"></textarea>
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].outputone=='' && inputvalue==true">
+                                    please fill this field
+                                </span><br>
+                                <label>Output two</label>
+                                <textarea formControlName="outputtwo" class="form-control shadow-none"
+                                    [ngClass]="final.value.questions[i].outputtwo=='' && inputvalue==true ? 'form-control  shadow-none invalidstyle' : 'form-control  shadow-none'"
+                                    placeholder="Enter second test case output"></textarea>
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].outputtwo=='' && inputvalue==true">
+                                    please fill this field
+                                </span><br>
+                                <label>Output three</label>
+                                <textarea formControlName="outputthr" class="form-control shadow-none"
+                                    [ngClass]="final.value.questions[i].outputthr=='' && inputvalue==true ? 'form-control  shadow-none invalidstyle' : 'form-control  shadow-none'"
+                                    placeholder="Enter third test case output"></textarea><span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].outputthr=='' && inputvalue==true">
+                                    please fill this field
+                                </span><br>
+                            </div>
+                        </div> -->
+
+
+                        <div formArrayName="testcases">
+
+                            <div *ngFor="let t of getestcases(i).controls;index as ti">
+
+                                <div [formGroupName]="ti" class="row" style="margin-left: 1vw">
+                                    <div formArrayName="input" class="col-sm">
+                                        <label>Test case input {{ti+1}}</label>
+                                        <span *ngFor="let it of getparameter(i,ti).controls;index as itv">
+
+                                            <span [formGroupName]="itv" style="display: flex;">
+
+                                                <input class="form-control"
+                                                    placeholder="enter test case input {{ti+1}} , click + to add another parameter"
+                                                    formControlName="invalue" />
+                                                <!-- <span style="color: #a5081a;" *ngIf="final.value.testcases[itv].invalue=='' ">
+                                                        please fill this field
+                                               </span><br> -->
+                                                &nbsp;
+
+                                                <button class="btn btn-primary shadow-none" type="button"
+                                                    style="background-color: #00B0FF;"
+                                                    (click)="addparameter(i,ti,'param')"><i class='bx bx-plus-circle'
+                                                        style="font-size: 1.2rem;"></i></button>&nbsp;
+                                                <button (click)="removeparmeter(i,ti,itv)" type="button"
+                                                    *ngIf="getparameter(i,ti).length!=1" class="btn btn-danger"
+                                                    style="float: right;"><i class='bx bxs-message-alt-x'
+                                                        style="font-size: 1.2rem;"></i></button>
+
+                                            </span><br>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm"><label>Test case output {{ti+1}}</label><textarea
+                                            class="form-control" placeholder="enter test case output {{ti+1}}"
+                                            formControlName="output"></textarea>
+
+
+                                    </div>
+                                    <div class="col-sm-2"><br>
+                                        <button *ngIf="getestcases(i).length!=1" type="button"
+                                            class="btn btn-danger  box2" style="float: right;"
+                                            (click)="removetestcase(i,ti)"><i style="font-size: 1rem;"
+                                                class='bx bxs-message-alt-x'></i>
+                                            testcase</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <br>
+                        <button style="margin-left: 2vw;background-color:  #00B0FF;" class="btn btn-primary"
+                            type="button" (click)="addtestcase(i)"> Add testcase</button>
+
+
+
+
+                        <button *ngIf="controls.length!=1" class="btn btn-danger  box2" style="float: right;"
+                            type="button" (click)="deletequestion(i)"><i class='bx bxs-message-alt-x'></i>
+                            Question</button><br><br>
+                    </div>
+                </div>
+                <button style="float: right;background-color: #00B0FF" class="btn btn-primary" (click)="addquestion()"
+                    type="button"><i class='bx bx-plus-circle' style="font-size: 1rem;"></i> Question</button>
+            </div><br><br>
+            <button type="submit" class="btn btn-secondary" id="but">Submit</button>&nbsp;&nbsp;
+            <button routerLink="/admin/code" style="background-color:#a5081a" type="button" class="btn btn-danger"
+                style="width: 10rem;">Close</button><br><br>
+        </form>
+        <div *ngIf="display" [ngClass]="{'view':display}">
+            <h4>
+                &nbsp;{{popup}}
+
+            </h4>
+        </div>
+    </div>

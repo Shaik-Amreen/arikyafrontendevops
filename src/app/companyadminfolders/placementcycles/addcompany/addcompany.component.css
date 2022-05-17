@@ -1,0 +1,44 @@
+.addform{
+    margin: 2rem;
+    margin-top: 1rem;
+    padding: 4rem;
+    color: #1b1c1e;
+    font-size: 0.8rem;
+    background-color: #fff;
+    height: 85vh;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+}
+input,select{
+    font-size: 0.8rem;
+}
+.under{
+    margin-left: 2rem;
+}
+
+button,input{
+    font-size: 0.8rem;
+}
+  #but
+  {
+    background-color: #1b1c1e !important;
+    width: 10rem;
+  }
+  button{
+      font-weight: 600;
+  }
+  .imag{
+    width:170px;
+    height:170px;
+    border-radius: 50%;
+    align-items: center;
+    justify-items: center;
+    margin-left: 40%;
+    cursor: pointer;
+    /* border: solid 2px white; */
+    box-shadow: 0px 0px 10px 2px rgb(122, 114, 114);
+}
+  .invalidstyle
+  {
+      /*background-color: rgb(238, 51, 51); */
+      border-color:rgb(235, 83, 83);
+  }

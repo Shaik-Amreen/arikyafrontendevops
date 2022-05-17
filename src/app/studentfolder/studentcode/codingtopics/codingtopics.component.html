@@ -1,0 +1,197 @@
+<!-- <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+<script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script> -->
+
+
+<div class="layout">
+
+    <div class="row" style="padding: 1vw;" *ngIf="topics[0]!=0 && topics.length>0">
+        <h5 style="color: #1b1c1e;"><strong>CODING TOPICS</strong>
+            <div
+                style="background-color: #fff;border-radius: 7px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;display: flex;justify-content: center;align-items: center;float: right;width: 20vw;">
+                <input [(ngModel)]="searchtopic" type="text" name="searchtopic" class="form-control shadow-none"
+                    placeholder="start typing topic name"
+                    style="border: none;background-color: #fff;font-size: 0.8rem;" />
+                <i class="bx bx-search" style="font-size: 1rem;font-weight: 600"></i>&nbsp;
+
+            </div>
+        </h5>
+        <div class="row">
+
+            <div class="col-sm-6" style="height: 90vh;">
+                <br /><br /><br />
+                <div echarts [options]="quizoption"></div>
+            </div>
+            <div class="col-sm-6 table-responsive" style="height: 86vh;">
+                <span *ngFor="let a of topics ;index as i">
+                    <div *ngIf="a.topic.includes(searchtopic) || searchtopic==''"
+                        style="cursor: pointer;background-color: #fff;padding:1rem;margin: 0.5rem;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border-radius: 7px;"
+                        (click)="(!viewRating[i])?top(a):viewcoding(a)">
+                        <strong style="font-size: 1.1rem;color: #3f4043;margin: 1rem;margin-left: 0rem;"><span
+                                *ngIf="!viewRating[i]">ATTEMPT</span>
+                            {{a.topic | uppercase}}</strong>
+
+                        <span style="color: grey;font-size: 0.7rem;float:'right'" *ngIf="viewRating[i]">Click to view
+                            solutions
+                            .</span>
+                        <span style="color: grey;font-size: 0.7rem;float: right;" *ngIf="!viewRating[i]">Click to start
+                            test
+                            .</span>
+
+
+                        <br><br>
+                        <div *ngIf="viewRating[i]=='notattempted' else attempted">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <img src="assets/noexam.gif" style="height:100px ;" />
+                                </div>
+                                <div class="col-sm" style="padding-top: 1rem;margin-left: 1rem;"><strong
+                                        style="color:#424346;font-size: 1.2rem;">You
+                                        didn't attempt the test.
+                                    </strong><br>
+                                    <span style="color: grey;font-size: 0.8rem;">Make sure not to skip the tests</span>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #attempted>
+                            <div *ngIf="!viewRating[i]">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <img src="assets/best.gif" style="height:100px ;" />
+
+
+                                    </div>
+                                    <div class="col-sm" style="padding-top: 1rem;margin-left: 1rem;"><strong
+                                            style="color:skyblue;font-size: 1.2rem;">Good
+                                            luck
+                                            .</strong><br>
+
+
+                                    </div>
+                                </div>
+                                <br>
+                                <span style="color: grey;font-size: 0.7rem;">Click to start test .
+                                </span>
+                            </div>
+                            <div *ngIf="viewRating[i]">
+                                <div class="row" *ngIf="currentValue[i] > 41 && currentValue[i] &lt; 71">
+                                    <div class="col-sm-3"><img src="assets/average.gif" style="height:100px ;" />
+                                    </div>
+                                    <div class="col-sm" style="padding-top: 1rem;margin-left: 1rem;"><strong
+                                            style="color:gold;font-size: 1.2rem;">Could
+                                            be
+                                            better
+                                            .</strong><br>
+                                        <span style="color: grey;font-size: 0.8rem;">You have scored <span
+                                                style="font-size: 0.9rem;font-weight: 600;">{{currentValue[i]}}
+                                                %</span></span>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="currentValue[i] &lt; 40  && currentValue[i]&gt;-1">
+                                    <div class="col-sm-3">
+                                        <img src="assets/sad.gif" style="height:100px ;" />
+                                    </div>
+                                    <div class="col-sm" style="padding-top: 1rem;margin-left: 1rem;"><strong
+                                            style="color:#a5081a;font-size: 1.2rem;">Work
+                                            smart
+                                            .</strong><br>
+                                        <span style="color: grey;font-size: 0.8rem;">You have scored <span
+                                                style="font-size: 0.9rem;font-weight: 600;">{{currentValue[i]}}
+                                                %</span></span>
+                                    </div>
+                                </div>
+
+                                <div class="row" *ngIf="currentValue[i] > 69">
+                                    <div class="col-sm-3"><img src="assets/super.gif" style="height:100px ;" />
+                                    </div>
+                                    <div class="col-sm" style="padding-top: 1rem;margin-left: 1rem;"><strong
+                                            style="color:rgb(41, 209, 41);font-size: 1.2rem;">Congratulations
+                                            !</strong><br>
+                                        <span style="color: grey;font-size: 0.8rem;">You have scored <span
+                                                style="font-size: 0.9rem;font-weight: 600;">{{currentValue[i]}}
+                                                %</span></span>
+                                    </div>
+                                </div><br>
+
+                            </div>
+                        </ng-template>
+
+
+                        <!-- <button id="c" class="row" (click)="top(a.topic)"
+          *ngIf="topics[0]!=0 && topics.length>0">
+          <strong class="col-9"><span *ngIf="!viewRating[i]">ATTEMPT</span> {{a.topic | uppercase}}
+          </strong>
+          <span *ngIf="viewRating[i]" class="progress"
+            style="background-color: rgb(208, 204, 204);border-radius: 30px;padding: 0%; box-shadow: 0px 0px 10px 2px rgb(122, 114, 114);"
+            class="col">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" id="in" role="progressbar"
+            [ngStyle]="{ width: currentValue[i]}" aria-valuenow="currentValue[i]" aria-valuemin="0" aria-valuemax="100">
+              {{currentValue[i]}}
+            </div>
+          </span>
+        </button><br> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </span>
+
+            </div>
+        </div>
+        <!-- <div *ngFor="let a of topics ;index as i" >
+        <button  id="c" class="row" (click)="top(a.topic)" [disabled]="viewRating[i]" *ngIf="topics.length>0 && topics[0]!=0">
+            <strong class="col-9" ><span *ngIf="!viewRating[i]">ATTEMPT</span> {{a.topic | uppercase}} 
+            </strong>
+         <span *ngIf="viewRating[i]" class="progress" style="background-color: rgb(201, 83, 83);border-radius: 30px;padding: 0%;" class="col">
+                <span class="progress-bar" id="in" role="progressbar" [ngStyle]="{ width: currentValue[i]}" aria-valuenow="currentValue[i]" aria-valuemin="0" aria-valuemax="100">{{currentValue[i]}}</span>
+         </span>
+        </button><br>
+    </div>                      
+                                                                                                        -->
+
+        <div *ngIf="displaypopup" [ngClass]="{'view':displaypopup}">
+            <span style="font-size: 1rem;">
+                <strong><span style="font-size: 1.2rem;" *ngIf="!codesubmit"><i class='bx bx-error'></i></span>{{popup}}
+                    <div class="btn" *ngIf="codesubmit"><i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i></div>
+                </strong>
+            </span>
+        </div>
+    </div>
+
+
+    <!-- 
+<div class="modal-body">
+    Please don't exit the full screen while attempting the Test, which terminates your test.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Continue to test</button> -->
+
+
+    <div *ngIf="topics.length==0">
+        <div style="display: flex;justify-content: center;align-items: center;height: 100vh;background-color: #f4f7fb;">
+            <div style="text-align: center;">
+                <img src="assets/search.gif" style="max-height:300px"><br>
+                <h5><strong>Sorry ! we could not find any results .</strong></h5>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="topics[0]==0">
+        <h5>
+            <div
+                style="display: flex;justify-content: center;align-items: center;height: 100vh;background-color: #f4f7fb;">
+                <div style="text-align: center;">
+                    <img src="../../../assets/loading.gif"><br>
+
+                </div>
+            </div>
+        </h5>
+    </div>

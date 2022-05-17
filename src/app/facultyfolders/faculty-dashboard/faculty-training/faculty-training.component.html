@@ -1,0 +1,77 @@
+<!-- <div *ngIf="lenexist!=0 else nosearch">
+    <div style="display: flex;" *ngIf="viewdata.length==0 else vw">
+        <div><br><br>
+            <h5>CODING</h5>
+            <ul class="chart">
+
+                <li *ngFor="let c of codedata.message">
+
+                    <span (click)="view('code',c.type)"
+                        title='{{c.rating}} {{c.type}} , Attendees : {{c.attended!=null?c.attended:0}}' class={{c.type}}
+                        style="text-align: center;" [ngStyle]="{'height': c.rating}" id={{c.type}}>
+                        <strong style="font-size: 12px;" *ngIf="c.rating!='0%'">{{c.rating}}</strong>
+                    </span>
+                </li>
+
+            </ul><br><br> <br>
+
+            <h5>QUIZ</h5>
+            <ul class="chart">
+                <li *ngFor="let c of data.message">
+                    <span (click)="view('quiz',c.type)"
+                        title='{{c.rating}} {{c.type}} , Attendees : {{c.attended!=null?c.attended:0}}' class={{c.type}}
+                        style="text-align: center;" [ngStyle]="{'height': c.rating}" id={{c.type}}>
+                        <strong style="font-size: 12px;" *ngIf="c.rating!='0%'">{{c.rating}} </strong>
+                    </span>
+                </li>
+            </ul><br><br> <br>
+
+            <h5>OVERALL RATING</h5>
+            <ul class="chart">
+
+                <li *ngFor="let c of totaldata.message">
+                    <span (click)="view('overall',c.type)"
+                        title='{{c.rating}} {{c.type}} , Attendees : {{totaldata.data[c.type].length}}' class={{c.type}}
+                        style="text-align: center;" [ngStyle]="{'height': c.rating}" id={{c.type}}>
+                        <strong style="font-size: 12px;" *ngIf="c.rating!='0%'">{{c.rating}} </strong>
+                    </span>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <ng-template #vw>
+        <br><br>
+        <span style="float: right;">
+            <button class="btn" style="background-color: #00b0ff;color: white;"
+                (click)="exportexcel()">Download</button>
+            &nbsp;&nbsp;
+            <button class="btn btn-danger" (click)="viewdata=[]" style="margin-right: 2vw;">CLOSE</button>
+        </span>
+
+        <table class="table text-center" style="width: 80vw;color: gray;" id="excel-table">
+
+            <tr style="border-bottom:1px solid gray">
+                <th style="padding: 1%;">Roll number</th>
+                <th>Department</th>
+                <th>Rating</th>
+            </tr>
+            <tr style="border-bottom:1px solid gray" *ngFor="let c of viewdata">
+                <td style="padding: 1%;">{{c.roll}}</td>
+                <td>{{dept}}</td>
+                <td>{{c.rate}}</td>
+            </tr>
+        </table>
+    </ng-template>
+
+</div>
+
+<ng-template #nosearch>
+    <br><br>
+    <img style="padding-left: 15%;" src="../../../../assets/search.webp">
+</ng-template> -->
+<br />
+<div *ngFor="let c of optionsdata">
+    <div echarts [options]="c"></div>
+</div>

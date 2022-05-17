@@ -1,0 +1,109 @@
+<div style="max-height: 97vh;" class="table-responsive">
+    <div *ngIf="overdata!=[] else nodat">
+        <br><br>
+        <h5 style="color: #1b1c1e;margin-left: 1rem;"><strong>EDIT PROFILE .</strong></h5>
+        <form [formGroup]="studentForm" (ngSubmit)="save()">
+            <div *ngFor="let k of studentform">
+                <span *ngIf="k.tags=='input'">
+                    <strong>{{k.label}}</strong><br>
+                    <input class="form-control shadow-none"
+                        [ngClass]="studentForm.controls[k.formname].status=='INVALID' && studentformvalue==true ? 'form-control shadow-none invalidstyle' : 'form-control shadow-none'"
+                        id="{{k.formname}}" formControlName="{{k.formname}}" placeholder={{k.placeholder}}
+                        type={{k.type}} />
+                    <!-- <span style="color: #a5081a;"
+                        *ngIf="studentForm.controls[k.formname].status=='INVALID' && studentformvalue==true">
+                        please fill this field
+                    </span><br> -->
+                </span>
+
+                <span *ngIf="k.tags=='select'">
+                    <strong>{{k.label}}</strong><br>
+                    <select class="form-select"
+                        [ngClass]="studentForm.controls[k.formname].status=='INVALID' && studentformvalue==true ? 'form-select invalidstyle' : 'form-select'"
+                        id="{{k.formname}}" formControlName="{{k.formname}}">
+                        <option value="" selected disabled>please select</option>
+                        <option value="{{i.value}}" *ngFor="let i of k.options">{{i.label}}</option>
+                    </select>
+                    <span style="color: #a5081a;"
+                        *ngIf="studentForm.controls[k.formname].status=='INVALID' && studentformvalue==true">
+                        please fill this field
+                    </span><br>
+                </span>
+                <span class="row" *ngIf="k.tags=='combine'">
+                    <span class="{{k.cname}}" *ngFor="let c of k.fields">
+                        <span *ngIf="c.tags=='input' ">
+                            <strong>{{c.label}}</strong><br>
+                            <input class="form-control shadow-none"
+                                [ngClass]="studentForm.controls[c.formname].status=='INVALID' && studentformvalue==true ? 'form-control shadow-none invalidstyle' : 'form-control shadow-none'"
+                                id="{{c.formname}}" formControlName="{{c.formname}}" placeholder={{c.placeholder}}
+                                type={{c.type}} />
+                            <!-- <span style="color: #a5081a;"
+                                *ngIf="studentForm.controls[c.formname].status=='INVALID' && studentformvalue==true">
+                                please fill this field
+                            </span><br> -->
+                            <span style="color: #a5081a;"
+                                *ngIf="studentForm.controls[c.formname].errors && studentformvalue==true">
+                                <span *ngIf="studentForm.controls[c.formname].errors?.required">
+                                    please fill this field
+                                </span>
+                                <span *ngIf="studentForm.controls[c.formname].errors?.pattern">
+                                    {{c.patternerror}}
+                                </span>
+                                <span *ngIf="studentForm.controls[c.formname].errors?.min">
+                                    {{c.patternerror}}
+                                </span>
+                                <span *ngIf="studentForm.controls[c.formname].errors?.max">
+                                    {{c.patternerror}}
+                                </span>
+                                <span *ngIf="studentForm.controls[c.formname].errors?.minlength">
+                                    {{c.label | lowercase}} must must be greater than of length
+                                    {{studentForm.controls[c.formname].errors?.minlength.requiredLength}}
+                                </span>
+                                <span *ngIf="studentForm.controls[c.formname].errors?.maxlength">
+                                    {{c.label | lowercase}} must must not be with greater than of length
+                                    {{studentForm.controls[c.formname].errors?.maxlength.requiredLength}}
+                                </span>
+                            </span><br>
+                        </span>
+                        <span *ngIf="c.tags=='select'">
+                            <strong>{{c.label}}</strong><br>
+                            <select class="form-select"
+                                [ngClass]="studentForm.controls[c.formname].status=='INVALID' && studentformvalue==true ? 'form-select invalidstyle' : 'form-select'"
+                                id="{{c.formname}}" formControlName="{{c.formname}}">
+                                <option value="" selected disabled>please select</option>
+                                <option value="{{i.value}}" *ngFor="let i of c.options">{{i.label}}</option>
+                            </select>
+                            <span style="color: #a5081a;"
+                                *ngIf="studentForm.controls[c.formname].status=='INVALID' && studentformvalue==true">
+                                Please select this field
+                            </span><br>
+                        </span>
+                    </span><br>
+                </span>
+                <span *ngIf="k.type=='display'">
+                    <br> <strong style="font-size: 1rem;">{{k.label}}<br></strong><br>
+                </span>
+            </div>
+            <br> <button class="btn btn-primary" type="submit">Save</button>&nbsp;&nbsp;
+            <button class="btn btn-danger" type="button" routerLink="/student/studenthome">Close</button>
+        </form>
+    </div>
+    <ng-template #nodat>
+        <div style="display: flex;justify-content: center;align-items: center;height: 95vh;">
+            <div style="text-align: center;">
+                <img src="../../../assets/loading.gif"><br>
+
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+<div *ngIf="display" [ngClass]="{'view':display}">
+    <strong style="font-size: 1.2rem;">
+        <span style="font-size: 1.3rem;color: #ffff;">
+            <i class="fa fa-warning"></i>
+        </span>&nbsp;
+        &nbsp;{{popup}}
+        <!-- <div class="btn btn1"><i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i></div> -->
+    </strong>
+</div>

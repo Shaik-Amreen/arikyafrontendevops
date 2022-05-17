@@ -1,0 +1,296 @@
+<div class="row" style="margin: 0.5rem;">
+  <div class="col-3" style="justify-content: center;align-items: center;">
+
+    <strong style="font-size:1.2rem ;color: #00B0FF;cursor: pointer;"><br /><i routerLink="/student/quiz"
+        class='bx bx-arrow-back'></i> QUIZ DETAILS</strong>
+
+    <br /><br />
+    <div class="col card border-none" style="padding:1rem;border: none;color:#fff;
+    background: rgb(27,28,30);
+background: linear-gradient(117deg, rgba(27,28,30,1) 0%,  rgb(93, 191, 237) 100%);
+   ">
+      <h5> <i class='bx bx-detail'></i> <strong> TEST DETAILS </strong></h5>
+
+      <div style="margin-left: 1.5rem;">
+        <span style="font-size: 1rem;"> <strong>{{quizdetails.topic | uppercase}}</strong> </span><br />
+        <span style="font-size: 0.8rem;">Questions _ <strong>{{quizdata.length}}</strong> </span><br />
+        <span style="font-size: 0.8rem;">Duration _ <strong>{{quizdetails.totaltime}} min</strong></span><br />
+        <span style="font-size: 0.8rem;">Total marks _ <strong>{{quizdetails.totalmarks}}</strong></span><br />
+      </div>
+    </div>
+    <br />
+    <div class="col card" style="color:#fff;
+   background: rgb(27,28,30);
+background: linear-gradient(117deg, rgba(27,28,30,1) 21%, rgba(245,245,245,1) 100%);border: none;padding: 1rem;">
+      <h5> <i class='bx bxs-bookmarks'></i> <strong> SCORE BOARD </strong></h5>
+      <div style="margin-left: 1.5rem;">
+        <span style="font-size: 0.8rem;">Scored percentage <strong style="font-size: 1rem;">{{score.main.toFixed(2)}}
+            %</strong> </span><br />
+        <span style="font-size: 0.8rem;">Scored marks _ <strong>{{score.marks}}</strong> </span><br />
+        <span style="font-size: 0.8rem;">Rank _ <strong>{{score.rank}} </strong></span><br />
+        <span style="font-size: 0.8rem;">Tab swaps _ <strong>{{score.tabcount}}</strong></span><br />
+      </div>
+
+    </div>
+
+
+    <br />
+
+
+    <div class="col card" style="color: #fff;
+    
+    background: rgb(27,28,30);
+background: linear-gradient(117deg, rgba(27,28,30,1) 0%,  rgb(93, 191, 237) 100%);
+    border: none;padding: 1rem;">
+
+      <h5> <i class='bx bxs-time'></i> <strong> TIME MANAGED </strong></h5>
+
+      <div style="margin-left: 1.5rem; font-size: 0.8rem;">
+        <div style="margin-top: 0.2rem;">Test started on <strong> {{startdate}} {{starttime }}</strong> </div>
+        <div style="margin-top: 0.2rem;"> And ended on <strong> {{enddate}} {{endtime}}</strong></div>
+        <div style="margin-top: 0.2rem;"> Time consumed _ <strong>{{score.timeconsumed.toFixed(2)}} min </strong></div>
+        <div style="margin-top: 0.2rem;"> Time remained _ <strong>{{score.timeremained}}</strong> min </div>
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+
+  <div class="col-sm table-responsive" style="max-height: 95vh;"><br />
+    <div *ngFor="let each of quizdata;index as i">
+      <div
+        style="background-color: #fff;border-radius: 10px;padding: 1rem;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+        &nbsp;
+        <span style="pointer-events: none;">
+          <strong style="color:#1b1c1e"> Question {{i+1}}</strong>
+          <br /><br />
+          <div style="margin-left: 1rem;" [innerHTML]="each[0].questionis"></div>
+          <!-- <angular-editor [config]="editorConfig" [ngModel]="each[0].questionis">
+          </angular-editor> -->
+          <!-- <angular-editor style="pointer-events: none;" [config]="config2" ></angular-editor> -->
+        </span><br>
+        <!-- {{each[0]['answeredoption']}} -->
+        <!-- this is updated one changhe the remaininh 3 -->
+        <div style="margin-left: 1rem;font-size: 0.8rem">
+
+          <label
+            [ngClass]="each[0].correct=='option1' ? 'card correct':(each[0].answeredoption=='option1' ? 'card wrong':'card')">
+
+            <div>
+              &nbsp;{{each[0].option1}}
+              <span style="float: right;" *ngIf="each[0].correct=='option1'">
+                <span *ngIf="each[0]['answeredoption']=='option1'">Your Answer</span>
+                <span *ngIf="each[0]['answeredoption']!='option1'">Correct Answer</span>
+              </span>
+              <span style="float: right;" *ngIf="each[0].correct!='option1'">
+                <span *ngIf="each[0]['answeredoption']=='option1'">Wrong Answer</span>
+              </span>
+            </div>
+
+          </label>
+
+          <br>
+
+          <label
+            [ngClass]="each[0].correct=='option2' ? 'card correct':(each[0].answeredoption=='option2' ? 'card wrong':'card')">
+            <div>
+              &nbsp;{{each[0].option2}}
+              <span style="float: right;" *ngIf="each[0].correct=='option2'">
+                <span *ngIf="each[0]['answeredoption']=='option2'">Your Answer</span>
+                <span *ngIf="each[0]['answeredoption']!='option2'">Correct Answer</span>
+              </span>
+              <span style="float: right;" *ngIf="each[0].correct!='option2'">
+                <span *ngIf="each[0]['answeredoption']=='option2'">Wrong Answer</span>
+              </span>
+            </div>
+          </label>
+
+          <br />
+
+          <label
+            [ngClass]="each[0].correct=='option3' ? 'card correct':(each[0].answeredoption=='option3' ? 'card wrong':'card')">
+            <div>
+              &nbsp;{{each[0].option3}}
+              <span style="float: right;" *ngIf="each[0].correct=='option3'">
+                <span *ngIf="each[0]['answeredoption']=='option3'">Your Answer</span>
+                <span *ngIf="each[0]['answeredoption']!='option3'">Correct Answer</span>
+              </span>
+              <span style="float: right;" *ngIf="each[0].correct!='option3'">
+                <span *ngIf="each[0]['answeredoption']=='option3'">Wrong Answer</span>
+              </span>
+            </div>
+          </label>
+
+          <br />
+
+          <label
+            [ngClass]="each[0].correct=='option4' ? 'card correct':(each[0].answeredoption=='option4' ? 'card wrong':'card')">
+            <div>
+              &nbsp;{{each[0].option4}}
+              <span style="float: right;" *ngIf="each[0].correct=='option4'">
+                <span *ngIf="each[0]['answeredoption']=='option4'">Your Answer</span>
+                <span *ngIf="each[0]['answeredoption']!='option4'">Correct Answer</span>
+              </span>
+              <span style="float: right;" *ngIf="each[0].correct!='option4' && each[0]['answeredoption']=='option4'">
+                Wrong Answer
+              </span>
+            </div>
+          </label>
+
+          <br /><br />
+          <span style=" pointer-events: none;">
+            <strong style="color: #00B0FF;">EXPLAINATION </strong> &nbsp;
+            <!-- <span style="size: 20px;">{{each[0].explanation}}</span> -->
+            <!-- <angular-editor [config]="editorConfig" [ngModel]="each[0].explanation">
+            </angular-editor> -->
+            <br /><br />
+            <div [innerHTML]="each[0].explanation"></div>
+          </span><br><br>
+        </div>
+      </div>
+      <br />
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<!-- 
+<div class="col-8 container table-responsive" style="max-height: 91vh;">
+  <div class="col" *ngFor="let each of quizdata;index as i"
+    style="background-color: #fff;padding:1rem;margin: 0.3rem;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border-radius: 3px;">
+    &nbsp;
+    <label>
+      <div style="display: flex;align-items: center;">
+        <span style="color: #00b0ff;">
+          <strong style="display: flex;">Q{{i+1}} . &nbsp;
+            <angular-editor [config]="editorConfig" [ngModel]="each[0].questionis">
+            </angular-editor><br>
+          </strong>
+        </span>
+      </div>
+    </label>
+    <br>
+    <br>
+ <span style="display: flex;align-items: center;"
+      [ngClass]="{'correct':each[0].correct=='option1', 'wrong':each[0].correct!='option1'&&each[0].answeredoption=='option1','optionstyle':each[0].correct!='option1'&&each[0].answeredoption!='option1'}">
+          <div class="option">
+        <span *ngIf="each[0].correct==='option1'" class="crt">
+          <i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i>
+        </span>
+        <div *ngIf="each[0].correct!='option1' && each[0].answeredoption=='option1'">
+          <span class="wrg">
+            <i class="fa fa-times"></i>
+          </span>
+        </div>
+      </div>
+         <span style="padding-left: 0.5vw;">
+        {{each[0].option1}}
+      </span>
+
+      <div style="color: white;margin-left: auto" *ngIf="each[0].answeredoption=='option1'">
+        your answer
+      </div>
+      <div style="color: white;margin-left: auto"
+        *ngIf="each[0].correct==='option1'&&each[0].answeredoption!='option1'">
+        correct answer
+      </div>
+
+    </span>
+    <br>
+    <span style="display: flex;align-items: center;"
+      [ngClass]="{'correct':each[0].correct=='option2', 'wrong':each[0].correct!='option2'&&each[0].answeredoption=='option2','optionstyle':each[0].correct!='option2'&&each[0].answeredoption!='option2'}">
+
+    
+      <div class="option">
+        <span *ngIf="each[0].correct==='option2'" class="crt">
+          <i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i>
+        </span>
+        <span *ngIf="each[0].correct!='option2' && each[0].answeredoption=='option2'" class="wrg">
+          <i class="fa fa-times"></i>
+        </span>
+      </div>
+      <span style="padding-left: 0.5vw;">
+        {{each[0].option2}}
+      </span>
+      <div style="color: white;margin-left: auto" *ngIf="each[0].answeredoption=='option2'">
+        your answer
+      </div>
+      <div style="color: white;margin-left: auto"
+        *ngIf="each[0].correct==='option2'&&each[0].answeredoption!='option2'">
+        correct answer
+      </div>
+      </span>
+    <br>
+    <span style="display: flex;align-items: center;"
+      [ngClass]="{'correct':each[0].correct=='option3', 'wrong':each[0].correct!='option3'&&each[0].answeredoption=='option3','optionstyle':each[0].correct!='option3'&&each[0].answeredoption!='option3'}">
+
+    
+      <div class="option">
+        <span *ngIf="each[0].correct==='option3'" class="crt">
+          <i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i>
+        </span>
+        <span *ngIf="each[0].correct!='option3' && each[0].answeredoption=='option3'" class="wrg">
+          <i class="fa fa-times"></i>
+        </span>
+      </div>
+      <span style="padding-left: 0.5vw;">
+        {{each[0].option3}}
+      </span>
+      <div style="color: white;margin-left: auto" *ngIf="each[0].answeredoption=='option3'">
+        your answer
+      </div>
+      <div style="color: white;margin-left: auto"
+        *ngIf="each[0].correct==='option3'&&each[0].answeredoption!='option3'">
+        correct answer
+      </div>
+
+    </span><br>
+    <span style="display: flex;align-items: center;"
+      [ngClass]="{'correct':each[0].correct=='option4', 'wrong':each[0].correct!='option4'&&each[0].answeredoption=='option4','optionstyle':each[0].correct!='option4'&&each[0].answeredoption!='option4'}">
+
+       <div class="option">
+        <span *ngIf="each[0].correct==='option4'" class="crt">
+          <i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i>
+        </span>
+        <span *ngIf="each[0].correct!='option4' && each[0].answeredoption=='option4'" class="wrg">
+          <i class="fa fa-times"></i>
+        </span>
+      </div>
+
+     
+      <span style="padding-left: 0.5vw;">
+        {{each[0].option4}}
+      </span>
+      <div style="color: white;margin-left: auto" *ngIf="each[0].answeredoption=='option4'">
+        your answer
+      </div>
+      <div style="color: white;margin-left: auto"
+        *ngIf="each[0].correct==='option4'&&each[0].answeredoption!='option4'">
+        correct answer
+      </div>
+    </span>
+    <br>
+    <span style="color: #00b0ff;">
+         <strong>Explanation :</strong>
+      <angular-editor [config]="editorConfig" [ngModel]="each[0].explanation">
+      </angular-editor><br>
+    </span>
+    <div style="margin-left: auto;">
+      Status :
+      <span *ngIf="each[0].answeredoption==''">
+        not attempted
+      </span>
+      <span *ngIf="each[0].answeredoption!=''">
+        attempted
+      </span>
+
+    </div>
+  </div>
+</div><br><br><br><br> <br><br> -->

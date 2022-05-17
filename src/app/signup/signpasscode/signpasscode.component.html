@@ -1,0 +1,166 @@
+<div>
+    <h1 style="font-family: 'Poppins', sans-serif;">Recieved passcode !</h1>
+    <span id="subtext">To keep connected with us please enter<br> your personal info . </span>
+    <form (ngSubmit)="signIn()" [formGroup]="signUpForm">
+        <span style="color: #a5081a;" *ngIf="errmsg"><br><strong>{{errmsg}}</strong></span>
+        <span *ngFor="let k of modedata">
+            <span *ngIf="k.tags=='input'"><br />
+                <strong>{{k.label}}</strong>
+                <div
+                    style="display: flex;background-color: #fff;border-radius: 4px;padding: 0rem 0.5rem;border: 0.2px solid rgb(209, 209, 209);">
+                    <i style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{k.icon}}'></i>
+
+                    <input [readOnly]="k.formname=='mail'" class="form-control  shadow-none"
+                        style="border: none;background-color: #fff;" pattern={{k.pattern}}
+                        [ngClass]="signUpForm.controls[k.formname].status=='INVALID' && formvalue==true ? 'form-control  shadow-none invalidstyle' : 'form-control  shadow-none'"
+                        formControlName="{{k.formname}}" placeholder={{k.placeholder}} type={{k.type}}>
+                    <!-- <span *ngIf="k.type=='password'">
+                            <span *ngIf="!temp" (click)="temp=!temp"><i  style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{k.icon1}}'></i></span>
+				            <span *ngIf="temp" (click)="temp=!temp"><i  style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{k.icon2}}'></i></span>
+                        </span>  -->
+                    <!-- <span *ngIf="k.type=='password' && k.formname=='confirmpassword'">
+                            <span *ngIf="!temp" (click)="temp1=!temp1"><i  style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{k.icon1}}'></i></span>
+				            <span *ngIf="temp" (click)="temp1=!temp1"><i  style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{k.icon2}}'></i></span>
+                        </span>  -->
+                </div>
+                <span style="color: #a5081a;size:0.5rem"
+                    *ngIf="signUpForm.controls[k.formname].errors  && formvalue==true">
+
+                    <span *ngIf="signUpForm.controls[k.formname].errors?.required">
+                        please fill this field
+                    </span>
+                    <span *ngIf="signUpForm.controls[k.formname].errors?.pattern">
+                        {{k.patternerror}}
+                    </span>
+                    <span
+                        *ngIf="signUpForm.controls[k.formname].errors?.minlength && !signUpForm.controls[k.formname].errors?.pattern">
+                        {{k.formname}} must be greater than
+                        {{signUpForm.controls[k.formname].errors?.minlength.requiredLength}} length
+                    </span>
+                    <span
+                        *ngIf="signUpForm.controls[k.formname].errors?.maxlength && !signUpForm.controls[k.formname].errors?.pattern">
+                        {{k.formname}} must not be greater than
+                        {{signUpForm.controls[k.formname].errors?.maxlength.requiredLength}} length
+                    </span>
+                </span><br>
+            </span>
+            <div class="row" *ngIf="k.tags=='combine'">
+                <span class="{{k.cname}}" *ngFor="let c of k.fields"><br>
+                    <strong>{{c.label}}</strong>
+                    <div
+                        style="display: flex;background-color: #fff;border-radius: 4px;padding: 0rem 0.5rem;border: 0.2px solid rgb(209, 209, 209);">
+                        <i style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{c.icon}}'></i>
+
+                        <input [readOnly]="c.formname=='mail'" class="form-control  shadow-none"
+                            style="border: none;background-color: #fff;"
+                            [type]='c.type=="password" && c.formname=="password"? (!vepa1? "password" : "text"):(c.type=="password"?(!vepa2? "password" : "text"):null)'
+                            [ngClass]="signUpForm.controls[c.formname].status=='INVALID' && formvalue==true ? 'form-control  shadow-none invalidstyle' : 'form-control  shadow-none'"
+                            formControlName="{{c.formname}}" placeholder={{c.placeholder}}
+                            [type]='(c.formname=="password")? (vepa1? "text" : "password"):(c.formname=="confirmpassword")?((vepa2)?"text":"password"):"text"'>
+
+                        <span *ngIf="c.type=='password'">
+                            <span *ngIf="!vepa1 && c.formname=='password'" (click)="vepa1=!vepa1"><i
+                                    style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{c.icon1}}'></i></span>
+                            <span *ngIf="vepa1 && c.formname=='password'" (click)="vepa1=!vepa1"><i
+                                    style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{c.icon2}}'></i></span>
+
+                            <span *ngIf="!vepa2 && c.formname=='confirmpassword'" (click)="vepa2=!vepa2"><i
+                                    style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{c.icon1}}'></i></span>
+                            <span *ngIf="vepa2 && c.formname=='confirmpassword'" (click)="vepa2=!vepa2"><i
+                                    style="font-size: 1.3rem;margin-top: 0.5rem;" class='{{c.icon2}}'></i></span>
+                        </span>
+
+                    </div>
+                    <span style="color: #a5081a;size:0.5rem"
+                        *ngIf="signUpForm.controls[c.formname].errors && formvalue==true">
+                        <span *ngIf="signUpForm.controls[c.formname].errors?.required">
+                            please fill this field
+                        </span>
+                        <span *ngIf="signUpForm.controls[c.formname].errors?.pattern">
+                            {{c.patternerror}}
+                        </span>
+                        <!-- {{signUpForm.controls[c.formname].errors?.mustMatch |json}}====== -->
+                        <span *ngIf="signUpForm.controls[c.formname].errors?.mustMatch ">
+                            {{c.patternerror}}
+                        </span>
+                        <span
+                            *ngIf="signUpForm.controls[c.formname].errors?.minlength && !signUpForm.controls[c.formname].errors?.pattern">
+                            {{c.label | lowercase}} must must be greater than
+                            {{signUpForm.controls[c.formname].errors?.minlength.requiredLength}} length
+                        </span>
+                        <span
+                            *ngIf="signUpForm.controls[c.formname].errors?.maxlength && !signUpForm.controls[c.formname].errors?.pattern">
+                            {{c.label | lowercase}} must must not be greater than
+                            {{signUpForm.controls[c.formname].errors?.maxlength.requiredLength}} length
+                        </span>
+                        <!-- {{signUpForm.controls[c.formname].errors|json}} -->
+                    </span>
+                    <span *ngIf="c.tags=='select'">
+                        <strong>{{c.label}}</strong><br>
+                        <select class="form-select"
+                            [ngClass]="signUpForm.controls[c.formname].status=='INVALID' && formvalue==true ? 'form-select invalidstyle' : 'form-select'"
+                            formControlName="{{c.formname}}">
+                            <option value="" selected disabled>please select</option>
+                            <option value="{{i.value}}" *ngFor="let i of c.options">{{i.label}}</option>
+                        </select>
+                        <span style="color: #a5081a;size:0.5rem"
+                            *ngIf="signUpForm.controls[c.formname].errors && formvalue==true">
+                            <span *ngIf="signUpForm.controls[c.formname].errors?.required">
+                                Please select this field
+                            </span>
+                            <!-- <span *ngIf="signUpForm.controls[c.formname].errors?.pattern">
+                                {{c.patternerror}}
+                            </span> -->
+                        </span><br>
+                    </span>
+                </span>
+
+            </div>
+            <div class="row" *ngIf="k.tags=='combineselect'">
+                <span class="col-sm-4" *ngFor="let c of k.fields"><br />
+                    <span *ngIf="c.formname=='course' else deptyear">
+                        <strong>{{c.label}}</strong><br>
+                        <select class="form-select"
+                            [ngClass]="signUpForm.controls[c.formname].status=='INVALID' && formvalue==true ? 'form-select invalidstyle' : 'form-select'"
+                            formControlName="{{c.formname}}">
+                            <option value="" selected disabled>please select</option>
+                            <option value="{{i.value}}" *ngFor="let i of c.options">{{i.label}}</option>
+                        </select>
+                        <span style="color: #a5081a;" *ngIf="signUpForm.controls[c.formname].errors && formvalue==true">
+                            <span *ngIf="signUpForm.controls[c.formname].errors?.required">
+                                Please select this field
+                            </span>
+                            <!-- <span *ngIf="signUpForm.controls[c.formname].errors?.pattern">
+                                {{c.patternerror}}
+                            </span> -->
+                        </span>
+                    </span>
+                    <ng-template #deptyear>
+                        <strong>{{c.label}}</strong><br>
+                        <select class="form-select"
+                            [ngClass]="signUpForm.controls[c.formname].status=='INVALID' && formvalue==true ? 'form-select invalidstyle' : 'form-select'"
+                            formControlName="{{c.formname}}">
+                            <option value="" selected disabled>please select</option>
+                            <option value="{{i.value}}" *ngFor="let i of c.options[signUpForm.value.course]">{{i.label}}
+                            </option>
+                        </select>
+                        <span style="color: #a5081a;"
+                            *ngIf="signUpForm.controls[c.formname].status=='INVALID' && formvalue==true">
+                            Please select this field
+                        </span>
+                    </ng-template>
+
+                </span>
+            </div>
+        </span>
+
+
+
+
+
+        <strong style="float: right;color: #00B0FF;" id="press">Forgot password ? </strong><br>
+        <button id="but" type="submit" class="btn btn-primary">Submit</button><br><br>
+        <span>Already have an account ? <strong id="press" style="color: #00B0FF;" routerLink='/login'>Sign in to your
+                account . </strong></span>
+    </form>
+</div>

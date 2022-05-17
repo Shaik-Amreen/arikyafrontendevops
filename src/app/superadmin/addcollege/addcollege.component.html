@@ -1,0 +1,26 @@
+<br><br>
+<form [formGroup]="coldata" (submit)="save()" style="padding-left: 20%;">
+    <div class="row">
+        <div class="col-sm-3">
+            <label>organisation_id</label><br>
+            <input class="form-control shadow-none" placeholder="enter organisation_id"
+                formControlName="organisation_id">
+            <!-- <label>college name</label><br><br>
+            <label>Email</label><br><br> -->
+
+        </div>
+        <div class="col-sm-3">
+            <label>College name</label>
+            <input class="form-control shadow-none" placeholder="enter college name" formControlName="organisation">
+
+        </div>
+        <div class="col-sm-3">
+            <label>Email</label>
+            <input type="email" class="form-control shadow-none" placeholder="enter mail" formControlName="mail">
+
+        </div>
+
+    </div>
+    <br>
+    <button class="btn btn-primary" type="submit">Save</button>
+</form>

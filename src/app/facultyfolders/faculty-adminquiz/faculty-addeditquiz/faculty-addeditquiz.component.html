@@ -1,0 +1,145 @@
+<!-- <button (click)='sendmail()'>send mail</button> -->
+<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+<div class="layout table-responsive">
+    <div class="content"><br>
+        <div style="display: flex;">
+            <strong routerLink="/faculty/quiz"><i class='bx bx-arrow-back'
+                    style="font-size:1.5rem ;color: #00B0FF;cursor: pointer;"></i></strong>
+
+            <h5 style="color: #1b1c1e;margin-left: 1.5rem;"><strong>ADD QUIZ </strong></h5>
+        </div><br>
+        <form [formGroup]="final" (ngSubmit)="onSubmit()" style="margin-left: 3.2rem;">
+            <div class="row" style="width: 90%">
+                <div class="col-sm"><label>Topic</label><br><input class="form-control shadow-none"
+                        formControlName="topic" placeholder="Enter topic of the quiz">
+                    <span style="color: #a5081a;" *ngIf="final.controls.topic.status=='INVALID' && inputvalue==true">
+                        Please enter topic
+                    </span>
+                </div>
+                <div class="col-sm"><label>Start time</label><br><input class="form-control shadow-none"
+                        type="datetime-local" formControlName="startson">
+                    <span style="color: #a5081a;" *ngIf="final.controls.startson.status=='INVALID' && inputvalue==true">
+                        Please select start time
+                    </span>
+                </div>
+                <div class="col-sm"><label>End time</label><br><input class="form-control shadow-none"
+                        type="datetime-local" formControlName="endson">
+                    <span style="color: #a5081a;" *ngIf="final.controls.endson.status=='INVALID' && inputvalue==true">
+                        Please select end time
+                    </span>
+                </div>
+                <div class="col-sm"><label>Duration in min</label><br><input class="form-control shadow-none"
+                        type="number" min="0" max="500" formControlName="totaltime" placeholder="Enter time in minutes">
+                    <span style="color: #a5081a;"
+                        *ngIf="final.controls.totaltime.status=='INVALID' && inputvalue==true">
+                        Please enter duration time
+                    </span>
+                </div>
+            </div>
+            <div>
+                <div style="width: 70vw;margin-left: 2vw;margin-bottom: 2vw;" formArrayName="questions">
+                    <div class="table" *ngFor="let q of controls; index as i">
+                        <div [formGroupName]="i"><br>
+                            <div style="display: flex;text-align: center;">
+                                <span style="display: flex;">{{i+1}}.</span>
+
+                                <!-- <label>ENTER QUESTION:</label><br> -->
+                                <angular-editor id="editor1" formControlName="questionis" [config]="config2"
+                                    placeholder="ENTER QUESTION">
+                                </angular-editor><br>
+                            </div>
+                            <span style="color: #a5081a;"
+                                *ngIf="final.value.questions[i].questionis=='' && inputvalue==true">
+                                Please type question
+                            </span>
+
+                            <!-- <div style="display: flex;text-align: center;">
+                                Upload Image:<br>
+                                <img class="imag" [src]="image" (click)="img.click()" />
+                                <input style="display: none;" (change)="handleFileSelect($event)" type="file" #img>
+                            </div><br> -->
+                            <br>
+                            <div class="col" style="margin-left: 1vw;">
+                                <div style="display: flex; align-items: center;">
+
+                                    <input type="radio" id="radiobutton" value="option1" formControlName="correct">
+                                    <input type="text" formControlName="option1" class="form-control shadow-none"
+                                        placeholder="Enter  first option and choose if correct" /><br>
+                                    <!-- <span style="color: #a5081a;" *ngIf="final.controls.option1.status=='INVALID' && inputvalue==true">
+                                            please enter value
+                                        </span> -->
+
+                                    <br>
+                                </div>
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].option1=='' && inputvalue==true">
+                                    please fill this field
+                                </span>
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" id="radiobutton" value="option2" formControlName="correct">
+                                    <input type="text" formControlName="option2" class="form-control shadow-none"
+                                        placeholder="Enter  second option and choose if correct" /><br>
+                                </div>
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].option2=='' && inputvalue==true">
+                                    please fill this field
+                                </span>
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" id="radiobutton" value="option3" formControlName="correct">
+                                    <input type="text" formControlName="option3" class="form-control shadow-none"
+                                        placeholder="Enter  third option and choose if correct" />
+                                </div>
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].option3=='' && inputvalue==true">
+                                    please fill this field
+                                </span>
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" id="radiobutton" value="option4" formControlName="correct">
+                                    <input type="text" formControlName="option4" class="form-control shadow-none"
+                                        placeholder="Enter  fourth option and choose if correct" />
+                                </div>
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].option4=='' && inputvalue==true">
+                                    please fill this field
+                                </span><br>
+
+                                <label>Explanation:</label><br>
+                                <angular-editor style="display: flex;text-align: center;" id="editor1"
+                                    formControlName="explanation" [config]="config2"
+                                    placeholder="ENTER ANSWER EXPLANATION"></angular-editor><br>
+                                <span style="color: #a5081a;"
+                                    *ngIf="final.value.questions[i].explanation=='' && inputvalue==true">
+                                    Please give explanation
+                                </span>
+
+                            </div>
+
+                            <button *ngIf="controls.length!=1" style="float:right" class="btn btn-danger box2"
+                                (click)="deletequestion(i)"><i class='bx bxs-message-alt-x'>Remove</i></button>
+                            <br><br>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary box1" style="float:right" (click)="addquestion()" type="button"><i
+                            class='bx bx-comment-add'>Add</i></button>
+                    <br><br>
+                    <button type="submit" class="btn btn-secondary" id="but">Submit</button>&nbsp;&nbsp;
+                    <button routerLink="/faculty/quiz" style="background-color:#a5081a" class="btn btn-danger"
+                        style="width: 10rem;">Close</button><br><br>
+
+
+                </div><br><br>
+                <!-- <button type="submit" [disabled]="!final.valid">SUBMIT</button><br><br><br> -->
+                <br><br><br>
+            </div>
+        </form>
+
+        <div *ngIf="display" [ngClass]="{'view':display}">
+            <h4>
+                &nbsp;{{popup}}
+                <div class="btn"><i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i></div>
+            </h4>
+        </div>
+
+    </div>
+</div>

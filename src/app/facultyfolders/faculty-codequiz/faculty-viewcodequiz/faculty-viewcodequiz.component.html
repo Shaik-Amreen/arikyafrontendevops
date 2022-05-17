@@ -1,0 +1,124 @@
+<div *ngIf="nodata else nodat">
+    <div class="row layout">
+        <div [ngClass]="com=='one'? 'col active':'col not'" (click)="com='one'"><span><br>Coding test</span>
+            <button class="btn  btn-primary" routerLink="/faculty/codequiz/code" (click)="remove()" id='combut'
+                style="float: right;">add +
+            </button>
+
+        </div><br>
+        <div class="col active" (click)="com='two'"><span><br>Quiz</span>
+            <button class="btn btn-primary" id='combut' (click)="remove()" routerLink="/faculty/codequiz/quiz"
+                style="float: right;">add +
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div *ngIf="codetopics.length!=0 else add1"><br>
+                    <strong>Search with coding topic name</strong><br>
+                    <input type="text" name="type" [(ngModel)]="type" class="form-control shadow-none"
+                        placeholder="start typing topic name" /><br>
+                    <div class="table-responsive" style="max-height: 70vh;font-size: 0.75rem;">
+                        <table class="table table-borderless text-center">
+
+                            <tbody *ngFor="let c of  getcodetopics();index as i" style="background-color: white;">
+                                <tr style="color: white;background-color: #1c1d1e;" *ngIf="i==0">
+                                    <th>Topic</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Total Marks</th>
+                                    <th>Total Time</th>
+                                </tr>
+                                <tr (click)="code(c)" style="cursor:pointer;">
+                                    <td>{{c.topic}}</td>
+                                    <td>{{c.startson | date : 'medium'}}</td>
+                                    <td>{{c.endson | date : 'medium'}}</td>
+                                    <td>{{c.totalmarks}}</td>
+                                    <td>{{c.totaltime}} minutes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="getcodetopics().length==0">
+
+
+                            <div
+                                style="display: flex;justify-content: center;align-items: center;height: 40vh;width:40vw">
+                                <div style="text-align: center;">
+                                    <img src="../../../assets/search.gif" style="max-height:300px"><br>
+                                    <h5><strong>No results .</strong></h5>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div *ngIf="quiztopics.length!=0 else add"><br>
+                    <strong>Search with quiz topic name</strong><br>
+                    <input type="text" name="type" [(ngModel)]="type1" class="form-control shadow-none"
+                        placeholder="start typing topic name" /><br>
+                    <div class="table-responsive" style="max-height: 70vh;font-size: 0.75rem;">
+                        <table class="table table-borderless text-center">
+
+                            <tbody *ngFor="let c of getquiztopics();index as i" style="background-color: white;">
+                                <tr style="color: white;background-color: #1b1c1e;" *ngIf="i==0">
+                                    <th>Topic</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Total Marks</th>
+                                    <th>Total Time</th>
+                                </tr>
+                                <tr (click)="quiz(c)" style="cursor:pointer;">
+                                    <td>{{c.topic}}</td>
+                                    <td>{{c.startson | date : 'medium'}}</td>
+                                    <td>{{c.endson | date : 'medium'}}</td>
+                                    <td>{{c.totalmarks}}</td>
+                                    <td>{{c.totaltime}} minutes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="getquiztopics().length==0">
+                            <div
+                                style="display: flex;justify-content: center;align-items: center;height: 40vh;width:40vw">
+                                <div style="text-align: center;">
+                                    <img src="../../../assets/search.gif" style="max-height:300px"><br>
+                                    <h5><strong>No results .</strong></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #add>
+                <!-- quiz data is empty ! Please upload . -->
+                <div style="display: flex;justify-content: center;align-items: center;height: 80vh;width:40vw">
+                    <div style="text-align: center;">
+                        <img src="../../../assets/search.gif" style="max-height:300px"><br>
+                        <h5><strong>No results .</strong></h5>
+                    </div>
+                </div>
+
+            </ng-template>
+            <ng-template #add1>
+                <!-- coding data is empty ! Please upload .<br><br> -->
+                <div style="display: flex;justify-content: center;align-items: center;height: 80vh;width:40vw">
+                    <div style="text-align: center;">
+                        <img src="../../../assets/search.gif" style="max-height:300px"><br>
+                        <h5><strong>No results .</strong></h5>
+                    </div>
+                </div>
+
+            </ng-template>
+
+        </div>
+    </div>
+</div>
+<ng-template #nodat>
+    <div style="display: flex;justify-content: center;align-items: center;height: 90vh;">
+        <div style="text-align: center;">
+            <img src="../../../assets/loading.gif"><br>
+
+        </div>
+    </div>
+</ng-template>

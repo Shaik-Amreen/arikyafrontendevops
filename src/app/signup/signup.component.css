@@ -1,0 +1,16 @@
+@import url('../login/login.component.css');
+.content
+{
+    padding-top: 7rem;
+    padding-right: 2rem;
+    padding-left: 13rem;
+}
+
+@media (max-width: 575px) {
+
+   .content{
+    padding: 0rem;
+  padding-left: 1rem;
+   }
+
+}

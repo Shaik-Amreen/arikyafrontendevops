@@ -1,0 +1,23 @@
+<div id="fullpage">
+    <div class="row alignments">
+        <div class="col-sm-5" id="desktop" style="height: 100vh;">
+            <div style="display: flex;cursor:pointer" routerLink="/arikya">
+                <img src="assets/logo.png" style="height: 60px;">
+                <div style="margin-top:0.7rem;">
+                    <h1 style="font-size: 30px;font-family: 'Saira Stencil One', 'cursive';background: linear-gradient(144deg, rgba(0,176,255,1) 40%, rgba(27,28,30,1) 100%);-webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;">
+                        ARIKYA</h1>
+                </div>
+            </div>
+
+            <br />
+            <div style="margin-top: 2rem;margin-left: 2rem;">
+                <img src="assets/sidelogo.gif" style="height: 450px;">
+            </div>
+        </div>
+
+        <div class="col-sm table-responsive content" style="max-height: 100%;">
+            <router-outlet></router-outlet><br><br>
+        </div>
+    </div>
+</div>

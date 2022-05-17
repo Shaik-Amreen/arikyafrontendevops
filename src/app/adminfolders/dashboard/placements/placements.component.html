@@ -1,0 +1,284 @@
+<!-- <button class="btn" style="background-color: #00b0ff;color: white;float: right;"
+    (click)="exportexceloverall('campus-placements data')">Overall placements data</button>
+&nbsp; <button class="btn" style="background-color: #00b0ff;color: white;float: right;"
+    (click)="exportexceloverall('campus-placements count')">Overall count of placements</button>
+
+
+
+<table class="table text-center" id="campus-placements count" style="display: none;"
+    *ngFor="let f of placementcount;index as i">
+    <tr *ngIf="i==0">
+        <th>Placements cycle name</th>
+        <th>Eligible</th>
+        <th>Registered</th>
+        <th>Placed</th>
+    </tr>
+    <tr>
+        <td>{{f.placementcyclename}}</td>
+        <td>{{f.eligible}}</td>
+        <td>{{f.registered}}</td>
+        <td>{{f.placed}}</td>
+    </tr>
+</table>
+
+<table id="test" style="display: none;">
+    <thead>
+        <tr>
+            <th>hgc00</th>
+            <th>gvg</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>jgvgj</td>
+            <td>hgcvhgc</td>
+        </tr>
+    </tbody>
+
+</table>
+
+<table class="table text-center" style="display: none;" id="campus-placement data" *ngFor="let f of currpla;index as i">
+    <tr *ngIf="i==0">
+        <th>Placements cyclename</th>
+        <th>Department</th>
+        <th>Eligible</th>
+        <th>Registered</th>
+        <th>Placed</th>
+    </tr>
+    <tr>
+        <td>{{f.deptdata[0].placementcyclename}}</td>
+        <td>{{f.dept}}</td>
+        <td>{{f.deptdata.length}}</td>
+        <td>{{curreg[i].deptdata.length}}</td>
+        <td>{{currplaced[i].deptdata.length}}</td>
+    </tr>
+    <tr *ngIf="f.deptdata.length>0">
+        <td>Details</td>
+    </tr>
+    <tr *ngIf="i==0 && f.deptdata.length>0">
+        <th>Placements cycle name</th>
+        <th>Company name</th>
+        <th>Name</th>
+        <th>Roll Number</th>
+        <th>Course</th>
+        <th>Department</th>
+        <th>Mobile</th>
+        <th>Email ID</th>
+        <th>Eligible</th>
+        <th>Registered</th>
+        <th>Placed</th>
+        <th>Package</th>
+    </tr>
+    <tr *ngFor="let sup of f.deptdata">
+
+        <td>{{sup.placementcyclename}}</td>
+        <td>{{sup.companyname}}</td>
+        <td>{{sup.firstname}}</td>
+        <td>{{ sup.rollnumber }}</td>
+        <td>{{ sup.course }}</td>
+        <td>{{ sup.department }}</td>
+        <td>{{sup.mobile}}</td>
+        <td>{{sup.mail}}</td>
+        <td>yes</td>
+        <td>{{sup.registered}}</td>
+        <td>{{sup.placed}}</td>
+        <td>{{sup.package}}</td>
+    </tr>
+</table>
+
+<table class="table text-center" id="campus-placements data" style="display: none;"
+    *ngFor="let f of finaldata;index as i">
+    <tr *ngIf="i==0">
+        <th>Placements cycle name</th>
+        <th>Company name</th>
+        <th>Name</th>
+        <th>Roll Number</th>
+        <th>Course</th>
+        <th>Department</th>
+        <th>Mobile</th>
+        <th>Email ID</th>
+        <th>Eligible</th>
+        <th>Registered</th>
+        <th>Placed</th>
+        <th>Package</th>
+    </tr>
+    <tr *ngFor="let sup of f.data">
+
+        <td>{{sup.placementcyclename}}</td>
+        <td>{{sup.companyname}}</td>
+        <td>{{sup.firstname}}</td>
+        <td>{{ sup.rollnumber }}</td>
+        <td>{{ sup.course }}</td>
+        <td>{{ sup.department }}</td>
+        <td>{{sup.mobile}}</td>
+        <td>{{sup.mail}}</td>
+        <td>yes</td>
+        <td>{{sup.registered}}</td>
+        <td>{{sup.placed}}</td>
+        <td>{{sup.package}}</td>
+    </tr>
+</table>
+<br><br><br>
+
+
+<div *ngIf="!view else noview">
+    <div *ngIf="finalcount.length!=0 else empty">
+       
+        <div *ngFor="let c of finalcount" style="text-align: center;"><br><br><br>
+            <h5>{{c.placementcyclename}}</h5><br><br>
+            <button class="btn" style="background-color: #00b0ff;color: white;float: right;"
+                (click)="currentplacement(c.placementcyclename);">Download</button>
+
+            <ul class="chart">
+                <li>
+                    <span (click)="viewdata(c.placementcyclename,'placed')"
+                        title='{{c.placed}}Placed ,Students : {{placementcount[0].placed}}' id="placed"
+                        [ngStyle]="{'height': c.placed}" name="Placed" style="text-align: left;padding-left: 20px;">
+                        <strong style="font-size: 12px;" *ngIf="c.placed!='0.00%'">{{c.placed}} </strong>
+                    </span>
+                </li>
+                <li>
+                    <span (click)="viewdata(c.placementcyclename,'registered')"
+                        title='{{c.registered}}registered ,Students : {{placementcount[0].registered}}' id="registered"
+                        [ngStyle]="{'height': c.registered}" name="registered"
+                        style="text-align: left;padding-left: 20px;">
+                        <strong style="font-size: 12px;" *ngIf="c.registered!='0.00%'">{{c.registered}} </strong>
+                    </span>
+                </li>
+                <li>
+                    <span (click)="viewdata(c.placementcyclename,'eligible')"
+                        title='{{c.eligible}}eligible ,Students : {{placementcount[0].eligible}}' id="eligible"
+                        [ngStyle]="{'height':c.eligible}" name="eligible" style="text-align: left;padding-left: 20px;">
+                        <strong style="font-size: 12px;" *ngIf="c.eligible!='0.00%'">{{c.eligible}} </strong>
+                    </span>
+                </li>
+            </ul><br><br>
+        </div>
+    </div>
+    <ng-template #empty>
+        <img style="padding: 15%;" src="../../../../assets/search.webp">
+    </ng-template>
+</div>
+
+<ng-template #noview><br><br>
+    <div style="color: #00b0ff;">
+        <span style="float: right;">
+            <button class="btn" style="background-color: #00b0ff;color: white;"
+                (click)="exportexcel('total')">Download</button>
+            &nbsp;&nbsp;
+            <button class="btn btn-danger" style="margin-right: 2vw;" (click)="view=false">CLOSE</button>
+        </span>
+        {{cyclename | uppercase}} &nbsp;&nbsp;{{type}} students <br><br>
+        <table class="table text-center" style="width: 80vw;color: gray;" id="total">
+            <tr style="border-bottom:1px solid gray">
+                <th style="padding: 1%;">Name</th>
+                <th>Roll Number</th>
+                <th>Course</th>
+                <th>Department</th>
+                <th>Mobile</th>
+                <th>Email ID</th>
+            </tr>
+            <tr (click)="home(sup)" style="border-bottom:1px solid gray;cursor: pointer;"
+                *ngFor="let sup of applicantslist">
+                <td style="padding: 1%;">{{sup.firstname}}</td>
+                <td>{{ sup.rollnumber }}</td>
+                <td>{{ sup.course }}</td>
+                <td>{{ sup.department }}</td>
+                <td>{{sup.mobile}}</td>
+                <td>{{sup.mail}}</td>
+            </tr>
+        </table>
+        <br><br>
+        <span *ngFor="let c of branch">
+            <span *ngIf="branchdata[c].length>0">
+                <span style="float: right;">
+                    <button class="btn" style="background-color: #00b0ff;color: white;"
+                        (click)="exportexcel(c)">Download</button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-danger" style="margin-right: 2vw;" (click)="view=false">CLOSE</button>
+                </span>
+                {{cyclename | uppercase}} &nbsp;&nbsp;{{type}} {{c}} department students <br><br>
+                <table class="table text-center" style="width: 60vw;color: gray;" id=[c]>
+                    <tr style="border-bottom:1px solid gray">
+                        <th style="padding: 1%;">Name</th>
+                        <th>Roll Number</th>
+                        <th>Course</th>
+                        <th>Department</th>
+                        <th>Mobile</th>
+                        <th>Email ID</th>
+
+                    </tr>
+                    <tr (click)="home(sup)" style="border-bottom:1px solid gray;cursor: pointer;"
+                        *ngFor="let sup of branchdata[c]">
+                        <td style="padding: 1%;">{{sup.firstname}}</td>
+                        <td>{{ sup.rollnumber }}</td>
+                        <td>{{ sup.course }}</td>
+                        <td>{{ sup.department }}</td>
+                        <td>{{sup.mobile}}</td>
+                        <td>{{sup.mail}}</td>
+                    </tr>
+                </table>
+            </span>
+        </span>
+    </div>
+</ng-template> -->
+
+<div [ngClass]="optionsdata.length==0?'no':''" style="padding: 1vw;height: 98vh;">
+    <div *ngIf="data else nodata">
+        <div class="row" style="max-height: 2vh;margin-left: 5rem;">
+            <div class="col-sm-8">
+
+            </div>
+            <div class="col-sm-3"
+                style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding: 0%;border-radius:7px">
+                <select (change)="tempdatafunc()" [(ngModel)]="status" type="text" name="type"
+                    class="form-select shadow-none" placeholder="start typing student rollnumber"
+                    style="border:none;background-color: #fff;font-size: 0.8rem;border-radius: 7px;">
+                    <option value="all">All placement cycles</option>
+                    <option value="ongoing">Ongoing placement cycles</option>
+                    <option *ngFor="let c of placementcycles" value="{{c.placementcyclename}}">{{c.placementcyclename}}
+                    </option>
+                </select>
+            </div>
+
+
+
+        </div>
+        <br /><br />
+
+        <div *ngIf="optionsdata.length>0 else empty">
+            <div *ngFor="let c of optionsdata">
+                <br /><br />
+
+                <strong style="font-size: 1.2rem;color: #1b1c1e;">{{c[0][1].title}}</strong>
+
+                <br /><br />
+                <div echarts [options]="c[0][0]" class="demo-chart"></div>
+                <br />
+                <div *ngFor="let p of c[1]" style="margin:0rem 10rem;">
+
+                    <div echarts [options]="p" class="demo-chart"></div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+
+    <ng-template #empty>
+        <div style="display: flex;justify-content: center;align-items: center;height: 80vh;background-color: #f4f7fb;">
+            <div style="text-align: center;">
+                <img src="../../../assets/search.gif" style="height: 300px;"><br>
+                <h5 style="color: #1b1c1e;"><strong>We could not find any placement status .</strong></h5>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #nodata>
+        <div style="display: flex;justify-content: center;align-items: center;height: 90vh;background-color: #f4f7fb;">
+            <div style="text-align: center;">
+                <img src="../../../assets/loading.gif"><br>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

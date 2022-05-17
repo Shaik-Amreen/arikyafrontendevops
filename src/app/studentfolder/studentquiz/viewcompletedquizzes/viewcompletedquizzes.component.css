@@ -1,0 +1,18 @@
+label {
+  border: none;
+  border-radius: 7px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 0.5rem;
+  width: 35vw;
+}
+
+.correct {
+  background: rgba(218, 232, 221, 1);
+  box-shadow: 2px 2px 2px green;
+  color: green !important;
+}
+.wrong {
+  background: rgb(232, 221, 218);
+  box-shadow: 2px 2px 2px red;
+  color: red !important;
+}

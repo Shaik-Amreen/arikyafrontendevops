@@ -1,0 +1,132 @@
+<div class="table-responsive" [ngClass]="overdata.length==0?'back':''"
+  style="padding:3rem;padding-top: 1rem;height: 95vh;">
+  <h5 style="color: #1b1c1e;"><strong>OFFERS </strong></h5>
+  <div class="row" *ngIf="overdata.length>0 else nocompany" style="margin: 2rem;padding: 2rem;border-radius: 3px;">
+    <div *ngFor="let c of overdata;index as i;">
+      <div class="row"
+        style="background-color: #fff;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;padding: 2rem;border-radius: 3px;">
+        <div class="col-2">
+          <i style="font-size: 5rem;color: #00b0ff;" class='bx bxs-trophy'></i>
+        </div>
+        <div class="col" style="color: #1b1c1e;">
+          <h1>{{c.companyname}}</h1>
+          <h5>{{c.placementcyclename}}</h5>
+          Offer letter is
+          <span *ngIf="(c.offerletter=='-' || c.offerletter==null)  else showoffer">
+            not uploaded yet !
+            <input type="file" [disabled]='choose || base64Output' style="display: none;"
+              (change)="onFileSelected($event,i)" accept="application/pdf" #upload>
+            <button class="btn shadow-none" style="color:#00b0ff;" (click)="upload.click()">click
+              to upload offer letter<i class="bi bi-upload"></i></button>
+            <div *ngIf="offerindex==i">
+              <span style="margin: 0%;padding: 0%;border-radius: 2px;" *ngIf="base64Output">
+                <br><br>
+                <select class="form-select" [(ngModel)]='offerstatus'>
+                  <option value='accepted'>I accept offer letter</option>
+                  <option value='rejected'>I reject offer letter</option>
+                </select>&nbsp;
+              </span>
+              <br />
+              <span *ngIf="base64Output">
+                <button class="btn btn" style="background:#00b0ff;color: aliceblue;" (click)="save(c)">Save</button>
+              </span>
+            </div>
+          </span>
+          <ng-template #showoffer>uploaded</ng-template>
+          <span *ngIf="c.placed=='onhold' else showplaced" style="color: crimson;">
+            Resubmit your offer letter
+          </span>
+          <ng-template #showplaced>
+            <div *ngIf="c.placed=='-'">You have not placed yet !</div>
+            <div *ngIf="c.placed=='no'" style="color: crimson;">Sorry you are rejected . Better luck next Time .</div>
+            <div *ngIf="c.placed=='yes'" style="color: #00b0ff;">Congratulations ! you are placed</div>
+
+          </ng-template>
+          <!-- <table class="table" style="color: #1b1c1e;">
+
+            <tbody>
+
+              <tr>
+                <td><strong>Offer letter</strong></td>
+                <td>
+
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Placed</strong></td>
+                <td><span *ngIf="c.placed=='onhold' else showplaced">
+                    Resubmit your offer letter
+                  </span>
+                  <ng-template #showplaced>{{c.placed}}</ng-template>
+                </td>
+              </tr>
+            </tbody>
+
+
+          </table> -->
+
+
+
+        </div>
+      </div>
+      <br />
+
+    </div>
+  </div>
+
+  <!-- <br><br>
+  <table class="table text-center" style="font-size: 11px;" *ngIf="overdata.length>0 else nocompany">
+    <tr style="background-color: #00b0ff;color: white;">
+      <th style="padding: 1%;">Placement's cycle</th>
+      <th>Company</th>
+      <th>company location</th>
+      <th>Registered</th>
+      <th>Offer status</th>
+      <th>Package</th>
+      <th>Upload offer letter</th>
+      <th>Placed</th>
+    </tr>
+    <tr id="ch" style="border-bottom: 1px solid lightgrey;padding-bottom: 0.3%;" *ngFor="let c of overdata">
+      <td *ngIf="c.registered=='yes' ">{{c.placementcyclename}}</td>
+      <td *ngIf="c.registered=='yes' ">{{c.companyname}}</td>
+      <td *ngIf="c.registered=='yes' ">{{c.companylocation}}</td>
+      <td *ngIf="c.registered=='yes' ">{{c.registered}}</td>
+      <td *ngIf="c.registered=='yes' ">{{c.offerstatus}}</td>
+      <td *ngIf="c.registered=='yes' ">{{c.package}}</td>
+      <td *ngIf="c.registered=='yes'  ">
+        <span *ngIf="c.placed=='onhold'">
+          Resubmit your offer letter
+
+        </span><br>
+        <span *ngIf="c.offerletter==''">
+          <input type="file" [disabled]='choose' style="display: none;" (change)="onFileSelected($event)"
+            accept="application/pdf" #upload>
+          <button class="" (click)="upload.click()">upload offer letter<i class="bi bi-upload"></i></button>
+          <br><br>
+          <span style="margin: 0%;padding: 0%;border-radius: 2px;" *ngIf="base64Output">
+            <select class="btn btn" [(ngModel)]='offerstatus'>
+              <option value='accepted'>Accept</option>
+              <option value='rejected'>Reject</option>
+            </select>&nbsp;
+          </span>
+          <span *ngIf="base64Output">
+            <button class="btn btn" style="background:#a5081a;color: aliceblue;" (click)="save(c)">Save</button>
+          </span>
+        </span>
+        <span *ngIf="c.offerletter!=''">
+          uploaded
+        </span>
+      </td>
+      <td>{{c.placed}}</td>
+    </tr>
+  </table> -->
+
+  <ng-template #nocompany>
+    <div style="display: flex;justify-content: center;align-items: center;max-height: 90vh;background-color: #f4f7fb;">
+      <div style="text-align: center;"><br />
+        <img src="assets/search.gif" style="max-height:300px"><br>
+        <h5><strong>Sorry ! we could not find any results .</strong></h5>
+      </div>
+    </div>
+  </ng-template>
+</div>

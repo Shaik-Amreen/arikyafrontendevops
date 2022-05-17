@@ -1,0 +1,58 @@
+<div class="layout table-responsive" style="padding: 1rem;">
+    <!-- <span *ngIf="data[0]==0  else gotres">Loading...please wait</span> 
+    <ng-template #gotres> -->
+    <br>
+    <strong style="font-size: 1.2rem;color: #1b1c1e;"> PROFILE</strong><br><br>
+
+    <div *ngIf="!edit">
+        <div class="col-sm-6">
+            <div class="row" style="background-color:#fff;padding: 3rem;margin: 2rem;margin-top: 0rem;">
+                <div class="col-sm-4">
+                    <div class="imageup">
+                        <img class="imag" [src]="image" (click)="img.click()" style="cursor: pointer;" />
+                        <input style="display: none;" accept="image/png, image/jpeg" (change)="handleFileSelect($event)"
+                            type="file" #img>
+                    </div>
+                </div>
+                <div class="col-sm">
+
+                    <span>{{data.firstname}} {{data.middlename}} {{data.lastname}}</span><br>
+                    <span>{{data.mail}}</span><br>
+                    <span>{{data.contact}}</span><br>
+                    <span>{{data.designation}}</span><br>
+                    <span>{{data.role}}</span>
+                </div>
+                <div class="col-sm-1"><br>
+                    <i style="margin-top:-20px;font-size: 1.5rem;float: right;color: #00B0FF;cursor: pointer;"
+                        (click)="switchedit()" class='bx bxs-pencil'></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="edit">
+        <div class="card">
+            <form style="text-align:left;margin:3vh" [formGroup]="usereditform">
+                <label style="color: gray;">FirstName</label><br>
+                <input class="form-control" type="text" formControlName="firstname"><br>
+
+                <label style="color: gray;">MiddleName</label><br>
+                <input class="form-control" type="text" formControlName="middlename"><br>
+                <label style="color: gray;">LastName</label><br>
+                <input class="form-control" type="text" formControlName="lastname"><br>
+                <label style="color: gray;">Contact number</label><br>
+                <input class="form-control" type="number" formControlName="contact"><br>
+                <label style="color: gray;">Designation</label><br>
+                <input class="form-control" type="text" formControlName="designation"><br>
+
+                <button class="btn  btn-primary" style="color: white;background-color: #00B0FF;"
+                    [disabled]="usereditform.status=='INVALID'" (click)="save()">{{savestatus}}</button>&nbsp;
+                <button class="btn  btn-primary" style="color: white;background-color: #a5081a;"
+                    (click)="close()">CLOSE</button>&nbsp;
+            </form>
+        </div>
+    </div>
+    <!-- <ng-template #emptyres>
+            Your profile is not done yet !
+        </ng-template>
+    </ng-template> -->
+</div>

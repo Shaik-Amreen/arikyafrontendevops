@@ -1,0 +1,205 @@
+<div *ngIf="nodata else nodat">
+
+  <div class="row" style="background-color: #fff;padding: 0.7rem;margin-bottom: 0.3rem;">
+    <div class="col-sm-1">
+      <strong routerLink="/faculty/codequiz"><i class='bx bx-arrow-back'
+          style="font-size:2rem ;color: #00B0FF;cursor: pointer;"></i></strong>
+    </div>
+    <div class="col-sm"><strong style="font-size: 1.2rem;"> {{data.topic | uppercase}}</strong>
+    </div>
+    <div class="col-sm-2" style="padding-top: 0.4rem;">
+      <strong> TOTAL QUESTIONS : {{data.questions.length}} </strong><br>
+      <strong>TOTAL MARKS : {{data.totalmarks}}</strong>
+    </div>
+    <div class="col-sm-2" style="padding-top: 0.4rem;">
+      <strong>ATTEMPTED STUDENTS : {{totalcount}}</strong>
+    </div>
+    <div class="col-sm-2" style="padding-top: 0.4rem;">
+      <strong>TOTAL TIME : {{data.totaltime}} minutes</strong>
+    </div>
+    <div class="col-sm" style="padding-top: 0.4rem;">
+      <strong> Start time : &nbsp;{{data.startson |date:'medium'}} <br>
+        <span *ngIf="endedit">
+          <span style="color: #a5081a;cursor: pointer;"> Edit last date</span>
+          <br />
+          <input type="datetime-local" [(ngModel)]="endson" />
+          <button (click)="updatendate()">Save</button>
+        </span>
+        <span *ngIf="!endedit">
+
+          End time &nbsp;&nbsp;: &nbsp;{{data.endson | date:'medium'}}<br>
+          <span style="color: #a5081a;cursor: pointer;" (click)="endedit=true">Extend last date ? </span>
+        </span>
+      </strong>
+    </div>
+
+    <div class="col-sm-1" *ngIf="editcode">
+      <i style="font-size: 2rem;float: right;color: #00B0FF;cursor: pointer;" (click)="switchedit()"
+        class='bx bxs-pencil'></i>
+    </div>
+  </div>
+
+  <div *ngIf="type=='code'" class="row table-responsive"
+    style="background-color: #fff;padding: 1rem;height: 85vh;font-size: 0.8rem;">
+    <div *ngFor="let each of data.questions;index as i">
+      <div>
+        <span style="display: flex;" style="pointer-events: none;">
+          Question {{i+1}} <br />
+          <div [innerHTML]="each[0].questionis"></div>
+        </span>
+        <br>
+
+        <table class="table table-bordered text-center" style="background-color:#f4f7fb ;"
+          *ngFor="let testcase of each[0].testcases;index as tc">
+          <tbody>
+            <tr>
+              <td>
+                <strong>Test case input {{tc+1}}</strong>
+              </td>
+              <td><strong>Test case output {{tc+1}}</strong></td>
+            </tr>
+            <tr>
+              <td>
+            <tr *ngFor="let itn of testcase.input;index as itest" style="font-size: 0.7rem;">
+              <td><strong>{{itn.invalue}}</strong> is parameter {{itest+1}}</td>
+            </tr>
+
+            </td>
+            <td>
+              <pre>{{testcase.output}}</pre>
+            </td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- <div class="row">
+            <div class="col-sm">
+              <table class="table table-bordered text-center">
+                <tbody>
+                  <tr>
+                    <td>First input</td>
+                    <td>{{each[0].inputone}}</td>
+                  </tr>
+                  <tr>
+                    <td>Second input</td>
+                    <td>{{each[0].inputtwo}}</td>
+                  </tr>
+                  <tr>
+                    <td>Third input</td>
+                    <td>{{each[0].inputthr}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-sm">
+              <table class="table table-bordered text-center">
+                <tbody>
+                  <tr >
+                    <td>First output</td>
+                    <td>{{each[0].outputone}}</td>
+                  </tr>
+                  <tr>
+                    <td>Second output</td>
+                    <td>{{each[0].outputtwo}}</td>
+                  </tr>
+                  <tr>
+                    <td>Third output</td>
+                    <td>{{each[0].outputthr}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div> -->
+      </div>
+    </div>
+  </div>
+  <div *ngIf="type=='quiz'" class="row table-responsive"
+    style="background-color: #fff;padding: 1rem;height: 85vh;font-size: 0.8rem;">
+    <div *ngFor="let each of data.questions;index as i">
+      <div>
+
+        &nbsp;
+        <span style="color: #00b0ff;" style="pointer-events: none;">
+          Question {{i+1}}
+          <div [innerHTML]="each[0].questionis"></div>
+          <!-- <angular-editor style="pointer-events: none;" [config]="config2" ></angular-editor> -->
+        </span><br>
+        <br>
+        <!-- this is updated one changhe the remaininh 3 -->
+        <span style="display: flex;align-items: center;"
+          [ngClass]="{'correct':each[0].correct=='option1', 'wrong':each[0].correct!='option1'&&each[0].answeredoption=='option1','optionstyle':each[0].correct!='option1'&&each[0].answeredoption!='option1'}">
+
+          <input type="radio" class="radio"
+            [disabled]="each[0].answeredoption=='option1'||each[0].correct==='option1'?false:true"
+            [checked]="each[0].answeredoption==='option1'||each[0].correct==='option1'?true:false">
+
+          <label class="card" style="border: none;border-radius: 30px;"
+            [ngClass]="{'colorcor':each[0].correct=='option1', 'colorwro':each[0].correct!='option1'&&each[0].answeredoption=='option1','coloropt':each[0].correct!='option1'&&each[0].answeredoption!='option1'}">
+            &nbsp;{{each[0].option1}}
+          </label>
+
+        </span>
+        <br>
+        <span style="display: flex;align-items: center;"
+          [ngClass]="{'correct':each[0].correct=='option2', 'wrong':each[0].correct!='option2'&&each[0].answeredoption=='option2','optionstyle':each[0].correct!='option2'&&each[0].answeredoption!='option2'}">
+
+          <input type="radio" class="radio"
+            [disabled]="each[0].answeredoption=='option2'||each[0].correct==='option2'?false:true"
+            [checked]="each[0].answeredoption==='option2'||each[0].correct==='option2'?true:false">
+
+          <label class="card" style="border: none;border-radius: 30px;"
+            [ngClass]="{'colorcor':each[0].correct=='option2', 'colorwro':each[0].correct!='option2'&&each[0].answeredoption=='option2','coloropt':each[0].correct!='option2'&&each[0].answeredoption!='option2'}">
+            &nbsp;{{each[0].option2}}
+          </label>
+
+        </span>
+        <br>
+        <span style="display: flex;align-items: center;"
+          [ngClass]="{'correct':each[0].correct=='option3', 'wrong':each[0].correct!='option3'&&each[0].answeredoption=='option3','optionstyle':each[0].correct!='option3'&&each[0].answeredoption!='option3'}">
+
+          <input type="radio" class="radio"
+            [disabled]="each[0].answeredoption=='option3'||each[0].correct==='option3'?false:true"
+            [checked]="each[0].answeredoption==='option3'||each[0].correct==='option3'?true:false">
+
+          <label class="card" style="border: none;border-radius: 30px;"
+            [ngClass]="{'colorcor':each[0].correct=='option3', 'colorwro':each[0].correct!='option3'&&each[0].answeredoption=='option3','coloropt':each[0].correct!='option3'&&each[0].answeredoption!='option3'}">
+            &nbsp;{{each[0].option3}}
+          </label>
+
+        </span><br>
+        <span style="display: flex;align-items: center;"
+          [ngClass]="{'correct':each[0].correct=='option4', 'wrong':each[0].correct!='option4'&&each[0].answeredoption=='option4','optionstyle':each[0].correct!='option4'&&each[0].answeredoption!='option4'}">
+
+          <input type="radio" class="radio"
+            [disabled]="each[0].answeredoption=='option4'||each[0].correct==='option4'?false:true"
+            [checked]="each[0].answeredoption==='option4'||each[0].correct==='option4'?true:false">
+
+          <label class="card" style="border: none;border-radius: 30px;"
+            [ngClass]="{'colorcor':each[0].correct=='option4', 'colorwro':each[0].correct!='option4'&&each[0].answeredoption=='option4','coloropt':each[0].correct!='option4'&&each[0].answeredoption!='option4'}">
+            &nbsp;{{each[0].option4}}
+          </label>
+
+        </span>
+
+        <br>
+        <span style="color: #00b0ff; pointer-events: none;">
+          <strong>Explanation </strong> &nbsp;
+          <!-- <span style="size: 20px;">{{each[0].explanation}}</span> -->
+          <!-- <angular-editor [config]="editorConfig" [ngModel]="each[0].explanation">
+          </angular-editor> -->
+          <div [innerHTML]="each[0].explanation"></div>
+        </span><br><br>
+      </div>
+    </div>
+
+  </div>
+</div>
+<ng-template #nodat>
+  <div style="display: flex;justify-content: center;align-items: center;height: 90vh;">
+    <div style="text-align: center;">
+      <img src="../../../assets/loading.gif"><br>
+
+    </div>
+  </div>
+</ng-template>

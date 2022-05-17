@@ -1,0 +1,12 @@
+<div class="layout">
+    <span *ngFor="let c of navdata">
+        <a [routerLink]="c.rlink" routerLinkActive="active">
+            <i [class]='c.icon'></i>
+            <span>{{c.label | uppercase}}</span>
+        </a>
+    </span>
+</div>
+<div>
+    <router-outlet></router-outlet>
+</div>
+

@@ -1,0 +1,12 @@
+<form (ngSubmit)="submit()" [formGroup]="formgroupdata">
+    <span *ngFor="let k of formdata"><br>
+        <strong>{{k.label}}</strong>
+        <div class="input-icons">
+            <i class='{{k.icon}}'></i>
+            <input id="iconinput" class="form-control  shadow-none" formControlName="{{k.formname}}"
+                placeholder={{k.placeholder}} type={{k.type}} *ngIf="k.tags=='input'">
+        </div>
+    </span><br>
+    <strong style="float: right;color: #00B0FF;" id="press">Forgot password ? </strong><br>
+    <button id="but" type="submit" class="btn btn-primary">Sign In</button>
+</form>

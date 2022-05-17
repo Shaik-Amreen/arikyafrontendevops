@@ -1,0 +1,236 @@
+<div *ngIf="nodata else nodat" style="background-color: #f4f7fb;">
+    <br />
+    <div
+        style="margin: 0rem 1.8rem;font-size: 0.8rem; box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;border-radius:7px">
+        <div class="row"
+            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.5rem;padding-bottom: 5px; align-items: center;padding: 1rem;">
+
+
+            <div class="col-sm-2" style="display: flex;max-height: 70px;align-items: center;">
+                <i style="color: #00b0ff;font-size: 2rem;" [routerLink]="['/student/studenthome']"
+                    class='bx bx-arrow-back'></i>
+                <div class="imageup" style="margin-left: 1rem;">
+                    <img class="imag" [src]="image" style="cursor: pointer;" />
+                </div>
+                <!-- <img class="imag" src={{companydetails.companylogo}} /> -->
+            </div>
+            <div class="col-sm-3">
+                <strong style="font-size: 1.1rem;">{{companydetails.companyprofiletitle | uppercase}}</strong><br>
+                <span>{{companydetails.companyname}}</span><br>
+                <span style="font-size: 0.8rem;">{{companydetails.placementcyclename }}</span>
+            </div>
+            <div class="col-sm-3">Date of visit :
+                <span *ngIf="companydetails.dateofvisit!='not updated' else da">{{companydetails.dateofvisit | date
+                    }}</span>
+                <ng-template #da>{{companydetails.dateofvisit}}</ng-template> <br>{{companydetails.positiontype}}<br>
+                {{companydetails.companyprofilesource}}<br>
+            </div>
+
+        </div>
+    </div>
+    <div class="table-responsive" style="max-height: 77vh;">
+
+        <div class="content" style="margin: 0rem 1.8rem;font-size: 0.8rem;margin-right: 1rem;">
+
+            <div>
+                <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">SUMMARY</strong>
+                <div
+                    style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.5rem;margin-right: 0.3rem;font-size: 0.7rem ;">
+
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Placement cycle name</td>
+                                <td>{{companydetails.placementcyclename}}</td>
+                            </tr>
+                            <tr>
+                                <td>Company name</td>
+                                <td>{{companydetails.companyname}}</td>
+                            </tr>
+                            <tr>
+                                <td>Date of visit</td>
+                                <td *ngIf="companydetails.dateofvisit!='not updated'">{{companydetails.dateofvisit |
+                                    date }}</td>
+                                <td *ngIf="companydetails.dateofvisit!='updated' ">{{companydetails.dateofvisit }}</td>
+
+                            </tr>
+                            <tr>
+                                <td>Created by</td>
+                                <td>{{companydetails.created}}</td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>{{companydetails.status}}</td>
+                            </tr>
+                            <tr>
+                                <td>Company contact</td>
+                                <td>{{companydetails.companycontact}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <br />
+            <div>
+                <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">COMPANY
+                    DETAILS</strong>
+                <div
+                    style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.5rem;font-size: 0.7rem;">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Title</td>
+                                <td>{{companydetails.companyprofiletitle}}</td>
+                            </tr>
+                            <tr>
+                                <td>company Location</td>
+                                <td>{{companydetails.companylocation}}</td>
+                            </tr>
+                            <tr>
+                                <td>Position Type</td>
+                                <td>{{companydetails.positiontype}}</td>
+                            </tr>
+                            <tr>
+                                <td>company Function</td>
+                                <td>{{companydetails.companyfunction}}</td>
+                            </tr>
+                            <tr>
+                                <td>Category</td>
+                                <td>{{companydetails.category}}</td>
+                            </tr>
+                            <tr>
+                                <td>Cost to Company</td>
+                                <td>
+                                    <span
+                                        *ngIf="companydetails.minimum!=''">{{companydetails.minimum}}-{{companydetails.maximum}}&nbsp;{{companydetails.currency}}
+                                        per {{companydetails.interval}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div>
+                <div class="col">
+                    <div>
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">COURSE
+                            ELIGIBILITY
+                            CRITERIA</strong>
+                        <div class="col-sm"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.3rem;">
+
+                            <div *ngFor=" let c of companydetails.eligibilties">
+                                {{c[0].course | uppercase}}&nbsp;&nbsp; {{c[0].ff | uppercase}}
+                            </div>
+                        </div>
+
+
+                    </div><br />
+                    <div>
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">SCORE
+                            ELIGIBILITY
+                            CRITERIA</strong>
+                        <div class="col-sm"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
+                            <strong> Applicants must have scored</strong><br><br>
+                            {{companydetails.undergraduate}} % marks in Undergraduate<br>
+                            <strong>AND</strong><br>
+                            {{companydetails.inter}} % marks in Class 12th <br>
+                            <strong>OR</strong><br>
+                            {{companydetails.diploma}} % marks in Diploma<br>
+                            <strong>AND</strong><br>
+                            {{companydetails.ten}} % marks in Class 10th<br>
+                        </div>
+                    </div><br />
+                    <div>
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">GENDER
+                            ELIGIBILITY
+                            CRITERIA</strong>
+                        <div class="col-sm"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.3rem;">
+                            <div *ngIf="companydetails.gender!='malefemale' else backm">
+                                <strong>{{companydetails.gender | uppercase}}</strong>
+                                are eligible
+                            </div>
+                            <ng-template #backm>
+                                <div>All are eligible</div>
+                            </ng-template>
+                        </div>
+
+                    </div><br />
+                    <div>
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">BACKLOGS
+                            ELIGIBILITY
+                            CRITERIA</strong>
+                        <div class="col-sm"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
+                            <strong>{{companydetails.ongoingbacklogs}} </strong> Ongoing backogs are allowed .<br>
+                            <strong>{{companydetails.totalbacklogs}} </strong> Total backlogs are allowed .
+                        </div>
+                    </div><br />
+                    <div class="row">
+
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">HIRING
+                            HIERARCHY</strong>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-sm table-responsive"
+                            style="border-radius:2px;max-height:40vh;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
+                            <div *ngFor="let level of companydetails.hiringworkflow;index as i">
+
+                                <strong>{{level[0].level}} </strong><span
+                                    style="font-size: 0.7rem;">{{level[0].sub}}</span>
+                                <span *ngIf="i!=companydetails.hiringworkflow.length-1"><br><i class='bx bxs-downvote'
+                                        style="font-size: 1rem;"></i></span>
+                                <br>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <br />
+                    <div class="row" style="font-size: 0.8rem;">
+                        <strong style="padding: 0.9rem;margin-right: 0.3rem;color: #1b1c1e;">COMPANY
+                            DESCRIPTION</strong>
+                        <div class="col-sm-12"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.3rem;">
+
+                            <div [innerHTML]="companydetails.companydescription"></div>
+
+                        </div>
+                    </div>
+                    <br>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<ng-template #nodat>
+    <div style="display: flex;justify-content: center;align-items: center;height:90vh">
+        <div style="text-align: center;">
+            <img src="../../../assets/loading.gif"><br>
+            <h5><strong>Time to relax !!! Company details are on the way .</strong></h5>
+        </div>
+    </div>
+</ng-template>
+
+<div *ngIf="display" [ngClass]="{'view':display}">
+    <span style="font-size: 1rem;">
+        <span style="font-size: 1.3rem;">
+            <i class="fa fa-warning"></i>
+        </span>
+        &nbsp;INVALID INPUT DATA&nbsp;
+        <!-- <div class="btn btn1"><i style="color:white;font-size:2rem" class="bx bxs-check-circle"></i></div> -->
+    </span>
+</div>

@@ -1,0 +1,35 @@
+<div style="display: flex;justify-content: center;align-items: center;height: 100vh;width: 100vw;">
+
+    <div class="card shadow border-0" style="padding: 4%;width: 70vw;color: #1b1c1e;">
+        <h1 style="font-family:poppins"><strong>Instructions ! </strong></h1>
+        <hr>
+        <br>
+        <ul>
+            <li>Do not try to exit the full screen</li>
+            <li>If you try to do so , The test will be ended</li>
+            <li>Your result will be based on your marks , time consumed and tab switches</li>
+            <li>Be careful !</li>
+            <li>All the very best .</li>
+        </ul>
+
+        <br>
+        <div style="display:flex;align-items: center;max-height: 5vh;">
+
+            <input type="checkbox" [checked]="readmsg" (change)="readmsg=!readmsg" /> &nbsp;&nbsp;
+            I have read all the terms and conditions .
+        </div>
+
+
+        <br>
+        <div style="display: flex;justify-content: right;">
+            <button class="btn btn-primary" style="background-color: #00B0FF" [disabled]="!readmsg"
+                (click)="start()">START
+                TEST</button>&nbsp;&nbsp;
+            <button class="btn btn-danger" (click)="cancel()">CANCEL</button>
+        </div>
+    </div>
+
+
+
+
+</div>

@@ -1,0 +1,244 @@
+<!-- <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">END TEST !</h4>
+        <button type="button" class="close" style="border: none;" aria-label="Close" (click)="onCloseHandled()">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to end the test ? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="Endtest()">YES</button>
+        <button type="button" class="btn btn-primary" (click)="onCloseHandled()">NO</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<br>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':reload}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" *ngIf="askfullscreen && display!='block'">
+      <div class="modal-header">
+        <h4 class="modal-title">{{msg}}</h4>
+        <!-- <button type="button" class="close" style="border: none;" aria-label="Close" (click)="onCloseHandled()">
+                    <span aria-hidden="true">&times;</span></button> -->
+        <!-- <button type="button" class="btn btn-danger" (click)="testtimeout()">CLOSE</button>-->
+      </div>
+      <div>
+        <div class="modal-body">
+          <p>{{fullscreen}} </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="openFullscreen()">ENTER</button>
+          <!-- <button type="button" class="btn btn-primary" (click)="onCloseHandled()">NO</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- [ngStyle]="{'display':display} reload" -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" *ngIf="!askfullscreen">
+        <h4 class="modal-title">{{msg}}</h4>
+        <button *ngIf="!timeout" type="button" class="close" style="border: none;" aria-label="Close"
+          (click)="onCloseHandled()">
+          <span aria-hidden="true">&times;</span></button>
+        <button *ngIf="timeout" type="button" class="btn btn-danger" (click)="testtimeout()">CLOSE</button>
+      </div>
+      <div *ngIf="!timeout">
+        <div class="modal-body">
+          <p>Are you sure to end the test ? </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="Endtest()">YES</button>
+          <button type="button" class="btn btn-primary" (click)="onCloseHandled()">NO</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="view && get" style="margin: 1rem;position: fixed;margin-right: 0%;" oncopy="return false"
+  onpaste="return false" oncut="return false">
+  <span style="color: #a5081a;display: flex;justify-content: center;align-items: center;"> <strong>Test will be ended if
+      you try to disable FULL SCREEN .</strong></span>
+  <h3 style="text-align: right;"><span *ngIf="minutes &lt; 10">0</span>{{minutes}}:<span
+      *ngIf="seconds &lt;10">0</span>{{seconds}}</h3>
+
+  <h4 style="color: #1c1e55"><strong>{{ques.topic | uppercase}}</strong></h4>
+  <div class="col-sm table-responsive" id="testcases"
+    style="max-height: 81vh;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+    <br>
+    <div>
+
+
+      <!-- <angular-editor [config]="editorConfig" [ngModel]="question[0].questionis">
+      </angular-editor> -->
+
+
+      <div [innerHTML]="question[0].questionis"></div>
+
+
+      <br>
+
+    </div><br>
+    <div style="background-color: whitesmoke;width: 70vw;">
+      <span style="display: flex;justify-content: flex-end;align-items: center;">
+        <label style="margin-right: 0.5rem;">Language </label>
+        <select class="form-select" style="width: 10vw;background-color: whitesmoke;" [(ngModel)]="language"
+          (ngModelChange)="modo()">
+          <option value="c">C</option>
+          <option value="java">JAVA</option>
+          <option value="py">PYTHON</option>
+          <option value="cpp">C++</option>
+        </select>
+      </span>
+    </div>
+
+    <ngx-monaco-editor oncopy="return false" onpaste="return false" oncut="return false"
+      style="height: 50vh;width: 70vw;" [options]="editorOptions" [(ngModel)]="ans[questionno-1]">
+    </ngx-monaco-editor>
+    <br><br>
+
+    <span>
+      <button class="btn btn-secondary" style="float:left;" *ngIf="previousview" (click)="previous()">Previous</button>
+      &nbsp;&nbsp;
+      <button (click)="getvl(questionno)" [disabled]="ans[questionno-1].length==0" class="btn"
+        style="font-weight: 300;background-color: #00b0ff;color: #fff !important;">
+        <strong>{{saveTestStatus}}</strong></button>
+      <button class="btn btn-warning" style="float: right;" *ngIf="nextview" (click)="next()">Next</button>
+    </span>
+    <br><br>
+    <div *ngIf="loadtestcases else noutput">
+      <div *ngIf="result[questionno-1].length>0 else timeout">
+        <h5 style="float:right;"><strong>{{count}} / {{result[questionno-1].length}} Testcases passed</strong></h5>
+        <br><br>
+        <div *ngFor="let r of result[questionno-1];index as i" class="row">
+          <div class="col-sm m-2 card shadow" style="color: white;" [ngClass]="r.status=='passed'? 'correct' :'wrong' ">
+            <br />
+            <h5>Test case {{r.testcasenumber}} </h5>
+            <pre>{{r.status | uppercase}}</pre>
+          </div>
+          <div *ngIf="i<3" class="card shadow col-sm m-2" style="background-color: whitesmoke;"><br>
+            <h5>Input </h5>
+            <pre>{{r.input}}</pre>
+          </div>
+          <div *ngIf="i<3" class="card shadow col-sm m-2" style="background-color: whitesmoke;"><br>
+            <h5>Expected output </h5>
+            <pre>{{r.expected}} </pre>
+          </div>
+          <div *ngIf="i<3" class="col-sm m-2 card shadow" style="background-color: whitesmoke;">
+            <br />
+            <h5>Your output </h5>
+            <pre>{{r.output}}</pre>
+          </div>
+        </div>
+
+      </div>
+      <ng-template #timeout>
+        <div class="card p-2" *ngIf="showtest" style="font-size: 0.8rem;">
+          <strong> Please check your internet connection</strong>
+        </div><br />
+      </ng-template>
+    </div>
+    <ng-template #noutput>
+      <div class="spinner" *ngIf="allowloading">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </ng-template>
+  </div>
+  <div class="col-sm-2">
+    <strong style="color:#1c1e55">QUESTIONS</strong><br><br>
+    <div class="table-responsive" style="height: 50vh;">
+      <div *ngFor="let c of ques.questions;index as i">
+        <button style="margin-top:3px;width: 100%;" class="btn" (click)="q(i)"
+          [ngClass]=" question[0].questionis==c[0].questionis? 'sel' : c[0].attemptedmails.includes(mail) ? 'empty' : 'done'">
+          Question&nbsp;{{i+1}}&nbsp;
+        </button>&nbsp;
+      </div>
+    </div><br>
+    <!-- <video id="video" autoplay
+      style="background-color: #1b1c1e;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;height: 20vh;width: 15vw"></video> -->
+    <div style="bottom: 1rem;position: fixed;right:2rem;"> <button class="btn btn-danger" style="width: 10rem;"
+        (click)="openModal()">End test</button></div>
+  </div>
+</div>
+
+
+<!-- <div class="layout table-responsive">
+  <br>
+  <span style="color: #a5081a;display: flex;justify-content: center;align-items: center;"> <strong>Test will be ended if
+      you try to disable FULL SCREEN .</strong></span>
+  <br>
+  <h3 style="float: right;"><span *ngIf="minutes &lt; 10">0</span>{{minutes}}:<span
+      *ngIf="seconds &lt;10">0</span>{{seconds}}</h3>
+  <h4 style="color: #1c1e55"><strong>{{ques.topic | uppercase}}</strong></h4>
+
+
+  <br>
+  <div class="row" style="margin-left: 1vw;color: #00b0ff;">
+    <div class="col-10 ">
+      <div>
+        <strong>{{questionno}} .
+          <angular-editor [config]="editorConfig" [ngModel]="question[0].questionis">
+          </angular-editor><br>
+        </strong>
+
+      </div><br>
+
+      <span style="color: rgb(151, 63, 63);font-size: 12px;">
+        <strong>Input is stored in the 'sampleinput' variable in the form of string.</strong></span>
+      <br>
+      <div
+        style="background-color:rgb(28, 31, 31);width: 60vw;padding-left: 1.5vw;color: white;font-size: 13px;font-family: sans-serif;">
+        <pre>{{paramconditions[questionno-1]}}</pre>
+      </div>
+      <ngx-monaco-editor style="max-height: 50vh;width: 60vw;" [options]="editorOptions"
+        *ngIf="question[0].question!='PLEASE SELECT A QUESTION'" [(ngModel)]="ans[questionno-1]"></ngx-monaco-editor>
+
+
+      <br><br>
+      <span>
+
+        <button class="btn btn-secondary" style="float:left;" *ngIf="previousview"
+          (click)="previous()">Previous</button>
+
+
+        &nbsp;&nbsp;
+        <button (click)="getvl()"
+          *ngIf="question[0].question!='PLEASE SELECT A QUESTION' && ans[questionno-1].length!=0" class="btn sel"
+          style="font-weight: 300;">
+          <strong>SAVE AND TEST</strong></button>
+        <button class="btn btn-primary" style="float: right;" *ngIf="nextview" (click)="next()">Next</button>
+      </span>
+      <br><br>
+      <div *ngIf="result[questionno-1].length>0">
+        <div *ngFor="let r of result[questionno-1]">
+          <pre class="card" style="margin-left: 1vh;padding:1vh;color: white;"
+            [ngClass]="r.includes('PASSED')? 'correct' :'wrong' ">{{r}}</pre>
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+    <div class="col-2 ">
+      <strong style="color:#1c1e55">QUESTIONS</strong><br><br>
+      <span *ngFor="let c of ques.questions;index as i">
+        <button style="margin-top:3px" class="btn" (click)="q(i)"
+          [ngClass]=" question[0].questionis==c[0].questionis? 'sel' : result[i].length>0 ? 'empty' : 'done'">
+          &nbsp;{{i+1}}&nbsp;</button>&nbsp;</span>
+    </div>
+
+  </div>
+  <button class="btn btn-danger" style="float:right;" (click)="openModal()">End test</button>
+</div> -->

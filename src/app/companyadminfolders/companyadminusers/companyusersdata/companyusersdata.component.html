@@ -1,0 +1,98 @@
+<div class="layout" *ngIf="nodata else nodat">
+    <div class="row justify-content-md-center">
+        <div class="col-3 spacing">
+            <table class="table">
+                <tr>
+                    <td style="font-size: 1.2rem;"><strong>USERS</strong></td>
+                    <td><button routerLink="/admin/users/addusers" class="buttoncolor "
+                            style=" background-color: #1b1c1e;color: cornsilk;"><i class='bx bx-add-to-queue'></i>
+                            Add
+                            User</button></td>
+                </tr>
+            </table>
+            <table class="users">
+                <tbody *ngFor="let d of facdata;index as i">
+                    <tr>
+                        <td><button id="sub" [ngClass]="d==selectedUser ? 'buttoncolor' : 'btn'"
+                                (click)="selectUser(i)"><strong>{{d.firstname}}</strong><br>{{d.designation}}<br>{{d.mail}}</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-8 spacing ">
+            <div class="card  p-1"
+                style="font-size: 15px ;width:550px;box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;"
+                *ngIf="selectedMode else empty">
+                <div *ngIf="edit==false else editmode">
+                    <div class="row">
+                        <div class="col-3" style="color: lightblue;font-size: 100px;">
+                            <i class='bx bxs-user-circle'></i>
+                        </div>
+                        <div class="col" style="text-align: left;color: grey;"><br>
+                            <strong> {{selectedUser.firstname}} {{selectedUser.middlename}}
+                                {{selectedUser.lastname}}</strong><br>
+                            {{selectedUser.designation}}<br>
+                            {{selectedUser.role}}<br>
+                            {{selectedUser.mail}}<br>
+                            <span *ngIf="selectedUser.status=='no'">Dropped</span>
+                        </div>
+                    </div>
+                    <div>
+                        <button *ngIf="facdata.length>1 && mail!=selectedUser.mail" class="dangercolor p-2"
+                            (click)="deleteuser()">Delete User<i class='bx bxs-trash'></i></button>
+                        <button class="buttoncolor p-2" (click)="edit=true"><i class='bx bxs-edit'></i>Edit</button>
+                    </div>
+
+
+                </div>
+                <ng-template #editmode>
+                    <form style="text-align:left;margin:3vh" [formGroup]="userSignUpForm">
+                        <div class="row">
+                            <div class="col">
+                                <label style="color: gray;">First name</label><br>
+                                <input class="form-control shadow-none" formControlName="firstname"><br>
+                            </div>
+                            <div class="col">
+                                <label style="color: gray;">Middle name</label><br>
+                                <input class="form-control shadow-none" formControlName="middlename"><br>
+                            </div>
+                            <div class="col">
+                                <label style="color: gray;">Last name</label><br>
+                                <input class="form-control shadow-none" formControlName="lastname"><br>
+                            </div>
+                        </div>
+                        <label style="color: gray;">Designation</label><br>
+                        <input class="form-control shadow-none" formControlName="designation"><br>
+                        <label *ngIf=" mail!=selectedUser.mail" style="color: gray;">Role</label><br>
+                        <select class="form-select" formControlName="role" style="width: 100%;"
+                            *ngIf=" mail!=selectedUser.mail">
+                            <option value="admin">Admin</option>
+                            <option value="faculty">Faculty</option>
+                            <option value="student">Student</option>
+                        </select>
+                        <button style="background: #1b1c1e;" id="b" (click)="save()">Save</button>
+                        <button style="background:#a5081a" id="b" (click)="edit=false">Close</button>
+                    </form>
+                </ng-template>
+
+
+            </div>
+            <ng-template #empty>
+                <div class="aligncenter">
+                    Please select user
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+</div>
+<ng-template #nodat>
+    <div style="display: flex;justify-content: center;align-items: center;height: 90vh;">
+        <div style="text-align: center;">
+            <img src="../../../assets/pleasewait.gif"><br>
+            <h5><strong>Time to relax !!!</strong></h5>
+        </div>
+    </div>
+
+</ng-template>

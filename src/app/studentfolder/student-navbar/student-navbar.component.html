@@ -1,0 +1,338 @@
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<body>
+    <div [ngClass]="navMode ? 'sidebar active' : 'sidebar'">
+        <div class="logo_content">
+            <div class="logo">
+                <div class="logo_name" style="font-family: 'Poppins', sans-serif;">Arikya</div>
+            </div>
+            <i class='bx bx-menu-alt-right' (click)=" changeNav()" id="btn"></i>
+        </div>
+        <ul class="nav_list">
+            <li *ngFor="let i of content">
+                <a (click)="show=false" [routerLink]="i.rlink" routerLinkActive="clicked"><span id="cick"></span>
+                    <i [class]='i.icon'></i>
+                    <span class="links_name">{{i.label}}</span>
+                </a>
+                <span class="tooltip">{{i.label}}</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="home_content">
+        <nav class="navbar navstyle">
+            <strong style="text-align: left;font-size: 1rem;">{{collegeName}}</strong>
+            <div style="font-size: 0.8rem;">
+                <div ngbDropdown class="d-inline-block">
+                    <button style="color: #00B0FF;margin-right: 1rem;" class="btn shadow-none" id="dropdownBasic1"
+                        ngbDropdownToggle (click)="notification()"><i class='bx bx-envelope'></i>
+                    </button><br>
+                    <div class="table-responsive" ngbDropdownMenu aria-labelledby="dropdownBasic1"
+                        style="width: 25vw;max-height: 60vh;right: 0.005vw;padding: 1rem;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;background-color: #f4f7fb;border: none;">
+                        <h5 style="position: fixed;top:10%;right:5%;cursor: pointer;" (click)="notification()"><i
+                                class='bx bx-refresh bx-tada bx-flip-horizontal'></i></h5>
+                        <br /><br />
+                        <div *ngIf="combinedata.length>0 else nodata">
+                            <span *ngFor="let c of combinedata">
+                                <!-- <div *ngIf="(all.length!=0)"
+                                style="color: grey;font-size:14px;font-weight: 500;padding: 12px 16px;">
+                                <span *ngFor="let c of all">
+                                    <span *ngIf="c.verified!=''">
+                                        {{c.verifiedby}}
+                                        <span *ngIf="c.verified=='accepted'">accepted </span>
+                                        <span *ngIf="c.verified=='rejected'">rejected </span> your
+                                        <strong>{{c.field}} changes</strong> from <strong>{{c.prev}}</strong> to
+                                        <strong>{{c.current}}</strong>
+                                        on {{ c.date
+                                        |
+                                        date:'medium'}}
+                                    </span>
+                                    <span *ngIf="c.verified==''">
+                                        You have requested to change<strong>{{c.field}} </strong> from
+                                        <strong>{{c.prev}}</strong> to
+                                        <strong>{{c.current}}</strong>
+                                    </span>
+
+                                    <br><br>
+                                    <br>
+                                    <hr>
+                                </span>
+                            </div>
+                            <div *ngFor="let c of placenotify"
+                                style="color: grey;font-size:14px;font-weight: 500;padding: 12px 16px;">
+                                <div *ngIf="mail==c.mail">
+                                    your offer was <span *ngIf="c.placed=='no'">rejected</span> <span
+                                        *ngIf="c.placed=='yes'">accepted</span>
+                                    for {{c.companyname}} in {{c.placementcyclename}}
+                                </div>
+                                <br><br>
+                                <hr>
+                            </div>
+                            <div *ngIf="adminotifications.length!=0">
+                                <div *ngFor="let c of adminotifications"
+                                    style="color: grey;font-size:14px;font-weight: 500;padding: 12px 16px;">
+                                    {{c.firstname}} {{c.reason}} on {{c.date | date:'medium'}}
+                                    <br><br>
+                                    <hr>
+                                </div>
+                            </div> -->
+
+                                <div *ngIf="c.rollnumber && c.mail && c.verified"
+                                    style="background-color: #fff;margin-bottom: 0.5rem;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding: 0.5rem;border-radius: 7px;">
+
+                                    <span *ngIf="c.verified!='' && c.verified">
+
+                                        {{c.verifiedby}}
+                                        <span *ngIf="c.verified=='accepted'">accepted </span>
+                                        <span *ngIf="c.verified=='rejected'">rejected </span> your
+                                        <strong>{{c.field}} changes</strong> from <strong>{{c.prev}}</strong> to
+                                        <strong>{{c.current}}</strong>
+                                        on {{ c.date
+                                        |
+                                        date:'medium'}}
+                                    </span>
+                                    <span *ngIf="c.verified==''">
+                                        You have requested to change<strong>{{c.field}} </strong> from
+                                        <strong>{{c.prev}}</strong> to
+                                        <strong>{{c.current}}</strong>
+                                    </span>
+
+                                </div>
+
+
+                                <div style="background-color: #fff;margin-bottom: 0.5rem;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding: 0.5rem;border-radius: 7px;"
+                                    *ngIf="mail==c.mail && c.companyname">
+                                    your offer was <span *ngIf="c.placed=='no'">rejected</span> <span
+                                        *ngIf="c.placed=='yes'">accepted</span>
+                                    for {{c.companyname}} in {{c.placementcyclename}}
+                                </div>
+
+
+                                <div style="background-color: #fff;margin-bottom: 0.5rem;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding: 0.5rem;border-radius: 7px;"
+                                    *ngIf="c.reason">
+                                    {{c.firstname}} {{c.reason}} on {{c.date | date:'medium'}}
+                                </div>
+
+
+
+                            </span>
+                            <div *ngIf="all.length==0 && adminotifications.length==0">
+                                <ng-template style="color: grey;font-size:14px;font-weight: 500;margin-right: 1vw;">
+                                    <div style="padding: 2rem;padding-top: 0rem;">No modifications in student profiles
+                                        yet !
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <ng-template #nodata>
+                            <div class="text-center">
+                                No updates yet !
+                            </div>
+                        </ng-template>
+                    </div>
+
+                </div>
+                <div ngbDropdown class="d-inline-block">
+                    <button style="color: #fff;margin-right: 1rem;" class="btn shadow-none" id="dropdownBasic1"
+                        ngbDropdownToggle><span class="dot1" style="color: white;"><strong>{{pId}}</strong></span>
+                    </button><br>
+                    <div class="table-responsive" ngbDropdownMenu aria-labelledby="dropdownBasic1"
+                        style="width: 15vw;max-height: 60vh;right: 0.005vw;text-align: center;">
+                        <span
+                            style="display: flex;justify-content: center;align-items: center;margin: 2rem;margin-bottom: 0rem;">
+                            <span>
+                                <span class="dot">
+                                    <h1 style="color:white ;">{{pId}}</h1>
+                                </span><br>
+
+                            </span>
+                        </span>
+                        <span>{{firstname}}</span><br><span style="font-size: 0.7rem;">{{mail}}</span><br><br>
+                        <div style="padding: 1rem;padding-top: 0rem;background-color: #f4f7fb;">
+                            <br>
+                            <span
+                                style="display: flex;justify-content: center;align-items: center;justify-content: center;">
+                                <span [routerLink]="['/student/profile']"><i
+                                        style="font-size:1.2rem;color: #00B0FF;margin-left: 1rem;cursor: pointer;"
+                                        class='bx bxs-user-detail'></i></span><br>
+                                <span [routerLink]="['/student/changepassword']"><i
+                                        style="font-size:1.2rem;color: #00B0FF;margin-left: 1rem;cursor: pointer;"
+                                        class='bx bx-key'></i></span><br>
+                                <span [routerLink]="['/student/editprofile']"><i
+                                        style="font-size:1.2rem;color: #00B0FF;margin-left: 1rem;cursor: pointer;"
+                                        class='bx bxs-edit-alt'></i></span><br>
+                            </span><br>
+                            <span (click)="logout()" style="font-size:0.8rem;cursor: pointer;"><i
+                                    style="color: #00B0FF;font-size: 1.2rem;" class='bx bx-log-out bx-tada'></i> SIGN
+                                OUT</span>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- <span *ngIf="show" class="green-box ">
+                <span>
+                  <div style="padding:2%;padding-top: 4%;display: flex;justify-content: center;align-items: center;">
+                    <span class="dot" style="z-index: 6;">
+                      <h1 style="color:white ;">{{firstname.charAt(0)}}</h1>
+                    </span>
+                  </div><br>
+                  <h5 style="color:#1c1e55;float: right;" (click)="show=!show" [routerLink]="['student/editprofile']">
+                    <i class='bx bxs-pencil'></i>
+                  </h5>
+                  <span><strong>{{firstname | uppercase}}</strong></span> <br><br>
+                  <hr>
+        
+                  <br>
+                  <span style="font-size:3px" [routerLink]="['student/profile']" (click)="show=!show"
+                    style="cursor: pointer;"><strong><i class='bx bxs-user'></i> &nbsp;PROFILE</strong></span><br><br>
+                  <span style="font-size:11px" [routerLink]="['student/changepass']" (click)="show=!show"
+                    style="cursor: pointer;"><i class='bx bxs-lock-alt'></i>&nbsp;Change PASSWORD</span><br>
+                  <br>
+                  <hr><br>
+                  <span (click)="logout()" style="cursor: pointer;display: flex;justify-content: center;align-items: center;">
+                    <h3 style="color:#1c1e55;"><i class='bx bxs-log-out-circle bx-tada'></i></h3>
+                    <strong>Sign out</strong>
+                  </span>
+                </span>
+              </span> -->
+
+            <!-- <span style="justify-content: flex-end;">
+                <button class="btn" (click)="det()"
+                    style="color: grey;font-size:14px;font-weight: 500;margin-right: 1vw;">
+                    <button type="button" class="btn btn-primary">
+                        &nbsp; <i class='bx bxs-bell'></i>&nbsp; <span class="badge badge-light"> details
+                            verification{{notyet.length}}</span>&nbsp;
+                    </button>
+                </button>
+
+
+                <button class="btn" (click)="admindet()"
+                    style="color: grey;font-size:14px;font-weight: 500;margin-right: 1vw;">
+                    <button type="button" class="btn btn-primary">
+                        &nbsp; <i class='bx bxs-bell'></i>&nbsp; <span
+                            class="badge badge-light">adminotifications</span>&nbsp;
+                    </button>
+                </button>
+
+                <button class="btn" (click)="comdet()"
+                    style="color: grey;font-size:14px;font-weight: 500;margin-right: 1vw;">
+                    <button type="button" class="btn btn-primary">
+                        &nbsp; <i class='bx bxs-bell'></i>&nbsp; <span class="badge badge-light">
+                            offerletter
+                            {{comnotify.length}}</span>&nbsp;
+                    </button>
+                </button>
+
+                <button class="btn" (click)="show=!show;shownot=false"
+                    style="color: grey;font-size:12px;font-weight: 500;">
+                    <span class="dot1" style="color: white;"><strong>{{firstname.charAt(0)}}</strong></span>
+
+                </button>
+            </span> -->
+
+
+        </nav>
+        <div>
+            <div>
+                <router-outlet></router-outlet>
+            </div>
+
+            <!-- <span *ngIf="shownot " class="noti">
+                <span *ngIf=" all.length!=0 else nostu">
+                    <span *ngFor="let c of all" style="padding: 1vw;justify-content: left;align-items: left;">
+                        {{c.fullname}} {{c.rollnumber}} changed
+                        <strong>{{c.field}}</strong> from <strong>{{c.prev}}</strong> to
+                        <strong>{{c.current}}</strong>
+                        on {{ c.date
+                        |
+                        date:'medium'}} <br><br>
+                        <button class="btn btn-primary" *ngIf="c.verified=='notyet'"
+                            (click)="accept(c,'accepted')">ACCEPT</button>&nbsp;&nbsp;
+                        <button class="btn btn-danger" *ngIf="c.verified=='notyet'"
+                            (click)="accept(c,'rejected')">REJECT</button>
+
+                        <button class="btn btn-primary" *ngIf="c.verified=='accepted'">ACCEPTED by
+                            {{c.verifiedby}}</button>&nbsp;&nbsp;
+                        <button class="btn btn-danger" *ngIf="c.verified=='rejected'">REJECTED by
+                            {{c.verifiedby}}</button>
+                    </span>
+                </span>
+                <ng-template #nostu>
+                    No modifications in student profiles yet !
+                </ng-template>
+            </span>
+
+            <span *ngIf="showadminoti" class="green-box ">
+                <span *ngIf="adminotifications.length!=0 else noadmin">
+                    <span *ngFor="let c of adminotifications"
+                        style="padding: 1vw;justify-content: left;align-items: left;">
+                        {{c.firstname}} {{c.reason}} on {{c.date | date:'medium'}}
+                        <br><br>
+                    </span>
+                </span>
+                <ng-template #noadmin>
+                    No modifications in placementcycles yet !
+                </ng-template>
+            </span>
+
+            <span *ngIf="showcomnot" class="green-box ">
+                <span *ngFor="let c of comnotify">
+                    <span *ngIf="c.placed==''||c.placed=='not yet'">
+                        {{c.rollnumber}} uploaded offerletter of {{c.companyname}} in
+                        {{c.placementcyclename}}<br>
+                        Offer {{c.offerstatus}}
+                        <br>
+                        <span style="cursor: pointer;" (click)="download(c)"><i
+                                class='bx bxs-download bx-flip-horizontal bx-tada'></i>click here to
+                            download</span>
+                        <br>
+                        <br>
+                        <div *ngIf="c.offerstatus=='accepted'">
+                            <button class="btn btn-primary" (click)="acceptnot(c,'yes')">ACCEPT</button>&nbsp;&nbsp;
+                            <button class="btn btn-danger" (click)="acceptnot(c,'no')">REJECT</button>
+                        </div>
+                        <div *ngIf="c.offerstatus=='rejected'">
+                            <button class="btn btn-primary" (click)="acceptnot(c,'no')">ACCEPT</button>&nbsp;&nbsp;
+                            <button class="btn btn-danger" (click)="acceptnot(c,'yes')">REJECT</button>
+                        </div>
+                        <button style="margin-top: 10px;" class="btn btn-warning" (click)="acceptnot(c,'onhold')">ASK TO
+                            RESUBMIT</button>
+                    </span>
+                </span>
+            </span>
+
+            <span *ngIf="show" class="green-box ">
+                <span>
+                    <div style="padding:2%;padding-top: 4%;display: flex;justify-content: center;align-items: center;">
+                        <span class="dot" style="z-index: 6;">
+
+                            <h1 style="color:white ;">{{firstname.charAt(0)}}</h1>
+                        </span>
+                    </div><br>
+                    <h5 style="color:#1c1e55;float: right;" (click)="show=!show" [routerLink]="['rlink/editadmin']">
+                        <i class='bx bxs-pencil'></i>
+                    </h5>
+                    <span><strong>{{firstname | uppercase}}</strong></span> <br>
+                    <br>
+                    <span style="font-size:3px" [routerLink]="['rlink/aboutadmin']" (click)="show=!show"
+                        style="cursor: pointer;"><strong><i class='bx bxs-user'></i>
+                            &nbsp;PROFILE</strong></span><br><br>
+                    <span style="font-size:11px" [routerLink]="['rlink/changepassword']" (click)="show=!show"
+                        style="cursor: pointer;"><i class='bx bxs-lock-alt'></i>&nbsp;Change PASSWORD</span><br>
+                    <br>
+                    <hr><br>
+                    <span (click)="logout()"
+                        style="cursor: pointer;display: flex;justify-content: center;align-items: center;">
+                        <h3 style="color:#1c1e55;"><i class='bx bxs-log-out-circle bx-tada'></i></h3>
+                        <strong>Sign out</strong>
+                    </span>
+                </span>
+            </span> -->
+
+        </div>
+    </div>
+</body>
