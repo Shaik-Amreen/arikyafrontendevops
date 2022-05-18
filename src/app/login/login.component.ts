@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     ]
   mail = ''; otp = ''; generatedotp = ''; timeRemained = 120; invalidotp = false; mailerr = ''
   loginMode = true; logindata = false; errorMessage = ''; vepa: any = false;
-  formvalue = false;
+  formvalue = false;signin="Sign In"
   ngOnInit() {
 
   }
@@ -51,8 +51,10 @@ export class LoginComponent implements OnInit {
     // console.log("login")
     this.formvalue = true;
     if (this.formgroupdata.status == 'VALID') {
+      this.signin = "Signing... In"
       this.commonservice.postrequest('findoneusers', this.formgroupdata.value).subscribe(
         (res1: any) => {
+          this.signin = "Sign In";
           // console.log("signinworks", res1);
           (res1.status == 'error') ? this.errorMessage = res1.error :
             sessionStorage.setItem('mail', this.formgroupdata.value.mail); sessionStorage.setItem('token', res1.token); sessionStorage.setItem('organisation_id', res1.organisation_id);

@@ -20,15 +20,46 @@ export class CompanydetailsComponent implements OnInit {
   ch = 0; deadline = ''; errdate = ''; mailstatus = 'SEND MAIL'; eligible = 0; registered = 0; comselected = ''; addstatus = 'ADD STUDENTS'; currentIndex = -1
   eligibility: any[] = []; hiringflow: any[]
   allcom = [{ companyname: '' }]; listofstu = []; relen = 0; placed = 0; nextIndex = 0
+
+  lastItem: any
+  image = "../../../../assets/companylogo.jpg";
+  tempimg = "../../../../assets/companylogo.jpg";
+  saveimg: any = "save"; popup: any = ""; imagemodal = "none"
+  saveButton: any = "SAVE"
+  saveButtonStatus: any = 'SAVE'
+  dataForExcel: any = []
+  single: any = 'ADD'
+
   constructor(private http: HttpClient, private commonservice: CommonService, private route: Router, public ete: ExportExcelService) {
     this.firstcall()
   }
 
-  lastItem: any
-  firstcall() {
+
+  datainitialize(){
+    this.display = false;
+    this.companydetails = {}; this.data = []; this.nowshorted = []; this.rejectedlist = []; this.nodata = false
+    this.mapping = [];
+    this.singlestudent = ''
+    this.uploadindex = -5
+    this.objkey = [];
+    this.applicantslist = []; this.setedit = false
+    this.ch = 0; this.deadline = ''; this.errdate = ''; this.mailstatus = 'SEND MAIL'; this.eligible = 0; this.registered = 0; this.comselected = ''; this.addstatus = 'ADD STUDENTS'; this.currentIndex = -1
+    this.eligibility = [];this.hiringflow=[]
+    this.allcom = [{ companyname: '' }]; this.listofstu = []; this.relen = 0; this.placed = 0; this.nextIndex = 0;
+    this.image = "../../../../assets/companylogo.jpg";
+    this.tempimg = "../../../../assets/companylogo.jpg";
+    this.saveimg = "save"; this.popup = ""; this.imagemodal = "none"
+    this.saveButton = "SAVE"
+    this.saveButtonStatus = 'SAVE'
+    this.dataForExcel = []
+    this.single = 'ADD'
     sessionStorage.removeItem('editcompany')
     sessionStorage.removeItem('editcompany')
     this.mailstatus = 'SEND MAIL'; this.addstatus = 'ADD STUDENTS'
+  }
+
+  firstcall() {
+    this.datainitialize()
     this.commonservice.postrequest('company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (res: any) => {
         // console.log(res);
@@ -71,6 +102,7 @@ export class CompanydetailsComponent implements OnInit {
     );
 
   }
+
   getWorkflow() {
     this.lastItem = false
     this.commonservice.postrequest('hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
@@ -99,8 +131,7 @@ export class CompanydetailsComponent implements OnInit {
     )
   }
 
-  image = "../../../../assets/companylogo.jpg";
-  tempimg = "../../../../assets/companylogo.jpg";
+
   handleFileSelect(evt: any) {
     var reader = new FileReader;
     reader.readAsDataURL(evt.target.files[0]);
@@ -112,7 +143,7 @@ export class CompanydetailsComponent implements OnInit {
     evt.target.value = "";
   }
 
-  saveimg: any = "save"; popup: any = ""; imagemodal = "none"
+
   remove() {
     this.tempimg = "../../../../assets/companylogo.jpg"
   }
@@ -213,7 +244,7 @@ export class CompanydetailsComponent implements OnInit {
     window.location.reload()
   }
 
-  saveButton: any = "SAVE"
+
   onfilesubmit(evt: any, i: any) {
 
     this.uploadindex = i
@@ -299,7 +330,7 @@ export class CompanydetailsComponent implements OnInit {
   }
 
 
-  saveButtonStatus: any = 'SAVE'
+
 
   savethelist() {
     // console.log(this.currentIndex, "llllllllllllllllllllllllllllll", this.relen)
@@ -338,7 +369,7 @@ export class CompanydetailsComponent implements OnInit {
   //   XLSX.writeFile(wb, fileplacementcyclename);
   // }
 
-  dataForExcel: any = []
+
   exportexcel() {
     this.dataForExcel = []
     this.applicantslist.forEach((row: any) => {
@@ -352,8 +383,8 @@ export class CompanydetailsComponent implements OnInit {
     }
     this.ete.exportExcel(reportData);
   }
-
-  single: any = 'ADD'
+  
+  
 
 
 
