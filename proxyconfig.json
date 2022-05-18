@@ -1,11 +1,11 @@
 {
     "*": {
-        "target": "/api",
+        "target": "http://3.110.55.90:4000",
         "secure": "false",
         "changeOrigin": true,
         "logLevel": "debug",
         "pathRewrite": {
-            "^": "/api"
+            "^": "http://3.110.55.90:4000"
         }
     }
 }
