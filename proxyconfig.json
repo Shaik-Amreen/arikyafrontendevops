@@ -1,11 +1,11 @@
 {
     "*": {
-        "target": "http://3.110.55.90:4000",
+        "target": "http://13.233.7.193:4000",
         "secure": "false",
         "changeOrigin": true,
         "logLevel": "debug",
         "pathRewrite": {
-            "^": "http://3.110.55.90:4000"
+            "^": "http://13.233.7.193:4000"
         }
     }
 }
