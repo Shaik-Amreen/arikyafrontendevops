@@ -14,7 +14,7 @@ export class CompanyplacementshomeComponent implements OnInit {
     sessionStorage.removeItem('editcompany')
     if (sessionStorage.getItem("placementcyclename") != null) { sessionStorage.removeItem("placementcyclename"); }
     this.exists = false;
-    this.commonservice.postrequest('Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         // console.log(res)
         this.data = res.filter((e: any) => new Date(e.todate) > new Date())

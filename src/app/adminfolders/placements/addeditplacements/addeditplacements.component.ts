@@ -17,7 +17,7 @@ export class AddeditplacementsComponent implements OnInit {
 
 
     if (sessionStorage.getItem('editplacements') == 'yes') {
-      this.commonservice.postrequest('Placement/findonePlacement', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
+      this.commonservice.postrequest('http://localhost:4000/Placement/findonePlacement', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
         (res: any) => {
           res = res.docs
           let form: any = {}
@@ -137,7 +137,7 @@ export class AddeditplacementsComponent implements OnInit {
     this.placementdata = true;
     if (this.formgroupdata.status == 'VALID') {
       if (sessionStorage.getItem('editplacements') == 'yes') {
-        this.commonservice.postrequest('Placement/updatePlacement', this.formgroupdata.value).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/Placement/updatePlacement', this.formgroupdata.value).subscribe(
           (res: any) => {
             sessionStorage.removeItem('editplacements')
             this.router.navigate(['/admin/placements'])
@@ -147,7 +147,7 @@ export class AddeditplacementsComponent implements OnInit {
         );
       }
       else {
-        this.commonservice.postrequest('Placement/createPlacement', this.formgroupdata.value).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/Placement/createPlacement', this.formgroupdata.value).subscribe(
           (res: any) => {
             if (res.message == 'success') { this.router.navigate(['/admin/placements']); sessionStorage.setItem('successpopup', 'success') }
             else { this.errorMsg = 'Placement already exists' }

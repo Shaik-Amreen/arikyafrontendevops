@@ -87,7 +87,7 @@ export class AttemptquizComponent implements OnInit {
       }
     }
 
-    this.commonservice.postrequest('Practice/getquiztestquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "quiz", mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/getquiztestquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "quiz", mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         // console.log("res----------->", res)
         this.get = true;
@@ -224,7 +224,7 @@ export class AttemptquizComponent implements OnInit {
     console.log(this.quesvisit)
     let rating = { quesvisit: this.quesvisit, mail: this.mail, tabcount: this.tabcount, starttime: this.starttime, timeremained: `${this.minutes}:${this.seconds}`, topic: sessionStorage.getItem('topic'), marks: this.result, attemptedquiz: this.quiz.questions, organisation_id: sessionStorage.getItem("organisation_id") }
     // console.log("ratings:", rating)
-    this.commonservice.postrequest('Practice/quizratingstudentupdate', rating).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/quizratingstudentupdate', rating).subscribe(
       (res: any) => {
         // console.log("updated quiz", res, count++);
         this.quiz.endson = res.endson
@@ -321,7 +321,7 @@ export class AttemptquizComponent implements OnInit {
   test = true;
   // taketest(){
   //   console.log(this.topicname)
-  //    this.commonservice.postrequest('Practice/getquestions',{topic :this.topicname}).subscribe(
+  //    this.commonservice.postrequest('http://localhost:4000/Practice/getquestions',{topic :this.topicname}).subscribe(
   //       res=>{
   //         console.log(res.data);
   //         this.quiz = res.data;
@@ -346,7 +346,7 @@ export class AttemptquizComponent implements OnInit {
 
   // taketest(){
   //   console.log(this.topicname)
-  //    this.commonservice.postrequest('Practice/getquestions',{topic :this.topicname}).subscribe(
+  //    this.commonservice.postrequest('http://localhost:4000/Practice/getquestions',{topic :this.topicname}).subscribe(
   //       res=>{
   //         console.log(res);
   //         this.quiz = res;
@@ -431,7 +431,7 @@ export class AttemptquizComponent implements OnInit {
     // let a = 0
     let rating = { mail: this.mail, quesvisit: this.quesvisit, organisation_id: sessionStorage.getItem("organisation_id"), tabcount: this.tabcount, starttime: this.starttime, endtime: new Date(), timeremained: `${this.minutes}.${this.seconds}`, topic: sessionStorage.getItem('topic'), marks: this.result, attemptedquiz: this.quiz.questions }
     console.log("kuykugvkyhtvyv")
-    this.commonservice.postrequest('Practice/quizratingstudent', rating).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/quizratingstudent', rating).subscribe(
       (res: any) => {
         console.log("ressssssssssss", res)
         this.testtimeout()

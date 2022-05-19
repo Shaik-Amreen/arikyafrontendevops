@@ -191,7 +191,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
       profilepic: new FormControl(""),
     });
 
-    this.commonservice.postrequest('Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail') }).subscribe(
       (res: any) => {
         this.data = res;
         // console.log("ressssssssssssssssssssssss", res)
@@ -207,7 +207,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
         this.nodata = true
       })
 
-    this.commonservice.postrequest('placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
 
         // console.log("this.overdata", res);
@@ -223,7 +223,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
     this.getdata = true
 
     // console.log(this.getdata, "llllllllllllllllll")
-    this.commonservice.postrequest('placementstatus/checkmailnumber', {
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', {
       organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail')
     }).subscribe(
       (res: any) => {
@@ -234,12 +234,12 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
       (err: any) => console.log(err)
     );
 
-    // this.commonservice.postrequest('Dashboard/allcodequiztestratings', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    // this.commonservice.postrequest('http://localhost:4000/Dashboard/allcodequiztestratings', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
     //   (res: any) => {
     //     console.log("res.data",res.data)
     //   })
 
-    this.commonservice.postrequest('Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("studentmail") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("studentmail") }).subscribe(
       (res: any) => {
         // console.log("res.data", res)
         this.stdallcodedata = res.stdallcodedata
@@ -329,7 +329,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
       this.data.data.profilepic = this.image;
       // console.log(this.data.data.profilepic)
     }
-    this.commonservice.postrequest('Studentdata/updatestudentdatac', this.data.value).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac', this.data.value).subscribe(
       (res: any) => {
       })
     evt.target.value = "";
@@ -337,7 +337,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
 
   // verify() {
   //   this.data.data.verified = 'yes'
-  //   this.commonservice.postrequest('Studentdata/updateverified', this.data.data).subscribe(
+  //   this.commonservice.postrequest('http://localhost:4000/Studentdata/updateverified', this.data.data).subscribe(
   //     (res: any) => { this.data.data = res.data; console.log(this.data) },
   //     (err: any) => console.log(err)
   //   );
@@ -345,7 +345,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
 
   // resubmit() {
   //   this.data.data.verified = 'no'
-  //   this.commonservice.postrequest('Studentdata/askfreeze', this.data.data).subscribe(
+  //   this.commonservice.postrequest('http://localhost:4000/Studentdata/askfreeze', this.data.data).subscribe(
   //     (res: any) => { this.data.data = res.data; },
   //     (err: any) => console.log(err)
   //   );
@@ -353,7 +353,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
 
   // freeze() {
   //   this.data.data.freeze = 'yes';
-  //   this.commonservice.postrequest('Studentdata/askfreeze', this.data.data).subscribe(
+  //   this.commonservice.postrequest('http://localhost:4000/Studentdata/askfreeze', this.data.data).subscribe(
   //     (res: any) => { this.data.data = res.data; },
   //     (err: any) => console.log(err)
   //   );
@@ -361,7 +361,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
 
   // unfreeze() {
   //   this.data.data.freeze = 'no'
-  //   this.commonservice.postrequest('Studentdata/askunfreeze', this.data.data).subscribe(
+  //   this.commonservice.postrequest('http://localhost:4000/Studentdata/askunfreeze', this.data.data).subscribe(
   //     (res: any) => { this.data.data = res.data; },
   //     (err: any) => console.log(err)
   //   );
@@ -369,7 +369,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
 
   // accept(c: any, d: any) {
   //   c.verified = d;
-  //   this.commonservice.postrequest('notification/updatenotifications', c).subscribe(
+  //   this.commonservice.postrequest('http://localhost:4000/notification/updatenotifications', c).subscribe(
   //     (res: any) => {
   //       this.notdat = this.notdat - 1
   //     },
@@ -379,7 +379,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
 
 
   fillform() {
-    this.commonservice.postrequest('Studentdata/findstudentdetails', {
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', {
       organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail')
     }).subscribe(
       (res: any) => {
@@ -458,7 +458,7 @@ export class FacultyAdminstudentprofileComponent implements OnInit {
   //     }
 
   //     else {
-  //       this.commonservice.postrequest('notification/postnotifications', finaldat).subscribe(
+  //       this.commonservice.postrequest('http://localhost:4000/notification/postnotifications', finaldat).subscribe(
   //         (res1: any) => {
   //           console.log(res1)
   //           alert('successfully saved');

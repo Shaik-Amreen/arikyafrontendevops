@@ -18,7 +18,7 @@ export class CampusplacementreportsComponent implements OnInit {
   campusplacementdata: any = []; campusplacementdatadeptwise: any = {}; companyplacementdata: any = []; companyplacements: any = []
   constructor(private commonservice: CommonService, public ete: ExportExcelService) {
 
-    this.commonservice.postrequest('Studentdata/dashboardcampusreports', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/dashboardcampusreports', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
       (ress: any) => {
 
         this.data = true

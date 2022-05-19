@@ -71,7 +71,7 @@ export class AddeditcompanyComponent implements OnInit {
     {
       tags: 'combine', 'cname': 'col-sm-6', fields: [
         { "formname": "dateofvisit", "value": "not updated", "tags": "input", type: "date", label: "Date of visit" },
-        { "value": "", "label": "Company Function", "formname": "companyfunction", "tags": "input", "type": "text", "valid": true, "placeholder": "Company function", "patternerror": "Invalid company function", validations: [Validators.required]},
+        { "value": "", "label": "Company Function", "formname": "companyfunction", "tags": "input", "type": "text", "valid": true, "placeholder": "Company function", "patternerror": "Invalid company function", validations: [Validators.required] },
       ]
     },
     // { "value": "", "label": "Company Function", "formname": "companyfunction", "tags": "input", "type": "text", "valid": true, "placeholder": "Company function", "patternerror": "Invalid company function", validations: [Validators.required, Validators.pattern("^[A-Za-z0-9 ]+$")] },
@@ -175,7 +175,7 @@ export class AddeditcompanyComponent implements OnInit {
     })
 
     //for suggestions of company companyname
-    this.commonservice.postrequest('company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => this.data = res,
       (err: any) => console.log(err)
     )
@@ -251,7 +251,7 @@ export class AddeditcompanyComponent implements OnInit {
   alreadydata: any = []
   fillForm(d: any) {
     this.suggestions = false
-    this.commonservice.postrequest('company/findcompany', d).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findcompany', d).subscribe(
       (res: any) => {
 
         for (let i of res.companydetails.eligibilties) {
@@ -259,7 +259,7 @@ export class AddeditcompanyComponent implements OnInit {
           this.deptstoredata.push(i[0].ff)
         }
 
-        this.commonservice.postrequest('placementstatus/getHiring', d).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/placementstatus/getHiring', d).subscribe(
           (response: any) => {
 
             this.alreadydata = response
@@ -455,7 +455,7 @@ export class AddeditcompanyComponent implements OnInit {
         // console.log("url,this.addcompanyform.value", url, this.addcompanyform.value)
         this.commonservice.postrequest(url, this.addcompanyform.value).subscribe(
           (res: any) => {
-            this.commonservice.postrequest('notification/postadminoti', temp).subscribe(
+            this.commonservice.postrequest('http://localhost:4000/notification/postadminoti', temp).subscribe(
               (res1: any) => {
                 // console.log(res)
                 if (res.message == 'success') { this.router.navigate(['/admin/placements/placementsdetails']); sessionStorage.setItem("successpopup", 'success') }
@@ -666,7 +666,7 @@ export class AddeditcompanyComponent implements OnInit {
     })
 
     //for suggestions of company companyname
-    this.commonservice.postrequest('company/findallcompany', { college_id: sessionStorage.getItem("college_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { college_id: sessionStorage.getItem("college_id") }).subscribe(
       (res: any) => this.data = res,
       (err: any) => console.log(err)
     )

@@ -351,7 +351,7 @@ export class AdminstudentprofileComponent implements OnInit {
       profilepic: new FormControl(""),
     });
 
-    this.commonservice.postrequest('Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail') }).subscribe(
       (res: any) => {
         this.course = res.data.course
         this.data = res.data;
@@ -372,7 +372,7 @@ export class AdminstudentprofileComponent implements OnInit {
         this.nodata = true
       })
 
-    this.commonservice.postrequest('placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
 
         // console.log("this.overdata", res); 
@@ -388,7 +388,7 @@ export class AdminstudentprofileComponent implements OnInit {
     this.getdata = true
 
     // console.log(this.getdata, "llllllllllllllllll")
-    this.commonservice.postrequest('placementstatus/checkmailnumber', {
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', {
       organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail')
     }).subscribe(
       (res: any) => {
@@ -398,7 +398,7 @@ export class AdminstudentprofileComponent implements OnInit {
       },
       (err: any) => console.log(err)
     );
-    this.commonservice.postrequest('Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("studentmail") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("studentmail") }).subscribe(
       (res: any) => {
         // console.log("res.data", res)
         this.stdallcodedata = res.stdallcodedata
@@ -452,7 +452,7 @@ export class AdminstudentprofileComponent implements OnInit {
     this.data.profilepic = this.image;
     this.saveimg = "saving..."
     this.data.organisation_id = sessionStorage.getItem("organisation_id")
-    this.commonservice.postrequest('Studentdata/updatestudentdatac', this.data).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac', this.data).subscribe(
       (res: any) => {
         this.imagemodal = "none"
         this.saveimg = "save"
@@ -467,7 +467,7 @@ export class AdminstudentprofileComponent implements OnInit {
 
   verify() {
     this.data.verified = 'yes'
-    this.commonservice.postrequest('Studentdata/updateverified', this.data).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/updateverified', this.data).subscribe(
       (res: any) => { this.data = res.data; console.log(this.data) },
       (err: any) => console.log(err)
     );
@@ -475,7 +475,7 @@ export class AdminstudentprofileComponent implements OnInit {
 
   resubmit() {
     this.data.verified = 'no'
-    this.commonservice.postrequest('Studentdata/askfreeze', this.data).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/askfreeze', this.data).subscribe(
       (res: any) => { this.data = res.data; },
       (err: any) => console.log(err)
     );
@@ -483,7 +483,7 @@ export class AdminstudentprofileComponent implements OnInit {
 
   freeze() {
     this.data.freeze = 'yes';
-    this.commonservice.postrequest('Studentdata/askfreeze', this.data).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/askfreeze', this.data).subscribe(
       (res: any) => { this.data = res.data; },
       (err: any) => console.log(err)
     );
@@ -491,7 +491,7 @@ export class AdminstudentprofileComponent implements OnInit {
 
   unfreeze() {
     this.data.freeze = 'no'
-    this.commonservice.postrequest('Studentdata/askunfreeze', this.data).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/askunfreeze', this.data).subscribe(
       (res: any) => { this.data = res.data; },
       (err: any) => console.log(err)
     );
@@ -499,7 +499,7 @@ export class AdminstudentprofileComponent implements OnInit {
 
   accept(c: any, d: any) {
     c.verified = d;
-    this.commonservice.postrequest('notification/updatenotifications', c).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/notification/updatenotifications', c).subscribe(
       (res: any) => {
         this.notdat = this.notdat - 1
       },
@@ -509,7 +509,7 @@ export class AdminstudentprofileComponent implements OnInit {
 
 
   fillform() {
-    this.commonservice.postrequest('Studentdata/findstudentdetails', {
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', {
       organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail')
     }).subscribe(
       (res: any) => {
@@ -588,12 +588,12 @@ export class AdminstudentprofileComponent implements OnInit {
       //   // this.router.navigate(['admin/studentprofile'])
       // }
       // else {
-      //   this.commonservice.postrequest('Studentdata/updatestudentdatac',
+      //   this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac',
       //     this.studentForm.value).subscribe(
       //       (res: any) => {
       //         console.log(res, "llllllllllllllllllllllllllllllllllllllllllll")
       //         if (res.message == 'success') {
-      //           this.commonservice.postrequest('notification/postnotifications', finaldat).subscribe(
+      //           this.commonservice.postrequest('http://localhost:4000/notification/postnotifications', finaldat).subscribe(
       //             (res1: any) => {
       //               console.log("res1", res1)
       //               this.edit = !this.edit
@@ -606,7 +606,7 @@ export class AdminstudentprofileComponent implements OnInit {
       //       (err: any) => console.log(err)
       //     );
       // }
-      this.commonservice.postrequest('Studentdata/updatestudentdatac',
+      this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac',
         this.studentForm.value).subscribe(
           (res: any) => {
             this.edit = false

@@ -30,7 +30,7 @@ export class QuiztopicdetailsComponent implements OnInit {
 
 
   getdata() {
-    this.commonservice.postrequest('Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "quiz" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "quiz" }).subscribe(
       (res: any) => {
         this.endson = res.endson
         this.data = res;
@@ -68,7 +68,7 @@ export class QuiztopicdetailsComponent implements OnInit {
       this.endson = this.newdatetodatetimelocal()
       this.data.endson = this.endson
     }
-    this.commonservice.postrequest('Practice/editcodequiz', this.data).subscribe((res: any) => {
+    this.commonservice.postrequest('http://localhost:4000/Practice/editcodequiz', this.data).subscribe((res: any) => {
       this.endedit = false
       this.getdata()
     }, (err: any) => { console.log(err) })
@@ -77,7 +77,7 @@ export class QuiztopicdetailsComponent implements OnInit {
   stop() {
     this.data.endson = new Date().toISOString().slice(0, 16)
     console.log("this.data.endson", this.data.endson)
-    this.commonservice.postrequest('Practice/editcodequiz', this.data).subscribe((res: any) => {
+    this.commonservice.postrequest('http://localhost:4000/Practice/editcodequiz', this.data).subscribe((res: any) => {
       this.endedit = false
     }, (err: any) => { console.log(err) })
   }

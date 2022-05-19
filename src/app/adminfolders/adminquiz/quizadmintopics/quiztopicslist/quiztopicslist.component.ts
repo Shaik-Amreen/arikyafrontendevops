@@ -19,7 +19,7 @@ export class QuiztopicslistComponent implements OnInit {
         sessionStorage.removeItem("successpopup")
       }, 5000)
     }
-    this.commonservice.postrequest('Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }).subscribe(
       (res: any) => {
         // console.log(res)
 

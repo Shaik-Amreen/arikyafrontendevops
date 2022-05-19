@@ -13,7 +13,7 @@ export class QuiztopicsComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService, @Inject(DOCUMENT) private document: any) {
 
     sessionStorage.removeItem('topic');
-    this.commonservice.postrequest('Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }).subscribe(
       (res: any) => {
         if (sessionStorage.getItem("quizsubmit")) {
           // this.elem = document.documentElement;

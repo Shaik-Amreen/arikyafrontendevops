@@ -12,7 +12,7 @@ export class ViewcompletedquizzesComponent {
   quizdata: any = []; score: any = 0; topic: any = sessionStorage.getItem('topic');
   quizdetails: any; starttime: any; startdate: any; endtime: any; enddate: any
   constructor(private http: HttpClient, private commonservice: CommonService) {
-    this.commonservice.postrequest('Practice/viewattemptedquiz', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), topic: sessionStorage.getItem('topic') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/viewattemptedquiz', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), topic: sessionStorage.getItem('topic') }).subscribe(
       (res: any) => {
         this.score = res.data
         console.log(res, "ressssssssssssssss")
@@ -120,7 +120,7 @@ export class ViewcompletedquizzesComponent {
 
 
 // attempt(){
-//    this.commonservice.postrequest('Practice/viewattemptedquiz',{ organisation_id: sessionStorage.getItem("organisation_id"),rollno: "19691A0559", topicname: this.quiztopic }).subscribe(
+//    this.commonservice.postrequest('http://localhost:4000/Practice/viewattemptedquiz',{ organisation_id: sessionStorage.getItem("organisation_id"),rollno: "19691A0559", topicname: this.quiztopic }).subscribe(
 //      (res:any)=> {
 //         this.quizdata = res.data;
 //         console.log(this.quizdata);

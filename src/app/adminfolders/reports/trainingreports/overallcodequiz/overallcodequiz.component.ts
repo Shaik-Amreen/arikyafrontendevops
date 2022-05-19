@@ -15,7 +15,7 @@ export class OverallcodequizComponent implements OnInit {
   viewmore: any = false;
   type: any = ''
   status: any = "all"
-  loadstatus:any=false
+  loadstatus: any = false
 
   constructor(private http: HttpClient, private commonservice: CommonService, public ete: ExportExcelService) {
     this.nodata = false
@@ -23,7 +23,7 @@ export class OverallcodequizComponent implements OnInit {
   }
 
   alldata() {
-    this.commonservice.postrequest('Dashboard/allcodequiztestratings', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/allcodequiztestratings', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         this.overalldata = res.data;
         this.nodata = true
@@ -37,13 +37,13 @@ export class OverallcodequizComponent implements OnInit {
 
   tempdatafunc() {
     let te: any
-    this.loadstatus=true
+    this.loadstatus = true
     if (this.status != 'all') {
       te = this.overalldata.filter((e: any) => (e.dept == this.status));
     }
     else { te = this.overalldata }
     if (this.type != '') { te = te.filter((d: any) => (d.rollno.includes(this.type))) }
-    this.loadstatus=false
+    this.loadstatus = false
     return te
   }
 

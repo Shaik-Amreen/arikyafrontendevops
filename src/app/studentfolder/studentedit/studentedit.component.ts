@@ -309,7 +309,7 @@ export class StudenteditComponent implements OnInit {
 
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
 
-    this.commonservice.postrequest('placementstatus/checkmailnumber', {
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', {
       organisation_id:
         sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail')
     }).subscribe(
@@ -354,7 +354,7 @@ export class StudenteditComponent implements OnInit {
 
 
   fillform() {
-    this.commonservice.postrequest('Studentdata/findstudentdetails', {
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', {
       organisation_id:
         sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail')
     }).subscribe(
@@ -434,7 +434,7 @@ export class StudenteditComponent implements OnInit {
       }
 
       else {
-        this.commonservice.postrequest('notification/postnotifications', finaldat).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/notification/postnotifications', finaldat).subscribe(
           (res1: any) => {
             // console.log(res1)
             this.router.navigate(['student/profile'])

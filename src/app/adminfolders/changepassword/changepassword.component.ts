@@ -26,7 +26,7 @@ export class ChangepasswordComponent implements OnInit {
     this.formvalue = true
     if (this.changepassword.status == "VALID") {
       console.log("valid")
-      this.commonservice.postrequest('changepassword', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': sessionStorage.getItem('mail')?.toLocaleLowerCase(), 'password': this.changepassword.value.password }).subscribe(
+      this.commonservice.postrequest('http://localhost:4000/changepassword', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': sessionStorage.getItem('mail')?.toLocaleLowerCase(), 'password': this.changepassword.value.password }).subscribe(
         (res: any) => {
           (res.message == 'success' && res.role == "admin") ?
             (sessionStorage.setItem("adminchangepassword", 'success'), this.router.navigate(['/admin/home'])) : ((res.message == 'success' && res.role == "student") ? (sessionStorage.setItem("stdchangepassword", 'success'), this.router.navigate(['/student/studenthome'])) : null)

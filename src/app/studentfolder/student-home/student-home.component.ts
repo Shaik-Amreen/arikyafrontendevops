@@ -19,10 +19,10 @@ export class StudentHomeComponent implements OnInit {
         sessionStorage.removeItem("successpopup")
       }, 5000)
     }
-    this.commonservice.postrequest('placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         // console.log(res);
-        this.commonservice.postrequest('Studentdata/studentplacementinterest', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/Studentdata/studentplacementinterest', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
           (response: any) => {
             console.log("response", response)
             this.placementsinterest = response.reverse()
@@ -53,7 +53,7 @@ export class StudentHomeComponent implements OnInit {
   updateplacementinterest(i: any, status: any, cplace: any) {
     this.placementsinterest[i][cplace] = status
     // console.log(this.placementsinterest, ";;;;;;;;;;;;;;;;;;;;llllllllllllll")
-    this.commonservice.postrequest('Studentdata/studentupdateinterest', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), eligibleplacementcycles: this.placementsinterest }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/studentupdateinterest', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), eligibleplacementcycles: this.placementsinterest }).subscribe(
       (response: any) => {
         console.log(response)
       })

@@ -10,10 +10,10 @@ export class FacultyAllcompanieshomeComponent implements OnInit {
 
   data: any = [0]; presentcycle: any = "add"; placementdata: any = []
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
-    this.commonservice.postrequest('company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         if (res.length != 0) { this.data = res; this.data.reverse(); } else { this.data = [] }
-        this.commonservice.postrequest('Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
           (resp: any) => { this.placementdata = resp; this.placementdata.reverse(); },
           (errp: any) => console.log(errp)
         );

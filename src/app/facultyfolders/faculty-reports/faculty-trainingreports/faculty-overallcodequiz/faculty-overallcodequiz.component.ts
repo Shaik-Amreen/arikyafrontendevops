@@ -22,7 +22,7 @@ export class FacultyOverallcodequizComponent implements OnInit {
   }
 
   alldata() {
-    this.commonservice.postrequest('Dashboard/allcodequiztestratings', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/allcodequiztestratings', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         this.overalldata = res.data;
         this.nodata = true

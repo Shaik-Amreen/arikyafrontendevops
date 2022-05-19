@@ -33,16 +33,16 @@ export class FacultyPlacementsdetailsComponent implements OnInit {
     sessionStorage.removeItem('editcompany')
     sessionStorage.removeItem('editplacements')
     this.exists = false;
-    this.commonservice.postrequest('company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
       (res: any) => {
-        this.commonservice.postrequest('Placement/findonePlacement', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/Placement/findonePlacement', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
           (resp: any) => {
             // console.log("res:", resp)
 
-            this.commonservice.postrequest('Placement/findonePlacement', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
+            this.commonservice.postrequest('http://localhost:4000/Placement/findonePlacement', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
               (resc: any) => {
 
-                this.commonservice.postrequest('Studentdata/studentsplacementaddedstatus', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
+                this.commonservice.postrequest('http://localhost:4000/Studentdata/studentsplacementaddedstatus', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
                   (ress: any) => {
                     this.studenteligibleplacementstatus = ress
                     // console.log(ress, "helllllllllllllllll")
@@ -130,10 +130,10 @@ export class FacultyPlacementsdetailsComponent implements OnInit {
 
   addstudentstoplacementcycle() {
     this.addplacestatus = 'Adding students .. please wait !'
-    this.commonservice.postrequest('Studentdata/addstudentstoplacementcycle', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename'), notaddestudents: this.studenteligibleplacementstatus.notaddedstudents }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/addstudentstoplacementcycle', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename'), notaddestudents: this.studenteligibleplacementstatus.notaddedstudents }).subscribe(
       (res: any) => {
 
-        this.commonservice.postrequest('Studentdata/studentsplacementaddedstatus', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/Studentdata/studentsplacementaddedstatus', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
           (ress: any) => {
             this.addplacestatus = 'Click here to add in ' + this.place
             this.studenteligibleplacementstatus = ress
@@ -152,7 +152,7 @@ export class FacultyPlacementsdetailsComponent implements OnInit {
       mails.push(e.mail)
     });
     // console.log(mails)
-    this.commonservice.postrequest('placementstatus/homequery', { organisation_id: sessionStorage.getItem("organisation_id"), mails: mails, content: this.content }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/homequery', { organisation_id: sessionStorage.getItem("organisation_id"), mails: mails, content: this.content }).subscribe(
       (resc: any) => {
         this.buttonStatus = "SEND"
         this.content = ''

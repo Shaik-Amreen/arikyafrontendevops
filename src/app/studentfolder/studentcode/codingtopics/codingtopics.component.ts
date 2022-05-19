@@ -15,7 +15,7 @@ export class CodingtopicsComponent implements OnInit {
   currentValue: any = []; codesubmit: any = false
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService, @Inject(DOCUMENT) private document: any) {
     sessionStorage.removeItem('topic');
-    this.commonservice.postrequest('Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'code', mail: sessionStorage.getItem("mail") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'code', mail: sessionStorage.getItem("mail") }).subscribe(
       (res: any) => {
         if (sessionStorage.getItem("codesubmit")) {
           this.closeFullscreen()
@@ -60,7 +60,7 @@ export class CodingtopicsComponent implements OnInit {
           //     if (new Date(element.endson) < new Date() || Math.floor((a - b) / 60000) > parseInt(element.totaltime)) {
           //       let rating = { mail: sessionStorage.getItem("mail"), timeremained: `0.0`, topic: element.topic, organisation_id: sessionStorage.getItem('organisation_id') }
           //       // console.log(rating, "ooooooooooooooooooo", new Date(element.endson) > new Date())
-          //       this.commonservice.postrequest('Practice/ratingstudent', rating).subscribe(
+          //       this.commonservice.postrequest('http://localhost:4000/Practice/ratingstudent', rating).subscribe(
 
           //         (resp: any) => {
           //           console.log(resp, "outputttttttttttttttttt coidng tip[ocss")

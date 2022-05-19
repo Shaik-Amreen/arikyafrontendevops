@@ -35,7 +35,7 @@ export class FacultyQuizreportComponent implements OnInit {
   eachtest(t: any) {
     this.topic1 = t
     this.heading = t
-    this.commonservice.postrequest('Dashboard/eachtestratings', { organisation_id: sessionStorage.getItem("organisation_id"), topic: this.topic1, type: "quiz" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { organisation_id: sessionStorage.getItem("organisation_id"), topic: this.topic1, type: "quiz" }).subscribe(
       (res: any) => {
         this.stdseachtest = res.data
         this.visibleData = res.data
@@ -45,7 +45,7 @@ export class FacultyQuizreportComponent implements OnInit {
   }
 
   allcodeorquiztests() {
-    this.commonservice.postrequest('Dashboard/alltestratings', { organisation_id: sessionStorage.getItem("organisation_id"), type: "quiz" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', { organisation_id: sessionStorage.getItem("organisation_id"), type: "quiz" }).subscribe(
       (res: any) => {
         this.alldata = true
         this.nodata = true
@@ -56,7 +56,7 @@ export class FacultyQuizreportComponent implements OnInit {
   }
 
   gettopics() {
-    this.commonservice.postrequest('Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }).subscribe(
       (res: any) => {
         this.topics = res;
         this.display = false

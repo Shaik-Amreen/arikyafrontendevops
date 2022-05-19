@@ -9,7 +9,7 @@ import { ExportExcelService } from 'src/app/services/export-excel.service';
 })
 export class AdminHomeComponent implements OnInit {
   data: any = [0]; placementdata: any; presentcycle: any = "add"; studentstatus: any = [0]
-  category: any = ''; content: any = '';display=false;popup=""
+  category: any = ''; content: any = ''; display = false; popup = ""
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService, public ete: ExportExcelService) {
     if (sessionStorage.getItem("adminchangepassword")) {
       this.display = true
@@ -19,7 +19,7 @@ export class AdminHomeComponent implements OnInit {
         sessionStorage.removeItem("successpopup")
       }, 5000)
     }
-    this.commonservice.postrequest('company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         // console.log(res);
         if (res.length != 0) {
@@ -28,25 +28,22 @@ export class AdminHomeComponent implements OnInit {
         }
         else {
           this.data = []
-          this.commonservice.postrequest('Studentdata/pendinginvitations', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+          this.commonservice.postrequest('http://localhost:4000/Studentdata/pendinginvitations', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
             (resc: any) => {
-              this.placementdata = []
-              this.studentstatus = resc
+              // this.placementdata = []
+              // this.studentstatus = resc
               // console.log(resc, ".,..........................................")
             },
             (errc: any) => console.log(errc)
           );
         }
-        this.commonservice.postrequest('Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
           (resp: any) => {
-            this.commonservice.postrequest('Studentdata/pendinginvitations', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+            this.commonservice.postrequest('http://localhost:4000/Studentdata/pendinginvitations', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
               (resc: any) => {
                 // console.log(resp, ";;;;;;;;;;;;;;;;;;;;;;;;");
                 resp = resp.filter((e: any) => new Date(e.todate) > new Date())
-                this.placementdata = resp; this.placementdata.reverse();
-
-
-
+                this.placementdata = resp; this.placementdata.reverse()
                 this.studentstatus = resc
                 // console.log(resc)
               },
@@ -85,7 +82,7 @@ export class AdminHomeComponent implements OnInit {
       mails.push(e.mail)
     });
     // console.log(mails)
-    this.commonservice.postrequest('placementstatus/homequery', { organisation_id: sessionStorage.getItem("organisation_id"), mails: mails, content: this.content }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/homequery', { organisation_id: sessionStorage.getItem("organisation_id"), mails: mails, content: this.content }).subscribe(
       (resc: any) => {
         this.buttonStatus = "SEND"
         this.content = ''

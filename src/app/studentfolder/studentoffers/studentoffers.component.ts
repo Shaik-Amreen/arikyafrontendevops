@@ -12,7 +12,7 @@ export class StudentoffersComponent implements OnInit {
   overdata: any = []
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
 
-    this.commonservice.postrequest('placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         this.overdata = res;
         // console.log(this.overdata);
@@ -55,7 +55,7 @@ export class StudentoffersComponent implements OnInit {
   save(c: any) {
     c.offerletter = this.base64Output;
     c.placed = "-"
-    this.commonservice.postrequest('placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), companyname: c.companyname, offerletter: this.base64Output, offerstatus: this.offerstatus, mail: sessionStorage.getItem('mail'), verifiedoffer: 'no', placed: c.placed }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), companyname: c.companyname, offerletter: this.base64Output, offerstatus: this.offerstatus, mail: sessionStorage.getItem('mail'), verifiedoffer: 'no', placed: c.placed }).subscribe(
       (res: any) => {
         // console.log("it works2");
         console.log(res)

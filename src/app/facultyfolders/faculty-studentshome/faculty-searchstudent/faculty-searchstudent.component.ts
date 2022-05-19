@@ -15,7 +15,7 @@ export class FacultySearchstudentComponent implements OnInit {
   organisation: any = ''
   ngOnInit(): void {
 
-    this.commonservice.postrequest('Studentdata/findcollegestudents', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/findcollegestudents', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         this.organisation = res.collegedata
         this.data = res.data; this.len = '0';

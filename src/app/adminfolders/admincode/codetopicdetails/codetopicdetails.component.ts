@@ -130,13 +130,13 @@ export class CodetopicdetailsComponent implements OnInit {
       this.endson = this.newdatetodatetimelocal()
       this.data.endson = this.endson
     }
-    this.commonservice.postrequest('Practice/editcodequiz', this.data).subscribe((res: any) => {
+    this.commonservice.postrequest('http://localhost:4000/Practice/editcodequiz', this.data).subscribe((res: any) => {
       this.endedit = false; this.getdata()
     }, (err: any) => { console.log(err); })
   }
 
   getdata() {
-    this.commonservice.postrequest('Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "code" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "code" }).subscribe(
       (res: any) => {
         this.endson = res.endson
         this.data = res;

@@ -20,7 +20,7 @@ export class CodetopicslistComponent implements OnInit {
         sessionStorage.removeItem("successpopup")
       }, 5000)
     }
-    this.commonservice.postrequest('Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'code' }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'code' }).subscribe(
       (res1: any) => { this.codetopics = res1; this.len1 = res1.length; this.nodata = true; this.codetopics.reverse() })
   }
 

@@ -81,7 +81,7 @@ export class PlacedstudentComponent implements OnInit {
       element.rollnumber = element.rollnumber.toLowerCase()
     });
     this.savingMode = 'Saving';
-    this.commonservice.postrequest('placementstatus/updateplaced',
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateplaced',
       { data: this.mapping, organisation_id: sessionStorage.getItem('collee_id') }).subscribe(
         (res: any) => { this.savingMode = 'Saved'; this.mapping = []; this.saveMode = false; this.keys = []; this.validata = false; this.display = true; setTimeout(() => { this.display = false }, 5000) },
         (err: any) => console.log(err)

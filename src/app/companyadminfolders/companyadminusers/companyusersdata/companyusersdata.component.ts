@@ -14,7 +14,7 @@ export class CompanyusersdataComponent implements OnInit {
   selectedMode = false; selectedUser: any = { mail: '', designation: '', role: '', placementcyclename: '' }
   nodata = false
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
-    this.commonservice.postrequest('facultydetails/finddata', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/facultydetails/finddata', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => { console.log(res); this.facdata = res; this.nodata = true },
       (err: any) => console.log(err)
     );
@@ -29,7 +29,7 @@ export class CompanyusersdataComponent implements OnInit {
   }
 
   save() {
-    this.commonservice.postrequest('updateuser', this.userSignUpForm.value).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/updateuser', this.userSignUpForm.value).subscribe(
       (res: any) => { alert('SUCCESSFULLY SAVED'); window.location.reload() },
       (err: any) => console.log(err)
     );
@@ -38,7 +38,7 @@ export class CompanyusersdataComponent implements OnInit {
 
   deleteuser() {
     this.userSignUpForm.value.status = 'no'
-    this.commonservice.postrequest('updateuser', this.userSignUpForm.value).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/updateuser', this.userSignUpForm.value).subscribe(
       (res: any) => { alert('sucessfully deleted'); window.location.reload() },
       (err: any) => console.log(err)
     )

@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     ]
   mail = ''; otp = ''; generatedotp = ''; timeRemained = 120; invalidotp = false; mailerr = ''
   loginMode = true; logindata = false; errorMessage = ''; vepa: any = false;
-  formvalue = false;signin="Sign In"
+  formvalue = false; signin = "Sign In"
   ngOnInit() {
 
   }
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     this.formvalue = true;
     if (this.formgroupdata.status == 'VALID') {
       this.signin = "Signing... In"
-      this.commonservice.postrequest('findoneusers', this.formgroupdata.value).subscribe(
+      this.commonservice.postrequest('http://localhost:4000/findoneusers', this.formgroupdata.value).subscribe(
         (res1: any) => {
           this.signin = "Sign In";
           // console.log("signinworks", res1);
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
     this.mailerr = ''; f.value.mail = f.value.mail.toLowerCase()
     this.buttonMode = 'SENDING'; this.invalidotp = false
     console.log("hellooo")
-    this.commonservice.postrequest('findValidMail', f.value).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/findValidMail', f.value).subscribe(
       (res: any) => {
         console.log(res, "forgot passwoprd")
         if (res.message !== "success") {
@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
         }
         else {
           sessionStorage.setItem('mail', res.organisation_id);
-          this.commonservice.postrequest('forgotpassword', { mail: f.value.mail, organisation_id: res.organisation_id }).subscribe(
+          this.commonservice.postrequest('http://localhost:4000/forgotpassword', { mail: f.value.mail, organisation_id: res.organisation_id }).subscribe(
             (res1: any) => {
               if (res1.otp) {
                 this.buttonMode = 'SENT'; this.generatedotp = res1.otp; this.timeRemained = 120; let time = setInterval(() => { this.timeRemained-- }, 1000)

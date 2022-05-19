@@ -35,7 +35,7 @@ export class FacultyCodereportComponent implements OnInit {
   eachtest(t: any) {
     this.topic1 = t
     this.heading = t
-    this.commonservice.postrequest('Dashboard/eachtestratings', { organisation_id: sessionStorage.getItem("organisation_id"), topic: this.topic1, type: "code" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { organisation_id: sessionStorage.getItem("organisation_id"), topic: this.topic1, type: "code" }).subscribe(
       (res: any) => {
         this.stdseachtest = res.data
         this.visibleData = res.data
@@ -45,7 +45,7 @@ export class FacultyCodereportComponent implements OnInit {
   }
 
   allcodeorquiztests() {
-    this.commonservice.postrequest('Dashboard/alltestratings', { organisation_id: sessionStorage.getItem("organisation_id"), type: "code" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', { organisation_id: sessionStorage.getItem("organisation_id"), type: "code" }).subscribe(
       (res: any) => {
         this.alldata = true
         this.overallcodedata = res.data
@@ -56,7 +56,7 @@ export class FacultyCodereportComponent implements OnInit {
   }
 
   gettopics() {
-    this.commonservice.postrequest('Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'code' }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'code' }).subscribe(
       (res: any) => {
         this.topics = res;
         this.display = false

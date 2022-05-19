@@ -41,7 +41,7 @@ export class AddeditquizComponent implements OnInit {
       'endson': new FormControl('', Validators.required)
     })
     if (sessionStorage.getItem('editquiz') == 'yes') {
-      this.commonservice.postrequest('Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "quiz" }).subscribe(
+      this.commonservice.postrequest('http://localhost:4000/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "quiz" }).subscribe(
         (res: any) => {
           this.data = res; console.log(res);
           this.final.patchValue(this.data);
@@ -151,9 +151,9 @@ export class AddeditquizComponent implements OnInit {
       this.final.value.type = 'quiz';
       this.final.value.organisation_id = sessionStorage.getItem("organisation_id")
       this.final.value.createdby = sessionStorage.getItem("mail")
-      let url = ''
-      if (sessionStorage.getItem('editquiz') == 'yes') { url = 'Practice/editcodequiz' }
-      else { url = 'Practice/uploadpractice' }
+      let url = 'http://localhost:4000/'
+      if (sessionStorage.getItem('editquiz') == 'yes') { url = 'http://localhost:4000/Practice/editcodequiz' }
+      else { url = 'http://localhost:4000/Practice/uploadpractice' }
       // console.log('url')
       this.commonservice.postrequest(url, this.final.value).subscribe(
         (res: any) => {
@@ -218,7 +218,7 @@ export class AddeditquizComponent implements OnInit {
 
 
   // sendmail(){
-  //    this.commonservice.postrequest('technicalhead/quizupload',{mail:'19691A0559@Mits.ac.in'}).subscribe(
+  //    this.commonservice.postrequest('http://localhost:4000/technicalhead/quizupload',{mail:'19691A0559@Mits.ac.in'}).subscribe(
   //       res=>{
   //         this.success=true;
   //         console.log(res.message);

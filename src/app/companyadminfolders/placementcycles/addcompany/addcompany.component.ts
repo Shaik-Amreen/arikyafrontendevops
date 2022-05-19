@@ -153,7 +153,7 @@ export class AddcompanyComponent implements OnInit {
     })
 
     //for suggestions of company companyname
-    this.commonservice.postrequest('company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => this.data = res,
       (err: any) => console.log(err)
     )
@@ -221,7 +221,7 @@ export class AddcompanyComponent implements OnInit {
   deptstoredata: any = []
   fillForm(d: any) {
     this.suggestions = false
-    this.commonservice.postrequest('company/findcompany', d).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findcompany', d).subscribe(
       (res: any) => {
 
         for (let i of res.companydetails.eligibilties) {
@@ -384,7 +384,7 @@ export class AddcompanyComponent implements OnInit {
       // console.log("url,this.addcompanyform.value", url, this.addcompanyform.value)
       this.commonservice.postrequest(url, this.addcompanyform.value).subscribe(
         (res: any) => {
-          this.commonservice.postrequest('notification/postadminoti', temp).subscribe(
+          this.commonservice.postrequest('http://localhost:4000/notification/postadminoti', temp).subscribe(
             (res1: any) => {
               // console.log(res)
               if (res.message == 'success') { this.router.navigate(['/admin/placements/placementsdetails', ""]) }

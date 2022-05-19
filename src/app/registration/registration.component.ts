@@ -18,7 +18,7 @@ export class RegistrationComponent implements OnInit {
     this.placementcyclename = route.snapshot.params.placementcyclename; this.companyname = route.snapshot.params.companyname
     this.organisation_id = route.snapshot.params.organisation_id
     sessionStorage.setItem('organisation_id', this.organisation_id)
-    this.commonservice.postrequest('placementstatus/checktoken', { organisation_id: this.organisation_id, token: this.token, placementcyclename: this.placementcyclename, companyname: this.companyname }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/checktoken', { organisation_id: this.organisation_id, token: this.token, placementcyclename: this.placementcyclename, companyname: this.companyname }).subscribe(
       (res: any) => {
         console.log(res)
         this.displaycompanyname = res.companyname; this.displayplacement = res.placementcyclename
