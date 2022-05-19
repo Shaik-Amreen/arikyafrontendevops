@@ -31,11 +31,11 @@ export class CompanydetailsComponent implements OnInit {
   single: any = 'ADD'
 
   constructor(private http: HttpClient, private commonservice: CommonService, private route: Router, public ete: ExportExcelService) {
-    this.firstcall()
+    // this.firstcall()
   }
 
 
-  datainitialize(){
+  datainitialize() {
     this.display = false;
     this.companydetails = {}; this.data = []; this.nowshorted = []; this.rejectedlist = []; this.nodata = false
     this.mapping = [];
@@ -44,7 +44,7 @@ export class CompanydetailsComponent implements OnInit {
     this.objkey = [];
     this.applicantslist = []; this.setedit = false
     this.ch = 0; this.deadline = ''; this.errdate = ''; this.mailstatus = 'SEND MAIL'; this.eligible = 0; this.registered = 0; this.comselected = ''; this.addstatus = 'ADD STUDENTS'; this.currentIndex = -1
-    this.eligibility = [];this.hiringflow=[]
+    this.eligibility = []; this.hiringflow = []
     this.allcom = [{ companyname: '' }]; this.listofstu = []; this.relen = 0; this.placed = 0; this.nextIndex = 0;
     this.image = "../../../../assets/companylogo.jpg";
     this.tempimg = "../../../../assets/companylogo.jpg";
@@ -54,7 +54,7 @@ export class CompanydetailsComponent implements OnInit {
     this.dataForExcel = []
     this.single = 'ADD'
     sessionStorage.removeItem('editcompany')
-    sessionStorage.removeItem('editcompany')
+
     this.mailstatus = 'SEND MAIL'; this.addstatus = 'ADD STUDENTS'
   }
 
@@ -219,7 +219,7 @@ export class CompanydetailsComponent implements OnInit {
         (res: any) => {
 
           this.companydetails = res.data; this.ch = 0; this.getWorkflow()
-          this.firstcall()
+          // this.firstcall()
         },
         (err: any) => console.log(err)
       )
@@ -240,9 +240,7 @@ export class CompanydetailsComponent implements OnInit {
     )
   }
 
-  re() {
-    window.location.reload()
-  }
+
 
 
   onfilesubmit(evt: any, i: any) {
@@ -351,10 +349,6 @@ export class CompanydetailsComponent implements OnInit {
     )
   }
 
-  convert(a: any) {
-    return parseInt(a) + 4;
-  }
-
   // exportexcel(): void {
   //   const fileplacementcyclename = `${this.companydetails.companyname} ${this.companydetails.placementcyclename} Applicants List.xlsx`;
   //   /* table id is passed over here */
@@ -383,97 +377,21 @@ export class CompanydetailsComponent implements OnInit {
     }
     this.ete.exportExcel(reportData);
   }
-  
-  
+
+
 
 
 
   singlestudentmail() {
     this.single = 'ADDING'
     this.commonservice.postrequest('placementstatus/singlestudent', { organisation_id: sessionStorage.getItem("organisation_id"), ...this.companydetails, rollnumber: this.singlestudent }).subscribe(
-      (res: any) => { console.log("karthik", res); if (res.message == "success") { this.single = 'ADDED' } else if (res.message == "exist") { this.single = 'ALREADY EXIST' } },
+      (res: any) => { if (res.message == "success") { this.single = 'ADDED' } else if (res.message == "exist") { this.single = 'ALREADY EXIST' } },
       (err: any) => console.log(err)
     )
   }
 
 
-  editorConfig: AngularEditorConfig = {
-    editable: false,
-    spellcheck: true,
-    height: 'auto',
-    minHeight: '0',
-    maxHeight: 'auto',
-    width: 'auto',
-    minWidth: '0',
-    translate: 'yes',
-    enableToolbar: false,
-    showToolbar: false,
-    placeholder: 'Enter text here...',
-    defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      { class: 'arial', name: 'Arial' },
-      { class: 'times-new-roman', name: 'Times New Roman' },
-      { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
-    ],
-    customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
-    uploadUrl: 'v1/image',
-    // upload: (file: File) => {  },
-    uploadWithCredentials: false,
-    sanitize: false,
-    toolbarPosition: 'top',
-    toolbarHiddenButtons: [
-      [
-        'undo',
-        'redo',
-        'bold',
-        'italic',
-        'underline',
-        'strikeThrough',
-        'subscript',
-        'superscript',
-        'justifyLeft',
-        'justifyCenter',
-        'justifyRight',
-        'justifyFull',
-        'indent',
-        'outdent',
-        'insertUnorderedList',
-        'insertOrderedList',
-        'heading',
-        'fontName'
-      ],
-      [
-        'fontSize',
-        'textColor',
-        'backgroundColor',
-        'customClasses',
-        'link',
-        'unlink',
-        'insertImage',
-        'insertVideo',
-        'insertHorizontalRule',
-        'removeFormat',
-        'toggleEditorMode'
-      ]
-    ]
-  };
+
 
 
 
