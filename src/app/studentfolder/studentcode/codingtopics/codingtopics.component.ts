@@ -30,17 +30,19 @@ export class CodingtopicsComponent implements OnInit {
         }
         this.topics = res;
         // console.log(res)
+        this.topics = this.topics.filter((to: any) => new Date() >= new Date(to.startson))
 
-        res.forEach((data: any) => {
+        this.topics.forEach((data: any) => {
           let s;
+          console.log(data,"data")
           if (data.ratings) { s = data.ratings.filter((r: any) => r.mail == sessionStorage.getItem('mail')); }
-          if (s && s.length > 0) {
+          if (s && s.length > 0 && s[0].starttime != "-") {
             this.viewRating.push(true);
             this.currentValue.push(parseFloat(s[0].main).toFixed(2))
           }
           else {
-            if (new Date() >= new Date(data.startson)) {
-              if (new Date() > new Date(data.startson) && new Date() < new Date(data.endson)) {
+            if(new Date() >= new Date(data.startson)){
+              if (new Date() >= new Date(data.startson) && new Date() <= new Date(data.endson)) {
                 this.viewRating.push(false)
               }
               else {

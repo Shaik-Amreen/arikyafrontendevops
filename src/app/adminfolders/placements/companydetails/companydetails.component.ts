@@ -31,7 +31,7 @@ export class CompanydetailsComponent implements OnInit {
   single: any = 'ADD'
 
   constructor(private http: HttpClient, private commonservice: CommonService, private route: Router, public ete: ExportExcelService) {
-    // this.firstcall()
+    this.firstcall()
   }
 
 

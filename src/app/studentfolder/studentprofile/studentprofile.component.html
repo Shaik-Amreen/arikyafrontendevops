@@ -22,7 +22,7 @@
 </div>
 
 
-<div *ngIf="nodata else nodat">
+<div *ngIf="nodata[0]&&nodata[1] else nodat">
     <div class="layout">
         <div>
             <div
@@ -55,13 +55,15 @@
                         <span>CGPA</span>
                     </div>
                     <div class="col-sm-2">
-                        <span style="font-size: 2.5rem;" *ngIf="data.cgpa!=''">{{offers}}</span>
-                        <span style="font-size: 2.5rem;" *ngIf="data.cgpa==''">0</span><br>
+                        <span style="font-size: 2.5rem;" *ngIf="overdata">{{offers}}</span>
+                        <!-- <span style="font-size: 2.5rem;" *ngIf="overdata && offers==''">0</span> -->
+                        <br>
                         <span>OFFERS</span>
                     </div>
                     <div class="col-sm-2">
-                        <span style="font-size: 2.5rem;" *ngIf="data.cgpa!=''">{{applications}}</span>
-                        <span style="font-size: 2.5rem;" *ngIf="data.cgpa==''">0</span><br>
+                        <span style="font-size: 2.5rem;" *ngIf="overdata">{{applications}}</span>
+                        <!-- <span style="font-size: 2.5rem;" *ngIf="data.cgpa==''">0</span> -->
+                        <br>
                         <span>APPLICATIONS</span>
                     </div>
                     <div style="background-color: #d0efd0;border-radius: 60%;" *ngIf="data.verified=='yes'"
@@ -266,134 +268,136 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="font-size: 0.8rem;" *ngIf="sgpa.length>0">
-                        <strong style="padding: 0.9rem;margin-right: 0.7rem;color: #1b1c1e;">SEMESTER
-                            GRADES</strong><br>
-                        <div class="col-sm"
-                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.7rem;">
-                            <div echarts [options]="option"></div>
+                    <div *ngIf="nodata[2]">
+                        <div class="row" style="font-size: 0.8rem;" *ngIf="sgpa.length>0">
+                            <strong style="padding: 0.9rem;margin-right: 0.7rem;color: #1b1c1e;">SEMESTER
+                                GRADES</strong><br>
+                            <div class="col-sm"
+                                style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.7rem;">
+                                <div echarts [options]="option"></div>
+                            </div>
+                            <div class="col-sm" *ngIf="sgpa.length>0"
+                                style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.7rem;">
+                                <table class="table text-center" id="tb" *ngIf="sgpa.length>0">
+                                    <tbody>
+                                        <tr
+                                            style="background-color: whitesmoke;box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;color: #4b4e54;">
+                                            <td>COURSE</td>
+                                            <td>SEMESTER</td>
+                                            <td>GRADE POINTS</td>
+                                        </tr>
+                                        <tr *ngFor="let c of sgpa;index as i ">
+                                            <td>{{data.course | uppercase}}</td>
+                                            <td>{{i+1}}</td>
+                                            <td>{{c }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-sm" *ngIf="sgpa.length>0"
-                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.7rem;">
-                            <table class="table text-center" id="tb" *ngIf="sgpa.length>0">
-                                <tbody>
-                                    <tr
-                                        style="background-color: whitesmoke;box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;color: #4b4e54;">
-                                        <td>COURSE</td>
-                                        <td>SEMESTER</td>
-                                        <td>GRADE POINTS</td>
-                                    </tr>
-                                    <tr *ngFor="let c of sgpa;index as i ">
-                                        <td>{{data.course | uppercase}}</td>
-                                        <td>{{i+1}}</td>
-                                        <td>{{c }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <strong style="padding: 0.5rem;margin-right: 0.7rem;color: #1b1c1e;font-size: 0.9rem;"
-                            class="col-sm ">
-                            <span style="font-size:1rem;">SKILL TEST </span> &nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span style="color: #4b4e54;">
-                                <span *ngIf="stdallratedata.main"> {{stdallratedata.main}}
+                        <br>
+                        <div class="row">
+                            <strong style="padding: 0.5rem;margin-right: 0.7rem;color: #1b1c1e;font-size: 0.9rem;"
+                                class="col-sm ">
+                                <span style="font-size:1rem;">SKILL TEST </span> &nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style="color: #4b4e54;">
+                                    <span *ngIf="stdallratedata.main"> {{stdallratedata.main}}
+                                    </span>
+                                    <span *ngIf="!stdallratedata.main"> 0 </span>%</span>
+                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style="color: #00B0FF;">
+                                    <span *ngIf="stdallratedata.rank">{{stdallratedata.rank}}</span>
+                                    <span *ngIf="!stdallratedata.rank">0</span> RANK
                                 </span>
-                                <span *ngIf="!stdallratedata.main"> 0 </span>%</span>
-                            &nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span style="color: #00B0FF;">
-                                <span *ngIf="stdallratedata.rank">{{stdallratedata.rank}}</span>
-                                <span *ngIf="!stdallratedata.rank">0</span> RANK
-                            </span>
-                        </strong>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm"
-                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.7rem;">
-                            <table class="table text-center">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
-                                                class="col-sm ">
-                                                CODE TEST
-                                            </strong>
-                                        </td>
-                                        <td>
-                                            <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
-                                                class="col-sm ">
-                                                <span *ngIf="stdallcodedata.main"> {{stdallcodedata.main}}
-                                                </span>
-                                                <span *ngIf="!stdallcodedata.main"> 0 </span>%
-                                            </strong>
-                                        </td>
-                                        <td>
-                                            <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
-                                                class="col-sm ">
-                                                <span *ngIf="stdallcodedata.rank"> {{stdallcodedata.rank}}
-                                                </span>
-                                                <span *ngIf="!stdallcodedata.rank"> 0 </span>RANK
-                                            </strong>
-                                        </td>
-                                    </tr>
-                                    <tr *ngFor="let a of stdeachcoderate">
-                                        <td>{{a.topic}}</td>
-                                        <td>{{a.main}}%</td>
-                                        <td>{{a.rank}} Rank</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            </strong>
                         </div>
-                        <div class="col-sm"
-                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
-                            <table class="table text-center">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
-                                                class="col-sm ">
-                                                QUIZ TEST
-                                            </strong>
-                                        </td>
-                                        <td>
-                                            <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
-                                                class="col-sm ">
-                                                <span *ngIf="stdallquizdata.main"> {{stdallquizdata.main}}
-                                                </span>
-                                                <span *ngIf="!stdallquizdata.main"> 0 </span>%
-                                            </strong>
-                                        </td>
-                                        <td>
-                                            <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
-                                                class="col-sm ">
-                                                <span *ngIf="stdallquizdata.rank"> {{stdallquizdata.rank}}
-                                                </span>
-                                                <span *ngIf="!stdallquizdata.rank"> 0 </span>RANK
-                                            </strong>
-                                        </td>
-                                    </tr>
-                                    <tr *ngFor="let a of stdeachquizrate">
-                                        <td>{{a.topic}}</td>
-                                        <td>{{a.main}}%</td>
-                                        <td>{{a.rank}} Rank</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="row">
+                            <div class="col-sm"
+                                style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.7rem;">
+                                <table class="table text-center">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                                    class="col-sm ">
+                                                    CODE TEST
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                                    class="col-sm ">
+                                                    <span *ngIf="stdallcodedata.main"> {{stdallcodedata.main}}
+                                                    </span>
+                                                    <span *ngIf="!stdallcodedata.main"> 0 </span>%
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                                    class="col-sm ">
+                                                    <span *ngIf="stdallcodedata.rank"> {{stdallcodedata.rank}}
+                                                    </span>
+                                                    <span *ngIf="!stdallcodedata.rank"> 0 </span>RANK
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let a of stdeachcoderate">
+                                            <td>{{a.topic}}</td>
+                                            <td>{{a.main}}%</td>
+                                            <td>{{a.rank}} Rank</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm"
+                                style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
+                                <table class="table text-center">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                                    class="col-sm ">
+                                                    QUIZ TEST
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                                    class="col-sm ">
+                                                    <span *ngIf="stdallquizdata.main"> {{stdallquizdata.main}}
+                                                    </span>
+                                                    <span *ngIf="!stdallquizdata.main"> 0 </span>%
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong style="padding: 0.5rem;color: #1b1c1e;font-size: 0.9rem;"
+                                                    class="col-sm ">
+                                                    <span *ngIf="stdallquizdata.rank"> {{stdallquizdata.rank}}
+                                                    </span>
+                                                    <span *ngIf="!stdallquizdata.rank"> 0 </span>RANK
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let a of stdeachquizrate">
+                                            <td>{{a.topic}}</td>
+                                            <td>{{a.main}}%</td>
+                                            <td>{{a.rank}} Rank</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                        <br />
+                        <div *ngIf="codetopics.length>0"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.7rem;">
+                            <div echarts [options]="codeoption"></div>
+                        </div><br />
+                        <div *ngIf="quiztopics.length>0"
+                            style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.7rem;">
+                            <div echarts [options]="quizoption"></div>
+                        </div>
+                        <br />
                     </div>
-                    <br />
-                    <div *ngIf="codetopics.length>0"
-                        style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.7rem;">
-                        <div echarts [options]="codeoption"></div>
-                    </div><br />
-                    <div *ngIf="quiztopics.length>0"
-                        style="border-radius:2px;background-color: #fff;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.7rem;">
-                        <div echarts [options]="quizoption"></div>
-                    </div>
-                    <br />
                 </div>
                 <br><br>
             </div>

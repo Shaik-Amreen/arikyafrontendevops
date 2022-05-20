@@ -8,7 +8,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./studentprofile.component.css']
 })
 export class StudentprofileComponent implements OnInit {
-  nodata: any = false
+  nodata: any = []
   // data: any = {}; sgpa: any []; offers: any = 0; applications: any = 0; display = true
   data: any = ''; sgpa: any = []; offers: any = 0; applications: any = 0; display = false; imagemodal = "none"
   codetopics: any = []; coderate: any = []; quiztopics: any = []; quizrate: any = []
@@ -27,45 +27,60 @@ export class StudentprofileComponent implements OnInit {
       profilepic: new FormControl(""),
     });
 
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') ,query2:"placementstatusmail",query3:"stdprofilerating"}).subscribe(
       (res: any) => {
+        console.log("all data",res)
         this.course = res.data.course
         this.getdata = true
         this.data = res.data;
-        this.nodata = true
-        console.log("res", res, "//////////////", this.data.sgpa)
+        this.nodata[0] = true
+        // console.log("res", res, "//////////////", this.data.sgpa)
         if (this.data.sgpa) {
           res.data.sgpa.forEach((e: any) => {
-            console.log(e, "hgfuyfiyfiyfiyfiygfiy")
+            // console.log(e, "hgfuyfiyfiyfiyfiygfiy")
             this.sgpa.push(...Object.values(e[0]))
-            console.log(this.sgpa)
+            // console.log(this.sgpa)
           });
         }
 
-        console.log("this.sgpa", this.sgpa)
+        // console.log("this.sgpa", this.sgpa)
         this.data.yearofjoining = parseInt(res.data.yearofjoining);
         this.data.profilepic == '' ? this.data.profilepic = "../../../../assets/user.png" : null;
         this.image = this.data.profilepic;
-        console.log("this.images:", this.image)
-      }
-    )
+        // console.log("this.images:", this.image)
 
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
-      (res: any) => {
-        console.log("this.overdata", res); this.overdata = res;
+        //query2 response for student placementsstatus checkmails 
+        this.overdata = res.data2;
         this.applications = 0; this.offers = 0;
+        this.nodata[1] = true
         this.overdata.forEach((a: any) => {
           if (a.offerstatus == 'yes') { this.offers++ }
           if (a.registered == 'yes') { this.applications++ }
         });
-      },
-      (err: any) => console.log(err)
-    );
+
+        //student profile ratings
+        // this.nodata[2] = true
+      }
+    )
+
+    // this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    //   (res: any) => {
+    //     console.log("this.overdata-data2", res); 
+    //     this.overdata = res;
+    //     this.applications = 0; this.offers = 0;
+    //     this.nodata[1] = true
+    //     this.overdata.forEach((a: any) => {
+    //       if (a.offerstatus == 'yes') { this.offers++ }
+    //       if (a.registered == 'yes') { this.applications++ }
+    //     });
+    //   },
+    //   (err: any) => console.log(err)
+    // );
 
     this.commonservice.postrequest('http://localhost:4000/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("mail") }).subscribe(
       (res: any) => {
-        console.log("res.data", res)
-
+        console.log("res.data-data3", res)
+        this.nodata[2] = true
         this.stdallcodedata = res.stdallcodedata
         this.stdallquizdata = res.stdallquizdata
         this.stdallratedata = res.stdallratedata
@@ -73,14 +88,14 @@ export class StudentprofileComponent implements OnInit {
         this.stdeachquizrate = res.stdeachquizrate
         this.stdeachcoderate.forEach((s: any) => {
           this.codetopics.push(s.topic)
-          console.log(this.codetopics, "ppppppppppppppppppppppppp")
+          // console.log(this.codetopics, "ppppppppppppppppppppppppp")
           this.coderate.push(s.main)
         })
         this.stdeachquizrate.forEach((s: any) => {
           this.quiztopics.push(s.topic)
           this.quizrate.push(s.main)
         })
-        console.log(this.codetopics, "ppppppppppppppppppppppppp")
+        // console.log(this.codetopics, "ppppppppppppppppppppppppp")
         this.setOptions()
       })
   }

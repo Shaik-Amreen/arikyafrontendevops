@@ -93,6 +93,7 @@
                       style="color:#00b0ff;font-size: 1.2rem;">Good luck
                       .</strong><br>
                     <span style="color: grey;font-size: 0.8rem;">Hope for the best !</span>
+
                   </div>
                 </div>
                 <br>
@@ -100,7 +101,7 @@
 
               </div>
               <div *ngIf="viewRating[i]">
-                <div class="row" *ngIf="currentValue[i] > 41 && currentValue[i] < 71">
+                <div class="row" *ngIf="currentValue[i] &gt; 41 && currentValue[i] &lt; 71">
                   <div class="col-sm-3">
                     <img src="assets/average.gif" style="height:100px ;" />
 
@@ -112,7 +113,7 @@
                         style="font-size: 0.9rem;font-weight: 600;">{{currentValue[i]}} %</span></span>
                   </div>
                 </div>
-                <div class="row" *ngIf="currentValue[i] < 40  && currentValue[i]>-1">
+                <div class="row" *ngIf="currentValue[i] &lt; 40  && currentValue[i] &gt; -1">
                   <div class="col-sm-3">
                     <img src="assets/sad.gif" style="height:100px ;" />
 
@@ -126,7 +127,7 @@
                   </div>
                 </div>
 
-                <div class="row" *ngIf="currentValue[i] > 69   ">
+                <div class="row" *ngIf="currentValue[i] &gt; 69   ">
                   <div class="col-sm-3">
                     <img src="assets/super.gif" style="height:100px ;" />
                   </div>
