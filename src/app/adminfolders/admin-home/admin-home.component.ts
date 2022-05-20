@@ -28,14 +28,6 @@ export class AdminHomeComponent implements OnInit {
         }
         else {
           this.data = []
-          this.commonservice.postrequest('http://localhost:4000/Studentdata/pendinginvitations', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
-            (resc: any) => {
-              // this.placementdata = []
-              // this.studentstatus = resc
-              // console.log(resc, ".,..........................................")
-            },
-            (errc: any) => console.log(errc)
-          );
         }
         this.commonservice.postrequest('http://localhost:4000/Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
           (resp: any) => {
