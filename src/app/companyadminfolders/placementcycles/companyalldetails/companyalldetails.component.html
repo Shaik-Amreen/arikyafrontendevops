@@ -208,8 +208,8 @@
                             style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.3rem;">
                             <strong>A single student</strong><br><br>
                             <span *ngIf="companydetails.status=='opened' else failone">
-                                <input class="form-control" [(ngModel)]="singlestudent" (click)="single='ADD'"
-                                    width="50vw" /><br>
+                                <input class="form-control shadow-none" [(ngModel)]="singlestudent"
+                                    (click)="single='ADD'" width="50vw" /><br>
                                 <button class="btn" *ngIf="singlestudent.length==10" (click)="singlestudentmail()"
                                     style="background-color: #00b0ff;border-radius: 20px;color: white;">{{single}}</button>
                             </span>
@@ -308,7 +308,7 @@
                             <ng-template #dis>
                                 <div style="margin:0rem 2rem">
                                     <strong>SELECT DEADLINE<br> </strong><br>
-                                    <input class="form-control" [(ngModel)]="deadline" type="datetime-local"
+                                    <input class="form-control shadow-none" [(ngModel)]="deadline" type="datetime-local"
                                         (change)="errdate=''">
                                 </div>
                                 <div *ngIf="errdate!=''" style="color: #a5081a;">{{errdate}}</div>

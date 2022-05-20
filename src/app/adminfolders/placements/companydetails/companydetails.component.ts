@@ -62,10 +62,10 @@ export class CompanydetailsComponent implements OnInit {
     this.datainitialize()
     this.commonservice.postrequest('http://localhost:4000/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (res: any) => {
-        // console.log(res);
+        console.log(res);
         this.commonservice.postrequest('http://localhost:4000/placementstatus/eligible', res.companydetails).subscribe(
           (rese: any) => {
-            // console.log(rese, "companydetails"); 
+            console.log(rese, "companydetails");
             this.nodata = true
             this.registered = rese.rdata.length; this.eligible = rese.data.length;
             this.placed = rese.edata.length
@@ -73,6 +73,7 @@ export class CompanydetailsComponent implements OnInit {
               res.companydetails.status = 'closed';
               this.commonservice.postrequest('http://localhost:4000/company/updatestatus', res.companydetails).subscribe(
                 (response: any) => {
+                  console.log("responseeeeeeeeeeeeeee")
                   // console.log(response)
                   this.companydetails = res.companydetails;
                   this.hiringflow = this.companydetails.hiringworkflow.flat()
@@ -105,6 +106,7 @@ export class CompanydetailsComponent implements OnInit {
 
   getWorkflow() {
     this.lastItem = false
+    this.companydetails.status == 'closed'
     this.commonservice.postrequest('http://localhost:4000/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (reset: any) => {
         // console.log("reset", reset)
@@ -217,7 +219,7 @@ export class CompanydetailsComponent implements OnInit {
       else { this.companydetails.status = 'opened' }
       this.commonservice.postrequest('http://localhost:4000/company/updatestatus', this.companydetails).subscribe(
         (res: any) => {
-
+          console.log(res)
           this.companydetails = res.data; this.ch = 0; this.getWorkflow()
           // this.firstcall()
         },

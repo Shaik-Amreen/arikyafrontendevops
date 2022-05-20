@@ -60,8 +60,9 @@
 
 
                         <div style="display: flex;">
-                            <div style="color: #a5081a;margin-left: 12vw;"><strong>{{c.rejectedat}}</strong> </div>
-                            <div *ngIf="c.offerletter!=''" (click)="downloadPdf(c.offerletter,'Offer Letter')">
+                            <div style="color: #a5081a;margin-left: 12vw;"><strong
+                                    *ngIf="c.rejectedat!='-'">{{c.rejectedat}}</strong> </div>
+                            <div *ngIf="c.offerletter!='-'" (click)="downloadPdf(c.offerletter,'Offer Letter')">
                                 <div style="color: #00b0ff; cursor: pointer;margin-left: 10vw;">
                                     Click to download the offer letter
                                 </div>

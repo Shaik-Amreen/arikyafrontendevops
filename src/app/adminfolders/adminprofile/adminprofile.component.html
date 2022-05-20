@@ -152,20 +152,20 @@
             <form style="text-align:left;margin:3vh" [formGroup]="usereditform" (change)="saveit=true">
                 <div style="display: flex;justify-content: space-around;">
                     <div> <label style="color: gray;">FirstName</label><br>
-                        <input class="form-control" type="text" formControlName="firstname"><br>
+                        <input class="form-control shadow-none" type="text" formControlName="firstname"><br>
                     </div>
                     <div> <label style="color: gray;">MiddleName</label><br>
-                        <input class="form-control" type="text" formControlName="middlename"><br>
+                        <input class="form-control shadow-none" type="text" formControlName="middlename"><br>
                     </div>
                     <div> <label style="color: gray;">LastName</label><br>
-                        <input class="form-control" type="text" formControlName="lastname"><br>
+                        <input class="form-control shadow-none" type="text" formControlName="lastname"><br>
                     </div>
                 </div>
                 <div style="margin: 0rem 3vw;">
                     <label style="color: gray;">Contact number</label><br>
-                    <input class="form-control" type="number" formControlName="contact"><br>
+                    <input class="form-control shadow-none" type="number" formControlName="contact"><br>
                     <label style="color: gray;">Designation</label><br>
-                    <input class="form-control" type="text" formControlName="designation"><br><br />
+                    <input class="form-control shadow-none" type="text" formControlName="designation"><br><br />
                     <button class="btn  btn-primary" style="color: white;background-color: #00B0FF;"
                         [disabled]="usereditform.status=='INVALID'" (click)="save()">{{savestatus}}</button>&nbsp;
                     <button class="btn  btn-danger " style="color: white;background-color: #a5081a;"

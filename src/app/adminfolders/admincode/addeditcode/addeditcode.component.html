@@ -131,7 +131,7 @@
                                         <label>Test case input {{ti+1}}</label>
                                         <span *ngFor="let it of getparameter(i,ti).controls;index as itv">
                                             <span [formGroupName]="itv" style="display: flex;">
-                                                <input class="form-control"
+                                                <input class="form-control shadow-none"
                                                     placeholder="enter test case input {{ti+1}} , click + to add another parameter"
                                                     id="invalue" formControlName="invalue" />
                                                 <!-- {{itv}} {{ti}}
@@ -157,8 +157,9 @@
                                     </div>
 
                                     <div class="col-sm"><label>Test case output {{ti+1}}</label><textarea
-                                            class="form-control" placeholder="enter test case output {{ti+1}}"
-                                            id="output" formControlName="output"></textarea>
+                                            class="form-control shadow-none"
+                                            placeholder="enter test case output {{ti+1}}" id="output"
+                                            formControlName="output"></textarea>
 
                                         <span style="color: #a5081a;"
                                             *ngIf="final.value.questions[i].testcases[ti].output=='' && inputvalue==true ">

@@ -28,14 +28,6 @@ export class AdminHomeComponent implements OnInit {
         }
         else {
           this.data = []
-          this.commonservice.postrequest('http://localhost:4000/Studentdata/pendinginvitations', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
-            (resc: any) => {
-              // this.placementdata = []
-              // this.studentstatus = resc
-              // console.log(resc, ".,..........................................")
-            },
-            (errc: any) => console.log(errc)
-          );
         }
         this.commonservice.postrequest('http://localhost:4000/Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
           (resp: any) => {
@@ -109,7 +101,7 @@ export class AdminHomeComponent implements OnInit {
     })
 
     let reportData = {
-      title: (e == 'total') ? 'ENREOLLED LIST IN ARIKYA' : (e == 'registered') ? 'REGISTERED LIST IN ARIKYA' : 'NOT REGISTERED LIST IN ARIKYA',
+      title: (e == 'total') ? 'STUDENTS LIST IN ARIKYA' : (e == 'registered') ? 'REGISTERED LIST IN ARIKYA' : 'NOT REGISTERED LIST IN ARIKYA',
       data: this.dataForExcel,
       headers: ['ROLL NUMBER', "MAIL", "COURSE", "YEAR", "STATUS"],
       backAlpha: 'E3'

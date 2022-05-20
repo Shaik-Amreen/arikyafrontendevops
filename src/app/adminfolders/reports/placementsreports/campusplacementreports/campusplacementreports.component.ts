@@ -51,8 +51,8 @@ export class CampusplacementreportsComponent implements OnInit {
                   // console.log(comdeptdata)
                   // this.companyplacementdata.push(tempcom)
                   if (this.departments.length - 1 == id) {
-                    console.log(comdeptdata, "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
-                    // comdeptdata.company = c.companyname
+                    // console.log(comdeptdata, "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+                    comdeptdata.company = c.companyname
                   }
                   // console.log(comdata, "]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]")
                 }
@@ -63,6 +63,7 @@ export class CampusplacementreportsComponent implements OnInit {
             });
             // console.log(comdeptdata, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..")
             this.companyplacements = [...this.companyplacements, comdeptdata]
+            // console.log(this.companyplacements)
           });
           this.campusplacementdatadeptwise.placementcyclename = camp.placementcyclename
           this.campusplacementdatadeptwise.fromdate = camp.fromdate
