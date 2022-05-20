@@ -1,6 +1,6 @@
 <div *ngIf="nodata else nodat">
     <br><br>
-    <h5 style="color: #1b1c1e;margin-left: 1rem;"><strong>TO PROCEED FURTHER PLEASE FILL .</strong></h5>
+    <h5 style="color: #1b1c1e;margin-left: 1rem;"><strong>TO PROCEED FURTHER PLEASE FILL .&nbsp;<span style="color: #a5081a;">(For testing we provided static data, you can make changes)</span></strong></h5>
     <form [formGroup]="studentdata" (ngSubmit)="save()">
         <div *ngFor="let k of studentform">
             <span *ngIf="k.tags=='input'">
