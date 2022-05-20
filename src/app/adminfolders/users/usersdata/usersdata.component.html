@@ -30,22 +30,24 @@
                     style="border: none;background-color: #fff;font-size: 0.8rem;" />
                 <i class="bx bx-search" style="font-size: 1rem;font-weight: 600"></i>&nbsp;
             </span><br />
-            <table class="users">
-                <tbody *ngFor="let d of facdata;index as i">
-                    <tr *ngIf="type=='' || d.mail.includes(type)">
-                        <td>
-                            <div style="margin-bottom: 1vh;">
-                                <button id="sub" [ngClass]="d==selectedUser ? 'buttoncolor' : 'btn'"
-                                    (click)="selectUser(i)"><strong>{{d.firstname}}</strong><br>{{d.designation}}<br>{{d.mail}}</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive users" style=" max-height:76vh">
+                <table class="users">
+                    <tbody *ngFor=" let d of facdata;index as i">
+                        <tr *ngIf="type=='' || d.mail.includes(type)">
+                            <td>
+                                <div style="margin-bottom: 1vh;">
+                                    <button id="sub" [ngClass]="d==selectedUser ? 'buttoncolor' : 'btn'"
+                                        (click)="selectUser(i)"><strong>{{d.firstname}}</strong><br>{{d.designation}}<br>{{d.mail}}</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col spacing "><br /><br />
-            <div class="card  p-1"
-                style="font-size: 15px ;width:550px;box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;"
+        <div class="col spacing " style="display: flex;justify-content: center;align-items: center;height: 90vh;">
+            <div class="card  p-3"
+                style="font-size: 15px;box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;width:40vw"
                 *ngIf="selectedMode else empty">
                 <div *ngIf="edit==false else editmode">
                     <div class="row">
@@ -111,7 +113,7 @@
                             <option value="admin">Admin</option>
                             <option value="faculty">Faculty</option>
                             <option value="student">Student</option>
-                        </select>
+                        </select><br />
                         <button style="background: #1b1c1e;" id="b" (click)="save()">Save</button>
                         <button style="background:#a5081a" id="b" (click)="edit=false">Close</button>
                     </form>

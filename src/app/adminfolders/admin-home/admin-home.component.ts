@@ -109,7 +109,7 @@ export class AdminHomeComponent implements OnInit {
     })
 
     let reportData = {
-      title: (e == 'total') ? 'ENREOLLED LIST IN ARIKYA' : (e == 'registered') ? 'REGISTERED LIST IN ARIKYA' : 'NOT REGISTERED LIST IN ARIKYA',
+      title: (e == 'total') ? 'STUDENTS LIST IN ARIKYA' : (e == 'registered') ? 'REGISTERED LIST IN ARIKYA' : 'NOT REGISTERED LIST IN ARIKYA',
       data: this.dataForExcel,
       headers: ['ROLL NUMBER', "MAIL", "COURSE", "YEAR", "STATUS"],
       backAlpha: 'E3'

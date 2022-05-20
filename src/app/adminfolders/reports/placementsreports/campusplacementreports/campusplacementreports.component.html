@@ -104,6 +104,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <!-- {{c.companyplacements | json}} -->
                 <div *ngFor="let p of tempcompanyfunc(c.companyplacements)" style="margin: 2rem;">
                     <!-- <button class="btn btn-primary shadow-none"
                         style="background-color: #00b0ff;font-size: 0.7rem;float: right;"
@@ -135,9 +136,26 @@
                             <tr>
                                 <td>ALL</td>
                                 <td><strong>{{p.company}}</strong></td>
-                                <td>{{p['cse'].comregistercompany.length+p['cse'].comnotregistercompany.length+p['ece'].comregistercompany.length+p['ece'].comregistercompany.length+p['eee'].comregistercompany.length+p['mech'].comregistercompany.length+p['cst'].comregistercompany.length+p['mba'].comregistercompany.length+p['mca'].comregistercompany.length+p['civil'].comregistercompany.length+
-                                    p['eee'].comnotregistercompany.length+p['mech'].comnotregistercompany.length+
-                                    p['cst'].comnotregistercompany.length+p['mba'].comnotregistercompany.length+p['mca'].comnotregistercompany.length+p['civil'].comnotregistercompany.length}}
+                                <td>
+                                    {{
+
+                                    p['cse'].comregistercompany.length+
+                                    p['ece'].comregistercompany.length+
+                                    p['ece'].comnotregistercompany.length+
+                                    p['eee'].comregistercompany.length+
+                                    p['mech'].comregistercompany.length+
+                                    p['cst'].comregistercompany.length+
+                                    p['mba'].comregistercompany.length+
+                                    p['mca'].comregistercompany.length+
+                                    p['civil'].comregistercompany.length+
+                                    p['cse'].comnotregistercompany.length+
+                                    p['eee'].comnotregistercompany.length+
+                                    p['mech'].comnotregistercompany.length+
+                                    p['cst'].comnotregistercompany.length+
+                                    p['mba'].comnotregistercompany.length+
+                                    p['mca'].comnotregistercompany.length+
+                                    p['civil'].comnotregistercompany.length
+                                    }}
                                 </td>
                                 <td>{{p['cse'].comregistercompany.length+p['ece'].comregistercompany.length+
                                     p['eee'].comregistercompany.length+p['mech'].comregistercompany.length+

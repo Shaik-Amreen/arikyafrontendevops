@@ -68,8 +68,8 @@
                 <form #f="ngForm" (ngSubmit)="forget(f)" *ngIf='buttonMode!="SENT" else sent'>
                     <div class="danger" *ngIf="mailerr!=''"><i class='bx bxs-error'></i>&nbsp;{{mailerr}}<br><br></div>
                     <h1 style="font-family: 'Poppins', sans-serif;">Change password</h1><br />
-                    <input (click)="mailerr=''" class="form-control" type="mail" placeholder="EMAIL" required
-                        [(ngModel)]="mail" name="mail" required /><br />
+                    <input (click)="mailerr=''" class="form-control shadow-none" type="mail" placeholder="EMAIL"
+                        required [(ngModel)]="mail" name="mail" required /><br />
                     <button type="submit" class="btn btn-primary " style="background-color: #00B0FF;"
                         [disabled]="!f.valid || buttonMode=='SENDING' ">{{buttonMode}}
                         <div class="spinner-grow spinner-grow-sm" style="color: aliceblue;" role="status"
@@ -81,7 +81,7 @@
                     <form #f="ngForm" (ngSubmit)="checkOtp(f)">
                         <div class="danger" *ngIf="invalidotp"><i class='bx bxs-error'></i>&nbsp;INVALID OTP<br><br>
                         </div>
-                        <input type='number' class="form-control" [(ngModel)]='otp' name='otp'
+                        <input type='number' class="form-control shadow-none" [(ngModel)]='otp' name='otp'
                             placeholder="ENTER OTP" /><br>
                         <button type="submit" class="btn btn-primary" style="background-color: #00B0FF;">VERIFY
                             OTP</button><br><br />

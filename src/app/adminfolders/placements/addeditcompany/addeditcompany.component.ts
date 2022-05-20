@@ -446,7 +446,7 @@ export class AddeditcompanyComponent implements OnInit {
         }
 
         let status = (sessionStorage.getItem('editcompany') == "yes") ? "modified " : 'added';
-        let url = (sessionStorage.getItem('editcompany') == "yes") ? 'company/updatecompany' : 'company/createcompany';
+        let url = (sessionStorage.getItem('editcompany') == "yes") ? 'http://localhost:4000/company/updatecompany' : 'http://localhost:4000/company/createcompany';
         let temp = {
           date: new Date(), college_id: sessionStorage.getItem('college_id'), doneby: sessionStorage.getItem('mail'),
           firstname: sessionStorage.getItem('firstname'),

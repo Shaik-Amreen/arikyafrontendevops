@@ -72,19 +72,19 @@
 
                     </span>
                     <div style="margin-left:4rem;">
-                        <div class="form-control" (click)="input1.click();answer(questionno,'option1')"
+                        <div class="form-control shadow-none" (click)="input1.click();answer(questionno,'option1')"
                             style="width: 60%;cursor: pointer;"><input type="radio" #input1 style="margin-right: 5px;"
                                 name="option" [(ngModel)]="quiz['questions'][questionno-1][0]['answeredoption']"
                                 value="option1">{{quiz['questions'][questionno-1][0]['option1']}}</div><br>
-                        <div class="form-control" (click)="input2.click();answer(questionno,'option2')"
+                        <div class="form-control shadow-none" (click)="input2.click();answer(questionno,'option2')"
                             style="width: 60%;cursor: pointer;"><input type="radio" #input2 style="margin-right: 5px;"
                                 name="option" [(ngModel)]="quiz['questions'][questionno-1][0]['answeredoption']"
                                 value="option2">{{quiz['questions'][questionno-1][0]['option2']}}</div><br>
-                        <div class="form-control" (click)="input3.click();answer(questionno,'option3')"
+                        <div class="form-control shadow-none" (click)="input3.click();answer(questionno,'option3')"
                             style="width: 60%;cursor: pointer;"><input type="radio" #input3 style="margin-right: 5px;"
                                 name="option" [(ngModel)]="quiz['questions'][questionno-1][0]['answeredoption']"
                                 value="option3">{{quiz['questions'][questionno-1][0]['option3']}}</div><br>
-                        <div class="form-control" (click)="input4.click();answer(questionno,'option4')"
+                        <div class="form-control shadow-none" (click)="input4.click();answer(questionno,'option4')"
                             style="width: 60%;cursor: pointer;"><input type="radio" #input4 style="margin-right: 5px;"
                                 name="option" [(ngModel)]="quiz['questions'][questionno-1][0]['answeredoption']"
                                 value="option4">{{quiz['questions'][questionno-1][0]['option4']}}</div><br><br>
