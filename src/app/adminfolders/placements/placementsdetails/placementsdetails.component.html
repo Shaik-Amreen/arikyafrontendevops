@@ -45,7 +45,12 @@
             <td>{{place}}</td>
             <td>{{c.companyname}}</td>
             <td>{{c.companyprofiletitle}}</td>
-            <td>{{c.status}}</td>
+            <td><strong *ngIf="c.status=='opened'" style="color: #00b0ff;">In progress</strong>
+              <strong *ngIf="c.status=='closed'" style="color: crimson;">Closed</strong>
+              <strong *ngIf="c.status=='submitted'" style="color: green;">Submitted</strong>
+              <strong *ngIf="c.status=='not updated'" style="color: goldenrod;">Not updated</strong>
+
+            </td>
             <td>{{c.created}}</td>
           </tr>
 

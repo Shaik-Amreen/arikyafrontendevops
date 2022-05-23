@@ -189,6 +189,7 @@ import { JavaComponent } from './studentfolder/java/java.component';
 import { RichTextEditorComponent } from './adminfolders/rich-text-editor/rich-text-editor.component';
 import { ContactComponent } from './contact/contact.component';
 import { NopageComponent } from './nopage/nopage.component';
+import { OfferstatusComponent } from './adminfolders/offerstatus/offerstatus.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -367,6 +368,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     RichTextEditorComponent,
     ContactComponent,
     NopageComponent,
+    OfferstatusComponent,
 
 
   ]

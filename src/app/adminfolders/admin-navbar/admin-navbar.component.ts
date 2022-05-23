@@ -55,6 +55,7 @@ export class AdminNavbarComponent implements OnInit {
           { label: "Placements", rlink: "/admin/reports/placements" },
         ]
       },
+      { label: "Offer status", rlink: "/admin/offerstatus", icon: 'bx bxs-user' },
       { label: "Users", rlink: "/admin/users", icon: 'bx bxs-user' },
       { label: "Calendar", rlink: "/admin/calendar", icon: 'bx bx-calendar' },
     ]
@@ -91,7 +92,6 @@ export class AdminNavbarComponent implements OnInit {
     // console.log(sessionStorage.getItem('organisation_id'))
     this.commonservice.postrequest('http://localhost:4000/data/findcollegename', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
       (res: any) => {
-        console.log(res, ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
         this.collegeName = res.organisation
       },
       (err: any) => this.router.navigate(['/login'])
@@ -113,8 +113,10 @@ export class AdminNavbarComponent implements OnInit {
   allbell() {
     this.commonservice.postrequest('http://localhost:4000/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
-        // console.log("notify", res)
+        console.log("notify", res)
+
         this.comnotify = res.data1
+        this.comnotify = this.comnotify.filter((e: any) => e.offerletter != '-')
         this.placenotify = res.data2
         // console.log("this.placenotify", this.placenotify)
       },

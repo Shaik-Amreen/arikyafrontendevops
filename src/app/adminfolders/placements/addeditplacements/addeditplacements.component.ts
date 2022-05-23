@@ -82,8 +82,8 @@ export class AddeditplacementsComponent implements OnInit {
     { value: sessionStorage.getItem('organisation_id'), formname: 'organisation_id' },
     {
       tags: 'combine', 'cname': 'col-sm-6', Validations: [Validators.required], 'fields': [
-        { value: '', "label": "From date", "type": "month", "tags": "input", "formname": "fromdate", "valid": true },
-        { value: '', "label": "To date", "type": "month", "tags": "input", "formname": "todate", "valid": true },
+        { value: '', "label": "From date", "type": "date", "tags": "input", "formname": "fromdate", "valid": true },
+        { value: '', "label": "To date", "type": "date", "tags": "input", "formname": "todate", "valid": true },
       ]
     },
     { "formname": "created", "value": sessionStorage.getItem('organisation_id') },
@@ -135,7 +135,7 @@ export class AddeditplacementsComponent implements OnInit {
   onSubmit() {
     // console.log(this.eligibleFormData);
     this.placementdata = true;
-    if (this.formgroupdata.status == 'VALID') {
+    if (this.formgroupdata.status == 'VALID' && (new Date(this.formgroupdata.value.fromdate) <= new Date(this.formgroupdata.value.todate))) {
       if (sessionStorage.getItem('editplacements') == 'yes') {
         this.commonservice.postrequest('http://localhost:4000/Placement/updatePlacement', this.formgroupdata.value).subscribe(
           (res: any) => {
@@ -145,6 +145,9 @@ export class AddeditplacementsComponent implements OnInit {
           },
           (err: any) => this.errorMsg = 'err'
         );
+      }
+      else if (new Date(this.formgroupdata.value.fromdate) > new Date(this.formgroupdata.value.todate)) {
+        document.getElementById('fromdate')?.scrollIntoView({ behavior: "smooth", block: 'center' });
       }
       else {
         this.commonservice.postrequest('http://localhost:4000/Placement/createPlacement', this.formgroupdata.value).subscribe(
