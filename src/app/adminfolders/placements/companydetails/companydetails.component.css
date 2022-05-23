@@ -7,6 +7,8 @@ tr {
   border-bottom: 0.5px solid whitesmoke;
 }
 
+
+
 .imag {
   width: 70px;
   height: 70px;
@@ -42,6 +44,20 @@ tr {
 .modal {
   background: rgba(0, 0, 0, .5);
 }
+
+.modal {
+  background: rgba(0, 0, 0, .5);
+}
+
+.applicants:focus {
+  border-color: #ced4da; /* default B5 color or set your own color*/
+  outline: none ;
+  box-shadow: none ;
+} 
+/* .modal1 {
+  background: rgba(254, 253, 253, 0.636);
+} */
+
 
 
 .view {

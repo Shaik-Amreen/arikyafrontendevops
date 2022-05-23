@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core'; import { Router, ActivatedRou
 import * as XLSX from 'xlsx';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ExportExcelService } from 'src/app/services/export-excel.service';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
   selector: 'app-companydetails',
@@ -59,13 +60,12 @@ export class CompanydetailsComponent implements OnInit {
   }
 
   firstcall() {
-    this.datainitialize()
     this.commonservice.postrequest('http://localhost:4000/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.commonservice.postrequest('http://localhost:4000/placementstatus/eligible', res.companydetails).subscribe(
           (rese: any) => {
-            console.log(rese, "companydetails");
+            // console.log(rese, "companydetails");
             this.nodata = true
             this.registered = rese.rdata.length; this.eligible = rese.data.length;
             this.placed = rese.edata.length
@@ -73,12 +73,12 @@ export class CompanydetailsComponent implements OnInit {
               res.companydetails.status = 'closed';
               this.commonservice.postrequest('http://localhost:4000/company/updatestatus', res.companydetails).subscribe(
                 (response: any) => {
-                  console.log("responseeeeeeeeeeeeeee")
+                  // console.log("responseeeeeeeeeeeeeee")
                   // console.log(response)
                   this.companydetails = res.companydetails;
-                  this.hiringflow = this.companydetails.hiringworkflow.flat()
+                  this.hiringflow = this.companydetails.hiringworkflow.flat();
                   // this.companydetails.companylogo=(res.companydetails.companylogo);
-                  console.log("this.companydetails.companylogo111", this.companydetails.companylogo);
+                  // console.log("this.companydetails.companylogo111", this.companydetails.companylogo);
                   (this.companydetails.companylogo == null || this.companydetails.companylogo == '') ? this.companydetails.companylogo = "../../../.././assets/companylogo.jpg" : null;
                   this.image = this.companydetails.companylogo;
                   this.getWorkflow()
@@ -392,6 +392,54 @@ export class CompanydetailsComponent implements OnInit {
     )
   }
 
+  addapplicantdisplay = 'none'
+  applicants: any
+  validate = false;
+  validatemsg = ""
+  addapplicants='ADD'
+  applicantstatus=''
+
+  addapplicantmodal(){
+    this.addapplicantdisplay='block';this.validatemsg='';this.applicants='';this.applicantstatus='Add';this.addapplicants="ADD"
+  }
+
+  removeapplicantmodal(){
+    this.addapplicantdisplay='block';this.applicantstatus='Remove';this.validatemsg='';this.applicants='';this.addapplicants="REMOVE"
+  }
+
+  addapplicant() {
+    this.validate = true
+    this.validatemsg = ""
+    if (this.applicants) {
+      let rollnos = this.applicants.trim().replace(/\n/g, ',').split(',');
+      console.log(rollnos)
+      rollnos.forEach((data: any, index: any) => {
+        if ((data.length != 10 || !/^[A-Za-z0-9]*$/.test(data)) && !this.validatemsg) {
+          this.validatemsg = `*Invalid Input ${data} at Line No ${index + 1}`
+          if (rollnos.length == index + 1) {
+            this.validatemsg = `*Invalid Input ${data} At End`
+          }
+        }
+      });
+      if (!this.validatemsg) {
+        (this.applicantstatus=='Add')?this.addapplicants='Adding...':this.addapplicants='Removing...';
+        this.commonservice.postrequest('http://localhost:4000/placementstatus/updateregistered', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname'), rollnumbers: rollnos,applicantstatus:this.applicantstatus }).subscribe(
+          (res: any) => { if (res.message == 'success') { 
+            this.firstcall()
+            this.display = true;  ;(this.applicantstatus=='Add')?(this.addapplicants='ADD',this.popup = "Applicants Added"):(this.addapplicants='REMOVE',this.popup = "Applicants Removed");this.addapplicantdisplay='none'
+            setTimeout(() => {
+              this.display = false;
+            }, 5000)
+        } },
+          (err: any) => console.log(err)
+        );
+      }
+    }
+    else {
+      this.validatemsg = "*Required"
+    }
+
+  }
 
 
 

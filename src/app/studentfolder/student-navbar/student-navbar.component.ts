@@ -101,7 +101,7 @@ export class StudentNavbarComponent implements OnInit {
   ngOnInit(): void {
     this.commonservice.postrequest('http://localhost:4000/data/findcollegename', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
       (res: any) => {
-        console.log(res, ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
+        // console.log(res, ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
         this.collegeName = res.organisation
       },
       (err: any) => this.router.navigate(['/login'])
@@ -112,7 +112,7 @@ export class StudentNavbarComponent implements OnInit {
   notification() {
     this.commonservice.postrequest('http://localhost:4000/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
-        // console.log("notify", res)
+        console.log("notifyacceptreject", res)
         this.comnotify = res.data1
 
         this.placenotify = res.data2
@@ -133,7 +133,7 @@ export class StudentNavbarComponent implements OnInit {
     );
     this.commonservice.postrequest('http://localhost:4000/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
-        // console.log(res)
+        console.log("findnotifications--------------------11111",res)
         this.all = res.filter((e: any) => e.mail == sessionStorage.getItem('mail'))
         console.log("this.all", this.all)
         this.combinedata = [...this.placenotify, ...this.adminotifications, ...this.all]

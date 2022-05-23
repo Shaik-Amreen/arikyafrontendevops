@@ -51,7 +51,7 @@
             </div>
             <div class="col-sm-3 ">
                 <span style="color:#00b0ff;font-weight: 600;">{{placed}} PLACED </span><br>
-                <span style="color:#00b0ff;font-weight: 600;">{{registered}} REGISTERED</span><br>
+                <span style="color:#00b0ff;font-weight: 600;">{{registered}} REGISTERED </span><br>
                 <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE</span><br>
             </div>
             <div class="col-sm"><br>
@@ -272,7 +272,11 @@
                         style="max-height:'90vh';border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;padding: 1rem;padding-left: 2rem;text-align: center;">
                         <div>
                             <span style="color:#00b0ff;font-weight: 600;">{{placed}} PLACED </span><br>
-                            <span style="color:#00b0ff;font-weight: 600;">{{registered}} REGISTERED</span><br>
+                            <span style="color:#00b0ff;font-weight: 600;">{{registered}} APPLICANTS&nbsp; <i
+                                    style="font-size: 0.8rem;color: green; cursor: pointer;" class='bx bx-plus-circle'
+                                    (click)="addapplicantmodal()"></i>&nbsp;<i
+                                    style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
+                                    (click)="removeapplicantmodal()"></i></span><br>
                             <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE</span><br>
                         </div>
                         <hr>
@@ -512,6 +516,33 @@
 
     </tr>
 </table>
+
+<div class="modal modal1" tabindex="-1" role="dialog" [ngStyle]="{'display':addapplicantdisplay}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 40vw;">
+            <div class="modal-header">
+                <div style="display: flex;">
+                    <h4 class="modal-title">{{applicantstatus}} Applicants</h4>&nbsp;
+                    <span style="padding-top: 0.6rem;">({{applicantstatus}} single or bulk students to the company).</span>
+                </div>
+            </div>
+            <div>
+                <div class="modal-body">
+                    <textarea type="text" class="form-control applicants" style="height: 50vh;white-space: pre-wrap;"
+                        placeholder="Enter single or bulk list of rollnumbers."
+                        [(ngModel)]="applicants"></textarea>
+                    <span style="color: #a5081a;size:0.5rem">{{validatemsg}}&nbsp;</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary applicants"
+                        (click)="addapplicant()">{{addapplicants}}</button>
+                    <button type="button" class="btn btn-danger applicants"
+                        (click)="addapplicantdisplay='none';validatemsg='';applicants=''">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <ng-template #nodat>
