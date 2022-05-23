@@ -16,115 +16,7 @@ export class AddeditcompanyComponent implements OnInit {
   sm = false;
   editMode = false
 
-  addcompany: any[] = [
-
-    { 'formname': 'type', value: 'college' },
-    {
-      tags: 'combine', 'cname': 'col-sm-6', fields: [
-
-        { "tags": "input", "type": "text", "valid": true, 'label': "Placement cycle name", 'formname': 'placementcyclename', value: sessionStorage.getItem("placementcyclename") },
-        { "value": "", "label": "Company", "formname": "companyname", "tags": "input", "type": "text", "placeholder": "Start typing company name...", "valid": true, 'pattern': "^[A-Za-z ]+$", "patternerror": "Invalid company name", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
-
-
-      ]
-    },
-    { 'formname': 'code', value: '' },
-    { 'formname': 'companylogo' },
-    {
-      tags: 'combine', 'cname': 'col-sm-6', fields: [
-
-        { "value": "", "label": "Company Profile Title", "formname": "companyprofiletitle", "tags": "input", "type": "text", "valid": true, "placeholder": "Enter company profile title", "patternerror": "Invalid profile title", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
-        {
-          "value": "", "label": "Company Profile Source", "formname": "companyprofilesource", "tags": "select", "valid": true, validations: [Validators.required],
-          "options": [
-            { "label": "campus placements", "value": "campus placements" },
-            { "label": "external officer", "value": "external officer" },
-            { "label": "PPO", "value": "ppo" }
-          ]
-        }
-      ]
-    },
-    {
-      tags: 'combine', 'cname': 'col-sm-6', 'fields': [
-        { "value": "", "label": "Company Location", "formname": "companylocation", "tags": "input", "type": "text", "valid": true, "placeholder": "Company location", "patternerror": "Enter valid location", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
-        { "value": "", "label": "Company Contact", "formname": "companycontact", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter company contact number", "patternerror": "Invalid phonenumber", validations: [Validators.required, Validators.minLength(10), Validators.maxLength(15)] },
-
-      ]
-    },
-    {
-      tags: 'combine', 'cname': 'col-sm-6', 'fields': [
-        {
-          "value": "", "label": "Position Type", "formname": "positiontype", "tags": "select", "valid": true, validations: [Validators.required],
-          "options": [
-            { "label": "full time", "value": "full time" }, { "label": "internship", "value": "internship" }, { "label": "part time", "value": "part time" },
-          ]
-        },
-        {
-          "value": "", "label": "Category", "formname": "category", "tags": "select", "valid": true, validations: [Validators.required],
-          "options": [
-            { "label": "Level 1 - CATEGORY A", "value": "Level 1 - CATEGORY A" }, { "label": "Level 2 - CATEGORY B", "value": "Level 2 - CATEGORY B" },
-            { "label": "Level 3 - CATEGORY C", "value": "Level 3 - CATEGORY C" }, { "label": "Level 4 - CATEGORY D", "value": "Level 4 - CATEGORY D" },
-            { "label": "Level 5 - CATEGORY E", "value": "Level 5 - CATEGORY E" }
-          ]
-        }]
-    },
-    {
-      tags: 'combine', 'cname': 'col-sm-6', fields: [
-        { "formname": "dateofvisit", "value": "not updated", "tags": "input", type: "date", label: "Date of visit" },
-        { "value": "", "label": "Company Function", "formname": "companyfunction", "tags": "input", "type": "text", "valid": true, "placeholder": "Company function", "patternerror": "Invalid company function", validations: [Validators.required] },
-      ]
-    },
-    // { "value": "", "label": "Company Function", "formname": "companyfunction", "tags": "input", "type": "text", "valid": true, "placeholder": "Company function", "patternerror": "Invalid company function", validations: [Validators.required, Validators.pattern("^[A-Za-z0-9 ]+$")] },
-
-    { "value": "", "label": "Stipend", "tags": "input", formname: "stipend", "type": "checkbox" },
-    {
-      tags: 'combine', subof: 'stipend', 'cname': 'col-sm-3', 'fields': [
-        {
-          "value": "", "label": "Interval", "tags": "select", "formname": "interval",
-          "options": [
-            { "label": "ANNUM", "value": "annum" }, { "label": "MONTH", "value": "month" }
-          ]
-        },
-        {
-          "value": "", "label": "Currency", "tags": "select", "formname": "currency",
-          "options": [
-            { "label": "INR", "value": "INR" }, { "label": "USD", "value": "USD" }
-          ]
-        },
-        { "value": "", "label": "Minimum", "tags": "input", "formname": "minimum", "type": "number" },
-        { "value": "", "label": "Maximum", "tags": "input", "formname": "maximum", "type": "number" },]
-    },
-
-
-    {
-      tags: 'combine', 'cname': 'col-sm-3 ', 'head': 'ELIGIBILITY CRITERIA', 'fields': [
-        { "value": "", "label": "10th", "type": "number", "tags": "input", "formname": "ten", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(99), Validators.min(40)] },
-        { "value": "", "label": "12th", "type": "number", "tags": "input", "formname": "inter", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(99), Validators.min(40)] },
-        { "value": "", "label": "Diploma", "type": "number", "tags": "input", "formname": "diploma", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(99), Validators.min(40)] },
-        { "value": "", "label": "Undergraduate", "type": "number", "tags": "input", "formname": "undergraduate", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(99), Validators.min(40)] },
-      ]
-    },
-    {
-      tags: 'combine', 'cname': 'col-sm-6 ', 'fields': [
-        { "value": "", "label": "Ongoing Backlogs", "formname": "ongoingbacklogs", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter ongoing backlogs", 'pattern': '^[0-9]', "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(10), Validators.min(0)] },
-        { "value": "", "label": "Total Backlogs", "formname": "totalbacklogs", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter total backlogs", 'pattern': '^[0-9]', "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(10), Validators.min(0)] },
-      ]
-    },
-    { 'formname': 'eligibilties', value: [] },
-    { label: 'Gender', formname: 'gender', value: 'malefemale', tags: "select", options: [{ label: 'All are eligible', value: 'malefemale' }, { label: 'Only male are eligible', value: 'male' }, { label: 'Only female are eligible', value: 'female' }] }
-    , { formname: 'hiringworkflow', value: [] },
-    { "value": "", "label": "Company Description", "type": "text", "tags": "textarea", "formname": "companydescription", "valid": true, "patternerror": "Enter valid description", validations: [Validators.required] },
-    { "formname": "gender", "value": "malefemale" },
-    { "formname": "status", "value": "not updated" },
-    // { "formname": "dateofvisit", "value": "not updated" },
-    { "formname": "deadline", "value": "not updated" },
-    { "formname": "created", "value": sessionStorage.getItem('firstname') },
-    { "formname": "createdon", "value": new Date() },
-    { "formname": "updatedon", "value": "" },
-    { "formname": "updatedby", "value": "" },
-    { "formname": "organisation_id", "value": sessionStorage.getItem('organisation_id') },
-
-  ]
+  addcompany: any = []
   hiringworkflowdata: any = ['Pre-placement talk', 'Resume shortlisting', 'Written test', 'Group Discussion', 'Technical Interview', 'HR Interview', 'Online test']
   suggestionsMode = true; errorMsg = ''; addCompanyForm: FormGroup; finaldept: any; applyAllMode = false;
   stipendMode = true;
@@ -143,6 +35,129 @@ export class AddeditcompanyComponent implements OnInit {
   hiringflowforsub: FormGroup;
 
   constructor(private router: Router, private commonservice: CommonService) {
+    this.addcompanyform = new FormGroup({
+      ongoingbacklogs: new FormControl(0)
+    })
+
+    this.addcompany = [
+
+      { 'formname': 'type', value: 'college' },
+      {
+        tags: 'combine', 'cname': 'col-sm-6', fields: [
+
+          { "tags": "input", "type": "text", "valid": true, 'label': "Placement cycle name", 'formname': 'placementcyclename', value: sessionStorage.getItem("placementcyclename") },
+          { "value": "", "label": "Company", "formname": "companyname", "tags": "input", "type": "text", "placeholder": "Start typing company name...", "valid": true, 'pattern': "^[A-Za-z ]+$", "patternerror": "Invalid company name", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
+
+
+        ]
+      },
+      { 'formname': 'code', value: '' },
+      { 'formname': 'companylogo' },
+      {
+        tags: 'combine', 'cname': 'col-sm-6', fields: [
+
+          { "value": "", "label": "Job Profile Title", "formname": "companyprofiletitle", "tags": "input", "type": "text", "valid": true, "placeholder": "Enter company profile title", "patternerror": "Invalid profile title", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
+          {
+            "value": "", "label": "Job Profile Source", "formname": "companyprofilesource", "tags": "select", "valid": true, validations: [Validators.required],
+            "options": [
+              { "label": "campus placements", "value": "campus placements" },
+              { "label": "external officer", "value": "external officer" },
+              { "label": "PPO", "value": "ppo" }
+            ]
+          }
+        ]
+      },
+      {
+        tags: 'combine', 'cname': 'col-sm-6', 'fields': [
+          { "value": "", "label": "Job Location", "formname": "companylocation", "tags": "input", "type": "text", "valid": true, "placeholder": "Job location", "patternerror": "Enter valid location", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
+          { "value": "", "label": "Company contact", "formname": "companycontact", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter company contact number", "patternerror": "Invalid phonenumber", validations: [Validators.required, Validators.minLength(10), Validators.maxLength(15)] },
+
+        ]
+      },
+      {
+        tags: 'combine', 'cname': 'col-sm-6', 'fields': [
+          {
+            "value": "", "label": "Position Type", "formname": "positiontype", "tags": "select", "valid": true, validations: [Validators.required],
+            "options": [
+              { "label": "full time", "value": "full time" }, { "label": "internship", "value": "internship" }, { "label": "part time", "value": "part time" },
+            ]
+          },
+          {
+            "value": "", "label": "Category", "formname": "category", "tags": "select", "valid": true, validations: [Validators.required],
+            "options": [
+              { "label": "Level 1 - CATEGORY A", "value": "Level 1 - CATEGORY A" }, { "label": "Level 2 - CATEGORY B", "value": "Level 2 - CATEGORY B" },
+              { "label": "Level 3 - CATEGORY C", "value": "Level 3 - CATEGORY C" }, { "label": "Level 4 - CATEGORY D", "value": "Level 4 - CATEGORY D" },
+              { "label": "Level 5 - CATEGORY E", "value": "Level 5 - CATEGORY E" }
+            ]
+          }]
+      },
+      {
+        tags: 'combine', 'cname': 'col-sm-6', fields: [
+          { "formname": "dateofvisit", "value": "not updated", "tags": "input", type: "date", label: "Date of visit" },
+          { "value": "", "label": "Job Function", "formname": "companyfunction", "tags": "input", "type": "text", "valid": true, "placeholder": "Job function", "patternerror": "Invalid Job function", validations: [Validators.required] },
+        ]
+      },
+      // { "value": "", "label": "Company Function", "formname": "companyfunction", "tags": "input", "type": "text", "valid": true, "placeholder": "Company function", "patternerror": "Invalid company function", validations: [Validators.required, Validators.pattern("^[A-Za-z0-9 ]+$")] },
+
+      { "value": "", "label": "Stipend", "tags": "input", formname: "stipend", "type": "checkbox" },
+      {
+        tags: 'combine', subof: 'stipend', 'cname': 'col-sm-3', 'fields': [
+          {
+            "value": "", "label": "Interval", "tags": "select", "formname": "interval",
+            "options": [
+              { "label": "ANNUM", "value": "annum" }, { "label": "MONTH", "value": "month" }
+            ]
+          },
+          {
+            "value": "", "label": "Currency", "tags": "select", "formname": "currency",
+            "options": [
+              { "label": "INR", "value": "INR" }, { "label": "USD", "value": "USD" }
+            ]
+          },
+          { "value": "", "label": "Minimum", "tags": "input", "formname": "minimum", "type": "number" },
+          { "value": "", "label": "Maximum", "tags": "input", "formname": "maximum", "type": "number" },]
+      },
+
+
+      {
+        tags: 'combine', 'cname': 'col-sm-3 ', 'head': 'ELIGIBILITY CRITERIA', 'fields': [
+          { "value": "", "label": "10th", "type": "number", "tags": "input", "formname": "ten", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(99), Validators.min(40)] },
+          { "value": "", "label": "12th", "type": "number", "tags": "input", "formname": "inter", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(99), Validators.min(40)] },
+          { "value": "", "label": "Diploma", "type": "number", "tags": "input", "formname": "diploma", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(99), Validators.min(40)] },
+          { "value": "", "label": "Undergraduate", "type": "number", "tags": "input", "formname": "undergraduate", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(99), Validators.min(40)] },
+        ]
+      },
+      {
+        tags: 'combine', 'cname': 'col-sm-6 ', 'fields': [
+          { "value": "", "label": "Ongoing Backlogs", "formname": "ongoingbacklogs", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter ongoing backlogs", 'pattern': '^[0-9]', "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(100), Validators.min(0)] },
+          { "value": "", "label": "Total Backlogs", "formname": "totalbacklogs", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter total backlogs", 'pattern': '^[0-9]', "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(10), Validators.min(parseInt(this.addcompanyform.value.ongoingbacklogs))] },
+        ]
+      },
+      { 'formname': 'eligibilties', value: [] },
+      { label: 'Gender', formname: 'gender', value: 'malefemale', tags: "select", options: [{ label: 'All are eligible', value: 'malefemale' }, { label: 'Only male are eligible', value: 'male' }, { label: 'Only female are eligible', value: 'female' }] }
+      , { formname: 'hiringworkflow', value: [] },
+      { "value": "", "label": "Job Description", "type": "text", "tags": "textarea", "formname": "companydescription", "valid": true, "patternerror": "Enter valid description", validations: [Validators.required] },
+      { "formname": "gender", "value": "malefemale" },
+      { "formname": "status", "value": "not updated" },
+      // { "formname": "dateofvisit", "value": "not updated" },
+      { "formname": "deadline", "value": "not updated" },
+      { "formname": "created", "value": sessionStorage.getItem('firstname') },
+      { "formname": "createdon", "value": new Date() },
+      { "formname": "updatedon", "value": "" },
+      { "formname": "updatedby", "value": "" },
+      { "formname": "organisation_id", "value": sessionStorage.getItem('organisation_id') },
+
+    ]
+
+
+
+
+
+
+
+
+
+
     if (sessionStorage.getItem('editcompany') == 'yes') {
       this.editMode = true
     }
@@ -173,7 +188,7 @@ export class AddeditcompanyComponent implements OnInit {
       }
       this.addcompanyform = new FormGroup(form)
     })
-
+    console.log(this.addcompanyform)
     //for suggestions of company companyname
     this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => this.data = res,
@@ -204,48 +219,7 @@ export class AddeditcompanyComponent implements OnInit {
   }
 
 
-  private companyForm() {
-    this.addCompanyForm = new FormGroup(
-      {
-        'placementcyclename': new FormControl(sessionStorage.getItem("placementcyclename")),
-        'companyname': new FormControl('', Validators.required),
-        'companyprofiletitle': new FormControl('', Validators.required),
-        'companycontact': new FormControl('', Validators.required),
-        'companyprofilesource': new FormControl('', Validators.required),
-        'companylocation': new FormControl('', Validators.required),
-        'companylogo': new FormControl(''),
-        'positiontype': new FormControl('', Validators.required),
-        'companyfunction': new FormControl('', Validators.required),
-        'category': new FormControl('', Validators.required),
-        'interval': new FormControl(''),
-        'currency': new FormControl(''),
-        'minimum': new FormControl(''),
-        'maximum': new FormControl(''),
-        'hiringworkflow': new FormArray([]),
-        'ten': new FormControl('', Validators.required),
-        'inter': new FormControl('', Validators.required),
-        'diploma': new FormControl('', Validators.required),
-        'undergraduate': new FormControl('', Validators.required),
-        'companydescription': new FormControl('', Validators.required),
-        'eligibilties': new FormArray([]),
-        'gender': new FormControl('malefemale'),
-        'status': new FormControl('not updated'),
-        'created': new FormControl(sessionStorage.getItem('firstname')),
-        'createdon': new FormControl(new Date()),
-        'dateofvisit': new FormControl('not updated'),
-        'deadline': new FormControl('not updated'),
-        'backlogs': new FormControl('no'),
-        'minbl': new FormControl(''),
-        'maxbl': new FormControl(''),
-        'ongoingbacklogs': new FormControl('', Validators.required),
-        'totalbacklogs': new FormControl('', Validators.required),
-        'updatedon': new FormControl(''),
-        'updatedby': new FormControl(''),
-        'organisation_id': new FormControl(sessionStorage.getItem('organisation_id'))
 
-      }
-    )
-  }
 
   deptstoredata: any = []
   alreadydata: any = []
@@ -263,7 +237,6 @@ export class AddeditcompanyComponent implements OnInit {
           (response: any) => {
 
             this.alreadydata = response
-            console.log(response, ";;;;;;;;;;;;;")
 
           })
 
@@ -409,8 +382,7 @@ export class AddeditcompanyComponent implements OnInit {
         });
       }
     });
-
-    if (this.addcompanyform.status == "VALID") {
+    if (this.addcompanyform.status == "VALID" && parseInt(this.addcompanyform.value.ongoingbacklogs) <= parseInt(this.addcompanyform.value.totalbacklogs)) {
       if (!this.stipendMode) {
         this.addcompanyform.get('interval').setValue("")
         this.addcompanyform.get('currency').setValue("")
@@ -448,7 +420,7 @@ export class AddeditcompanyComponent implements OnInit {
         let status = (sessionStorage.getItem('editcompany') == "yes") ? "modified " : 'added';
         let url = (sessionStorage.getItem('editcompany') == "yes") ? 'http://localhost:4000/company/updatecompany' : 'http://localhost:4000/company/createcompany';
         let temp = {
-          date: new Date(), college_id: sessionStorage.getItem('college_id'), doneby: sessionStorage.getItem('mail'),
+          date: new Date(), organisation_id: sessionStorage.getItem('organisation_id'), doneby: sessionStorage.getItem('mail'),
           firstname: sessionStorage.getItem('firstname'),
           reason: ` ${status} ${this.addcompanyform.value.companyname} profile in ${this.addcompanyform.value.placementcyclename} `
         }
@@ -469,6 +441,9 @@ export class AddeditcompanyComponent implements OnInit {
       }
     }
 
+    else if (parseInt(this.addcompanyform.value.ongoingbacklogs) > parseInt(this.addcompanyform.value.totalbacklogs)) {
+      document.getElementById('ongoingbacklogs')?.scrollIntoView({ behavior: "smooth", block: 'center' });
+    }
     else {
       let a = '';
       Object.keys(this.addcompanyform.controls).forEach(key => {
@@ -523,113 +498,112 @@ export class AddeditcompanyComponent implements OnInit {
   };
 
   initialize() {
-    this.addcompany = [
+    // this.addcompany = [
 
-      { 'formname': 'type', value: 'college' },
-      { 'formname': 'placementcyclename', value: sessionStorage.getItem("placementcyclename") },
-      { 'formname': 'code', value: '' },
-      { "value": "", "label": "Company", "formname": "companyname", "tags": "input", "type": "text", "placeholder": "Start typing company name...", "valid": true, 'pattern': "^[A-Za-z ]+$", "patternerror": "Invalid company name", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
-      { 'formname': 'companylogo' },
-      {
-        tags: 'combine', 'cname': 'col-sm-6', fields: [
+    //   { 'formname': 'type', value: 'college' },
+    //   { 'formname': 'placementcyclename', value: sessionStorage.getItem("placementcyclename") },
+    //   { 'formname': 'code', value: '' },
+    //   { "value": "", "label": "Company", "formname": "companyname", "tags": "input", "type": "text", "placeholder": "Start typing company name...", "valid": true, 'pattern': "^[A-Za-z ]+$", "patternerror": "Invalid company name", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
+    //   { 'formname': 'companylogo' },
+    //   {
+    //     tags: 'combine', 'cname': 'col-sm-6', fields: [
 
-          { "value": "", "label": "Company Profile Title", "formname": "companyprofiletitle", "tags": "input", "type": "text", "valid": true, "placeholder": "Enter company profile title", "patternerror": "Invalid profile title", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
-          {
-            "value": "", "label": "Company Profile Source", "formname": "companyprofilesource", "tags": "select", "valid": true, validations: [Validators.required],
-            "options": [
-              { "label": "campus placements", "value": "campus placements" },
-              { "label": "external officer", "value": "external officer" },
-              { "label": "PPO", "value": "ppo" }
-            ]
-          }
-        ]
-      },
-      {
-        tags: 'combine', 'cname': 'col-sm-6', 'fields': [
-          { "value": "", "label": "Company Location", "formname": "companylocation", "tags": "input", "type": "text", "valid": true, "placeholder": "Company location", "patternerror": "Enter valid location", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
-          { "value": "", "label": "Company Contact", "formname": "companycontact", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter company contact number", "patternerror": "Invalid phonenumber", validations: [Validators.required, Validators.minLength(10), Validators.maxLength(15)] },
+    //       { "value": "", "label": "Job Profile Title", "formname": "companyprofiletitle", "tags": "input", "type": "text", "valid": true, "placeholder": "Enter company profile title", "patternerror": "Invalid profile title", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
+    //       {
+    //         "value": "", "label": "Job Profile Source", "formname": "companyprofilesource", "tags": "select", "valid": true, validations: [Validators.required],
+    //         "options": [
+    //           { "label": "campus placements", "value": "campus placements" },
+    //           { "label": "external officer", "value": "external officer" },
+    //           { "label": "PPO", "value": "ppo" }
+    //         ]
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     tags: 'combine', 'cname': 'col-sm-6', 'fields': [
+    //       { "value": "", "label": "Job Location", "formname": "companylocation", "tags": "input", "type": "text", "valid": true, "placeholder": "Company location", "patternerror": "Enter valid location", validations: [Validators.required, Validators.pattern("^[A-Za-z ]+$")] },
+    //       { "value": "", "label": "Company Contact", "formname": "companycontact", "tags": "input", "type": "number", "placeholder": "Enter company contact number" },
 
-        ]
-      },
-      {
-        tags: 'combine', 'cname': 'col-sm-6', 'fields': [
-          {
-            "value": "", "label": "Position Type", "formname": "positiontype", "tags": "select", "valid": true, validations: [Validators.required],
-            "options": [
-              { "label": "full time", "value": "full time" }, { "label": "internship", "value": "internship" }, { "label": "part time", "value": "part time" },
-            ]
-          },
-          {
-            "value": "", "label": "Category", "formname": "category", "tags": "select", "valid": true, validations: [Validators.required],
-            "options": [
-              { "label": "Level 1 - CATEGORY A", "value": "Level 1 - CATEGORY A" }, { "label": "Level 2 - CATEGORY B", "value": "Level 2 - CATEGORY B" },
-              { "label": "Level 3 - CATEGORY C", "value": "Level 3 - CATEGORY C" }, { "label": "Level 4 - CATEGORY D", "value": "Level 4 - CATEGORY D" },
-              { "label": "Level 5 - CATEGORY E", "value": "Level 5 - CATEGORY E" }
-            ]
-          }]
-      },
-      {
-        tags: 'combine', 'cname': 'col-sm-6', fields: [
-          { "formname": "dateofvisit", "value": "not updated", "tags": "input", type: "date", label: "Date of visit" },
-          { "value": "", "label": "Company Function", "formname": "companyfunction", "tags": "input", "type": "text", "valid": true, "placeholder": "Company function", "patternerror": "Invalid company function", validations: [Validators.required, Validators.pattern("^[A-Za-z0-9/ ]+$")] },
-        ]
-      },
-      { "value": "", "label": "Stipend", "tags": "input", formname: "stipend", "type": "checkbox", },
-      {
-        tags: 'combine', subof: 'stipend', 'cname': 'col-sm-3', 'fields': [
-          {
-            "value": "", "label": "Interval", "tags": "select", "formname": "interval", "valid": true, validations: [Validators.required],
-            "options": [
-              { "label": "ANNUM", "value": "annum" }, { "label": "MONTH", "value": "month" }
-            ]
-          },
-          {
-            "value": "", "label": "Currency", "tags": "select", "formname": "currency", "valid": true, validations: [Validators.required],
-            "options": [
-              { "label": "INR", "value": "INR" }, { "label": "USD", "value": "USD" }
-            ]
-          },
-          { "value": "", "label": "Minimum", "tags": "input", "formname": "minimum", "type": "number", "valid": true, validations: [Validators.required], },
-          { "value": "", "label": "Maximum", "tags": "input", "formname": "maximum", "type": "number", "valid": true, validations: [Validators.required], },]
-      },
+    //     ]
+    //   },
+    //   {
+    //     tags: 'combine', 'cname': 'col-sm-6', 'fields': [
+    //       {
+    //         "value": "", "label": "Job Position Type", "formname": "positiontype", "tags": "select", "valid": true, validations: [Validators.required],
+    //         "options": [
+    //           { "label": "full time", "value": "full time" }, { "label": "internship", "value": "internship" }, { "label": "part time", "value": "part time" },
+    //         ]
+    //       },
+    //       {
+    //         "value": "", "label": "Job Category", "formname": "category", "tags": "select", "valid": true, validations: [Validators.required],
+    //         "options": [
+    //           { "label": "Level 1 - CATEGORY A", "value": "Level 1 - CATEGORY A" }, { "label": "Level 2 - CATEGORY B", "value": "Level 2 - CATEGORY B" },
+    //           { "label": "Level 3 - CATEGORY C", "value": "Level 3 - CATEGORY C" }, { "label": "Level 4 - CATEGORY D", "value": "Level 4 - CATEGORY D" },
+    //           { "label": "Level 5 - CATEGORY E", "value": "Level 5 - CATEGORY E" }
+    //         ]
+    //       }]
+    //   },
+    //   {
+    //     tags: 'combine', 'cname': 'col-sm-6', fields: [
+    //       { "formname": "dateofvisit", "value": "not updated", "tags": "input", type: "date", label: "Date of visit" },
+    //       { "value": "", "label": "Job Function", "formname": "companyfunction", "tags": "input", "type": "text", "valid": true, "placeholder": "Company function", "patternerror": "Invalid company function", validations: [Validators.required, Validators.pattern("^[A-Za-z0-9/ ]+$")] },
+    //     ]
+    //   },
+    //   { "value": "", "label": "Stipend", "tags": "input", formname: "stipend", "type": "checkbox", },
+    //   {
+    //     tags: 'combine', subof: 'stipend', 'cname': 'col-sm-3', 'fields': [
+    //       {
+    //         "value": "", "label": "Interval", "tags": "select", "formname": "interval", "valid": true, validations: [Validators.required],
+    //         "options": [
+    //           { "label": "ANNUM", "value": "annum" }, { "label": "MONTH", "value": "month" }
+    //         ]
+    //       },
+    //       {
+    //         "value": "", "label": "Currency", "tags": "select", "formname": "currency", "valid": true, validations: [Validators.required],
+    //         "options": [
+    //           { "label": "INR", "value": "INR" }, { "label": "USD", "value": "USD" }
+    //         ]
+    //       },
+    //       { "value": "", "label": "Minimum", "tags": "input", "formname": "minimum", "type": "number", "valid": true, validations: [Validators.required], },
+    //       { "value": "", "label": "Maximum", "tags": "input", "formname": "maximum", "type": "number", "valid": true, validations: [Validators.required], },]
+    //   },
 
 
-      {
-        tags: 'combine', 'cname': 'col-sm-3 ', 'head': 'ELIGIBILITY CRITERIA', 'fields': [
-          { "value": "", "label": "10th", "type": "number", "tags": "input", "formname": "ten", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(90), Validators.min(40)] },
-          { "value": "", "label": "12th", "type": "number", "tags": "input", "formname": "inter", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(90), Validators.min(40)] },
-          { "value": "", "label": "Diploma", "type": "number", "tags": "input", "formname": "diploma", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(90), Validators.min(40)] },
-          { "value": "", "label": "Undergraduate", "type": "number", "tags": "input", "formname": "undergraduate", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(90), Validators.min(40)] },
-        ]
-      },
-      {
-        tags: 'combine', 'cname': 'col-sm-6 ', 'fields': [
-          { "value": "", "label": "Ongoing Backlogs", "formname": "ongoingbacklogs", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter ongoing backlogs", 'pattern': '^[0-9]', "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(10), Validators.min(0)] },
-          { "value": "", "label": "Total Backlogs", "formname": "totalbacklogs", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter total backlogs", 'pattern': '^[0-9]', "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(10), Validators.min(0)] },
-        ]
-      },
-      { 'formname': 'eligibilties', value: [] },
-      // {
-      //   "label" : 'Gender', "formname" : 'gender', "value" : 'malefemale', "tags" : "select", "valid" : true, "validations" : [Validators.required],
-      //   "options" : [{ "label" : 'All are eligible', "value" : 'malefemale' }, { "label" : 'Only male are eligible', "value" : 'male' }, { "label" : 'Only female are eligible', "value" : 'female' }]
-      // }
-      {
-        label: 'Gender', formname: 'gender', value: 'malefemale', tags: "select",
-        options: [{ label: 'All are eligible', value: 'malefemale' }, { label: 'Only male are eligible', value: 'male' }, { label: 'Only female are eligible', value: 'female' }]
-      }
-      , { formname: 'hiringworkflow', value: [] },
-      { "value": "", "label": "Company Description", "type": "text", "tags": "textarea", "formname": "companydescription", "valid": true, "patternerror": "Enter valid description", validations: [Validators.required] },
-      { "formname": "gender", "value": "malefemale" },
-      { "formname": "status", "value": "not updated" },
+    //   {
+    //     tags: 'combine', 'cname': 'col-sm-3 ', 'head': 'ELIGIBILITY CRITERIA', 'fields': [
+    //       { "value": "", "label": "10th", "type": "number", "tags": "input", "formname": "ten", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(90), Validators.min(40)] },
+    //       { "value": "", "label": "12th", "type": "number", "tags": "input", "formname": "inter", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(90), Validators.min(40)] },
+    //       { "value": "", "label": "Diploma", "type": "number", "tags": "input", "formname": "diploma", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(90), Validators.min(40)] },
+    //       { "value": "", "label": "Undergraduate", "type": "number", "tags": "input", "formname": "undergraduate", "valid": true, "placeholder": "percentage", "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(90), Validators.min(40)] },
+    //     ]
+    //   },
+    //   {
+    //     tags: 'combine', 'cname': 'col-sm-6 ', 'fields': [
+    //       { "value": "", "label": "Ongoing Backlogs", "formname": "ongoingbacklogs", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter ongoing backlogs", 'pattern': '^[0-9]', "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(10), Validators.min(0)] },
+    //       { "value": "", "label": "Total Backlogs", "formname": "totalbacklogs", "tags": "input", "type": "number", "valid": true, "placeholder": "Enter total backlogs", 'pattern': '^[0-9]', "patternerror": "Invalid value", validations: [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.max(10), Validators.min(0)] },
+    //     ]
+    //   },
+    //   { 'formname': 'eligibilties', value: [] },
+    //   // {
+    //   //   "label" : 'Gender', "formname" : 'gender', "value" : 'malefemale', "tags" : "select", "valid" : true, "validations" : [Validators.required],
+    //   //   "options" : [{ "label" : 'All are eligible', "value" : 'malefemale' }, { "label" : 'Only male are eligible', "value" : 'male' }, { "label" : 'Only female are eligible', "value" : 'female' }]
+    //   // }
+    //   {
+    //     label: 'Gender', formname: 'gender', value: 'malefemale', tags: "select",
+    //     options: [{ label: 'All are eligible', value: 'malefemale' }, { label: 'Only male are eligible', value: 'male' }, { label: 'Only female are eligible', value: 'female' }]
+    //   }
+    //   , { formname: 'hiringworkflow', value: [] },
+    //   { "value": "", "label": "Job Description", "type": "text", "tags": "textarea", "formname": "companydescription", "valid": true, "patternerror": "Enter valid description", validations: [Validators.required] },
+    //   { "formname": "gender", "value": "malefemale" },
+    //   { "formname": "status", "value": "not updated" },
 
-      { "formname": "deadline", "value": "not updated" },
-      { "formname": "created", "value": sessionStorage.getItem('firstname') },
-      { "formname": "createdon", "value": new Date() },
-      { "formname": "updatedon", "value": "" },
-      { "formname": "updatedby", "value": "" },
-      { "formname": "college_id", "value": sessionStorage.getItem('college_id') },
+    //   { "formname": "deadline", "value": "not updated" },
+    //   { "formname": "created", "value": sessionStorage.getItem('firstname') },
+    //   { "formname": "createdon", "value": new Date() },
+    //   { "formname": "updatedon", "value": "" },
+    //   { "formname": "updatedby", "value": "" },
 
-    ]
+    // ]
     this.hiringworkflowdata = ['Pre-placement talk', 'Resume shortlisting', 'Written test', 'Group Discussion', 'Technical Interview', 'HR Interview', 'Online test']
     // console.log("this.hiringflowforsub",this.hiringflowforsub)
     if (this.hiringflowforsub) this.hiringflowforsub.reset()
@@ -650,8 +624,13 @@ export class AddeditcompanyComponent implements OnInit {
       else {
         if (e.tags == "combine") {
           e.fields.forEach((i: any) => {
+            if (i.formname == 'totalbacklogs') {
+              i.validations = [...i.Validations, Validators.min(this.addcompanyform.value.ongoingbacklogs)]
+            }
+
             (i.valid) ? form[i.formname] = new FormControl(i.value, i.validations) :
               form[i.formname] = new FormControl(i.value);
+
           });
         }
         else {
@@ -670,7 +649,7 @@ export class AddeditcompanyComponent implements OnInit {
       (res: any) => this.data = res,
       (err: any) => console.log(err)
     )
-    this.companyForm()
+    // this.companyForm()
     if (sessionStorage.getItem('editcompany') == "yes") {
       this.editStatus = "Edit company"
       this.fillForm({

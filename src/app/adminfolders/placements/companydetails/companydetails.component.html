@@ -213,27 +213,63 @@
                         <div class="col-sm"
                             style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;margin-right: 0.3rem;">
                             <strong>A single student</strong><br><br>
-                            <span *ngIf="companydetails.status=='opened' else failone">
-                                <input class="form-control shadow-none" [(ngModel)]="singlestudent"
-                                    (click)="single='ADD'" width="50vw" /><br>
-                                <button class="btn" *ngIf="singlestudent.length==10" (click)="singlestudentmail()"
-                                    style="background-color: #00b0ff;border-radius: 7px;color: white;">{{single}}</button>
+                            <span *ngIf="companydetails.status!=='submitted' else failone">
+                                <div style="display: flex;">
+                                    <input class="form-control shadow-none" [(ngModel)]="singlestudent"
+                                        (click)="single='ADD';addstudent={};showStudent=false" width="50vw" />&nbsp;
+                                    <button *ngIf="singlestudent.length==10" (click)="fetchstudent()"
+                                        style="background-color: #00b0ff;" class="btn btn-primary">Fetch</button>
+                                </div><br />
+                                <span *ngIf="showStudent">
+                                    <span *ngIf="addstudent else nostudent">
+                                        <table class="table table-bordered" style="font-size: 0.7rem;">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Name </td>
+                                                    <td>Roll</td>
+                                                    <td>Mail </td>
+                                                    <td>Course</td>
+                                                    <td>Department</td>
+                                                    <td>Mobile</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{addstudent.firstname + addstudent.middlename +
+                                                        addstudent.lastname}}</td>
+                                                    <td>{{addstudent.rollnumber}}</td>
+                                                    <td>{{addstudent.mail}}</td>
+                                                    <td>{{addstudent.course}}</td>
+                                                    <td>{{addstudent.department}}</td>
+                                                    <td>{{addstudent.mobile}}</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                        <button class="btn" (click)="singlestudentmail()"
+                                            style="background-color: #00b0ff;border-radius: 7px;color: white;">{{single}}</button>
+                                    </span>
+                                    <ng-template #nostudent>
+                                        <span style="color: crimson">We could not find any students !</span>
+                                    </ng-template>
+                                </span>
+
+                                <br />
+
                             </span>
                             <ng-template #failone>You cannot add ! This company is not accepting the applications
                                 now .
-                            </ng-template><br><br>
+                            </ng-template><br>
                             <strong> Students by company </strong><br>
-                            <div *ngIf="companydetails.status=='opened' else fail" class="p-3" style="display: flex;">
-                                <select [(ngModel)]="comselected" class="form-control w-50"
-                                    style="border-radius: 20px;">
+                            <div *ngIf="companydetails.status!='submitted' else fail" class="p-3"
+                                style="display: flex;">
+                                <select (click)="addstatus='ADD STUDENTS';comselected=''" [(ngModel)]="comselected"
+                                    class="form-control" style="border-radius: 5px;font-size:0.8rem ;">
                                     <option value="" disabled>Please Select a company</option>
                                     <option *ngFor="let c of allcom" value={{c.companyname}}
                                         [disabled]="c.companyname ==companydetails.companyname">
                                         {{c.companyname | uppercase}}</option>
                                 </select>&nbsp;&nbsp;
-                                <button *ngIf="comselected!=''"
-                                    style="background-color: #00b0ff;border-radius: 20px;color: white;"
-                                    (click)="addstu()">{{addstatus}}</button>
+                                <button *ngIf="comselected!=''" class="btn btn-primary shadow-none"
+                                    style="background-color: #00b0ff;" (click)="addstu()">{{addstatus}}</button>
                             </div>
                             <ng-template #fail><br>You cannot add ! This company is not accepting the applications now .
                             </ng-template>
@@ -252,7 +288,7 @@
                     </div>
 
                     <div class="row" style="font-size: 0.8rem;">
-                        <strong style="padding: 0.9rem;margin-right: 0.3rem;color: #1b1c1e;">COMPANY
+                        <strong style="padding: 0.9rem;margin-right: 0.3rem;color: #1b1c1e;">JOB
                             DESCRIPTION</strong>
                         <div class="col-sm-12"
                             style="border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 1rem;margin-right: 0.3rem;">
@@ -328,7 +364,7 @@
 
                             <div class="table-responsive" *ngIf="registered>0">
                                 <span *ngFor="let level of hiringflow;index as i">
-                                    <div style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"
+                                    <!-- <div style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"
                                         *ngIf="i&lt;=currentIndex+nextIndex && companydetails.status=='closed'">
                                         <strong>{{level.level}}</strong><br />
                                         <span style="font-size: 0.7rem;">{{level.sub}}</span>
@@ -336,8 +372,7 @@
                                             *ngIf="currentIndex==0 && relen==0  && companydetails.status=='closed'"><br>
 
                                             <span *ngIf="mapping.length>0"> <br>
-                                                <!-- <button (click)="savethelist()" class="btn"
-                                                    style="background-color: #00B0FF;color: #fff;">Save</button>&nbsp; -->
+                                              
                                                 <button class="btn btn-primary" style="background-color:#00B0FF ;"
                                                     (click)="savethelist()">{{saveButton}}</button>&nbsp;&nbsp;
                                                 <button (click)="mapping=[];keys=[];" class="btn"
@@ -345,7 +380,7 @@
                                             </span>
                                             <input #file1 (click)="file1.value = ''" value="" style="display:none"
                                                 type="file" accept=".xlsx" (change)="onfilesubmit($event,i)">
-                                            <!-- this is displayed before uploding preplacemnets -->
+                                           
                                             <a *ngIf="mapping.length==0" (click)="file1.click()"
                                                 style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
                                                 <strong>Click
@@ -369,31 +404,24 @@
 
                                             <span *ngIf="i==currentIndex  && companydetails.status=='closed'"
                                                 style="cursor: pointer;">&nbsp;
-                                                <span style="font-size: 13px;"><i (click)="setedit=true"
-                                                        *ngIf="!setedit" class='bx bxs-pencil'></i>
+                                                <span style="font-size: 13px;">
 
                                                     <i *ngIf="setedit" (click)="setedit=false" style="color: #a5081a;"
                                                         class='bx bxs-x-circle'></i>
                                                 </span>
                                                 <span *ngIf="setedit">
-
                                                     <span *ngIf="mapping.length>0"> <br>
                                                         <span><br />
                                                             <button class="btn btn-primary"
                                                                 style="background-color:#00B0FF ;"
                                                                 (click)="updatethelist()">Save</button>&nbsp;&nbsp;
-                                                            <!-- <button class="btn"
-                                                                style="background-color: white;color: #00b0ff;"
-                                                                (click)="updatethelist()">Save</button>&nbsp; -->
+                                                          
                                                             <button (click)="setedit=false;mapping=[];keys=[]"
                                                                 class="btn"
                                                                 style="color: white;background-color: #a5081a;">Close</button>
                                                         </span>
                                                     </span><br />
-                                                    <!-- <input type="file" accept=".xlsx" multiple="false"
-                                                (change)="onfilesubmit($event,i)">
-                                                 -->
-                                                    <!-- after upload editing option view -->
+                                                   
                                                     <input #file (click)="file.value = ''" value=""
                                                         style="display: none;" type="file" accept=".xlsx"
                                                         multiple="false" (change)="onfilesubmit($event,i)">
@@ -422,15 +450,13 @@
                                                 <span *ngIf="mapping.length>0 && uploadindex==i"><br /><br />
                                                     <button class="btn btn-primary"
                                                         (click)="savethelist()">{{saveButton}}</button>&nbsp;&nbsp;
-                                                    <!-- <button (click)="savethelist()" class="btn"
-                                                        style="background-color: white;color: #00b0ff;">Save</button>&nbsp; -->
+                                                  
                                                     <button (click)="mapping=[];keys=[]" class="btn"
                                                         style="color: white;background-color: #a5081a;">Close</button><br>
                                                 </span><br />
 
                                                 <input #file2 style="display: none;" type="file" accept=".xlsx"
                                                     multiple="false" (change)="onfilesubmit($event,i)">
-                                                <!-- <button (click)="file2.click()" style="background: #fff;border-bottom: 1px solid #00b0ff;cursor: pointer;">Browse File</button> -->
                                                 <a (click)="file2.click()" *ngIf="mapping.length==0"
                                                     style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
                                                     <strong>Click
@@ -454,8 +480,90 @@
 
 
 
+                                    </div> -->
+                                    <div *ngIf="i<=currentIndex && lastItem"
+                                        style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                                        <strong>{{level.level}} <i *ngIf="companydetails.status!='submitted'"
+                                                style="float: right;" class="bx bxs-pencil"
+                                                (click)="setedit[i]=true"></i></strong><br />
+                                        <span style="font-size: 0.7rem;">{{level.sub}}</span>
+                                        <span *ngIf="setedit[i]">
+                                            <span *ngIf="mapping.length>0"> <br>
+                                                <button class="btn btn-primary" style="background-color:#00B0FF ;"
+                                                    (click)="updatethelist(level)">{{saveButton}}</button>&nbsp;&nbsp;
+                                                <button (click)="mapping=[];keys=[];" class="btn"
+                                                    style="color: white;background-color: #a5081a;">Close</button><br>
+                                            </span>
+                                            <input #file1 (click)="file1.value = ''" value="" style="display:none"
+                                                type="file" accept=".xlsx" (change)="onfilesubmit($event,i)">
+                                            <i (click)="setedit[i]=false" *ngIf="mapping.length==0"
+                                                style="color: #a5081a;" class='bx bxs-x-circle'></i><br />
+                                            <a *ngIf="mapping.length==0" (click)="file1.click()"
+                                                style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
+                                                <strong>Click
+                                                    to upload qualified students in above level</strong></a>
+                                            <br><br>
+                                            <div style="max-height:50vh" class="table-responsive">
+                                                <table class="table table-bordered"
+                                                    *ngIf=" uploadindex==i && mapping.length>0">
+                                                    <tbody>
+                                                        <tr style="background-color: whitesmoke;">
+                                                            <td>rollnumber</td>
+                                                        </tr>
+                                                        <tr *ngFor="let row of mapping">
+                                                            <td>{{row.rollnumber}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </span>
+                                        <div *ngIf="i==currentIndex && mapping.length==0">
+                                            <br />
+                                            <button class="btn btn-primary"
+                                                style="background-color: #00B0FF;font-size: 0.8rem;">Click to
+                                                submit </button><br /><br />
+                                            <input class="form-control"
+                                                placeholder="enter otp recieved to your mail" /><br />
+                                            <button class="btn btn-dark">Verify Otp</button>
+                                        </div>
                                     </div>
+                                    <div *ngIf="i==currentIndex && !lastItem"
+                                        style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                                        <strong>{{level.level}} </strong><br />
+                                        <span style="font-size: 0.7rem;">{{level.sub}}</span>
+                                        <span>
+                                            <span *ngIf="mapping.length>0"> <br>
+                                                <button class="btn btn-primary" style="background-color:#00B0FF ;"
+                                                    (click)="savethelist()">{{saveButton}}</button>&nbsp;&nbsp;
+                                                <button (click)="mapping=[];keys=[];" class="btn"
+                                                    style="color: white;background-color: #a5081a;">Close</button><br>
+                                            </span>
+                                            <input #file1 (click)="file1.value = ''" value="" style="display:none"
+                                                type="file" accept=".xlsx" (change)="onfilesubmit($event,i)">
+                                            <a *ngIf="mapping.length==0 && companydetails.status!='submitted'"
+                                                (click)="file1.click()"
+                                                style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
+                                                <strong>Click
+                                                    to upload qualified students in above level</strong></a>
+                                            <br><br>
+                                            <div style="max-height:50vh" class="table-responsive">
+                                                <table class="table table-bordered"
+                                                    *ngIf=" uploadindex==i && mapping.length>0">
+                                                    <tbody>
+                                                        <tr style="background-color: whitesmoke;">
+                                                            <td>rollnumber</td>
+                                                        </tr>
+                                                        <tr *ngFor="let row of mapping">
+                                                            <td>{{row.rollnumber}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </span>
+                                    </div>
+
                                     <br />
+
                                 </span>
 
                             </div>

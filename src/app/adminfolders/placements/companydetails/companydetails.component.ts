@@ -17,7 +17,7 @@ export class CompanydetailsComponent implements OnInit {
   singlestudent: any = ''
   keys: any; uploadindex: any = -5
   objkey: any = [];
-  applicantslist: any = []; setedit = false
+  applicantslist: any = []; setedit: any = {}; addstudent: any
   ch = 0; deadline = ''; errdate = ''; mailstatus = 'SEND MAIL'; eligible = 0; registered = 0; comselected = ''; addstatus = 'ADD STUDENTS'; currentIndex = -1
   eligibility: any[] = []; hiringflow: any[]
   allcom = [{ companyname: '' }]; listofstu = []; relen = 0; placed = 0; nextIndex = 0
@@ -43,7 +43,7 @@ export class CompanydetailsComponent implements OnInit {
     this.singlestudent = ''
     this.uploadindex = -5
     this.objkey = [];
-    this.applicantslist = []; this.setedit = false
+    this.applicantslist = []; this.setedit = {}
     this.ch = 0; this.deadline = ''; this.errdate = ''; this.mailstatus = 'SEND MAIL'; this.eligible = 0; this.registered = 0; this.comselected = ''; this.addstatus = 'ADD STUDENTS'; this.currentIndex = -1
     this.eligibility = []; this.hiringflow = []
     this.allcom = [{ companyname: '' }]; this.listofstu = []; this.relen = 0; this.placed = 0; this.nextIndex = 0;
@@ -111,24 +111,31 @@ export class CompanydetailsComponent implements OnInit {
       (reset: any) => {
         // console.log("reset", reset)
         reset = reset.reverse()
+
         if (reset.length == 0) {
           this.currentIndex = 0
-          this.nextIndex = 0
         }
         else {
-          this.relen = 1; this.nextIndex = 1
-          if (reset.length >= this.hiringflow.length - 1) {
+          this.currentIndex = this.hiringflow.findIndex(e => e.level === reset[0].hiringflowname);
+          if (this.currentIndex == this.hiringflow.length - 1) {
             this.lastItem = true
           }
+          else {
+            this.lastItem = false
+          }
+          // this.relen = 1; this.nextIndex = 1
+          // if (reset.length >= this.hiringflow.length - 1) {
+          //   this.lastItem = true
+          // }
           // console.log(reset, this.hiringflow, ">>>>>>>>>>>>>>>>>>")
           // console.log(this.hiringflow, reset[0].hiringflowname)
-          this.currentIndex = this.hiringflow.findIndex(e => e.level === reset[0].hiringflowname);
-          this.nowshorted = reset.filter((e: any) => e.hiringflowname == reset[0].hiringflowname)
+          // this.currentIndex = this.hiringflow.findIndex(e => e.level === reset[0].hiringflowname);
+          // this.nowshorted = reset.filter((e: any) => e.hiringflowname == reset[0].hiringflowname)
           // console.log("this.nowshorted ", this.nowshorted)
         }
-        if (this.currentIndex == -1) {
-          this.currentIndex = this.hiringflow.length - 1
-        }
+        // if (this.currentIndex == -1) {
+        //   this.currentIndex = this.hiringflow.length - 1
+        // }
       }
     )
   }
@@ -323,12 +330,24 @@ export class CompanydetailsComponent implements OnInit {
     this.addstatus = 'ADDING'
     this.commonservice.postrequest('http://localhost:4000/placementstatus/addstu', this.companydetails).subscribe(
       (res: any) => {
-        this.addstatus = 'ADDED STUDENTS'
+        this.addstatus = res.message
       },
       (err: any) => console.log(err)
     );
   }
+  showStudent: any = false
 
+  fetchstudent() {
+    this.single = 'ADD'
+    this.showStudent = false
+    this.commonservice.postrequest('http://localhost:4000/studentdata/findbyrollnumber', { organisation_id: sessionStorage.getItem("organisation_id"), rollnumber: this.singlestudent }).subscribe(
+      (res: any) => {
+        this.addstudent = res.data;
+        this.showStudent = true
+      },
+      (err: any) => console.log(err)
+    )
+  }
 
 
 
@@ -344,7 +363,7 @@ export class CompanydetailsComponent implements OnInit {
   }
 
 
-  updatethelist() {
+  updatethelist(level: any) {
     this.commonservice.postrequest('http://localhost:4000/hiringstudent/hiringupdate', { organisation_id: sessionStorage.getItem("organisation_id"), accepted: this.mapping, rejected: this.rejectedlist, lastItem: this.lastItem }).subscribe(
       (res: any) => { this.saveButton = "SAVE"; this.mapping = []; this.keys = []; this.setedit = false; this.getWorkflow() },
       (err: any) => console.log(err)
@@ -369,13 +388,13 @@ export class CompanydetailsComponent implements OnInit {
   exportexcel() {
     this.dataForExcel = []
     this.applicantslist.forEach((row: any) => {
-      this.dataForExcel.push([row.firstname, row.rollnumber, row.course, row.department, row.mobile, row.mail, row.dob, row.currentaddress, row.permanentaddress, row.semcgpa, row.tenthcgpa, row.tenthschoolname, row.tenyear, row.intermpc, row.interclgname, row.intercgpa, row.ongoingbacklogs > 0 ? 'yes' : 'no'])
+      this.dataForExcel.push([row.firstname, row.rollnumber, row.course, row.department, row.mobile, row.mail, row.dob, row.currentaddress, row.permanentaddress, row.semcgpa, row.tenthcgpa, row.tenthboard, row.tenthschoolname, row.tenyear, row.intermpc, row.interboard, row.interclgname, row.intercgpa, row.interyear, row.ongoingbacklogs > 0 ? 'yes' : 'no'])
     })
     let reportData = {
-      title: 'Applicants',
+      title: `${this.companydetails.placementcyclename} ${this.companydetails.companyname} Applicants`,
       data: this.dataForExcel,
-      headers: ['Name', "Roll Number", "COURSE", "Department", "Mobile", 'Email ID', 'DOB', 'Current Address', 'Permanent Address', 'Current Term Score', 'Xth percentage', 'Xth Board', 'Year of passing 10th', 'Inter / Diploma', 'XIIth Board', 'Year of passing 12th', 'Backlogs'],
-      backAlpha: 'E3'
+      headers: ['Name', "Roll Number", "COURSE", "Department", "Mobile", 'Email ID', 'DOB', 'Current Address', 'Permanent Address', 'Current Term Score', 'X percentage', 'X Board', 'X School Name', 'Year of passing 10th', 'Inter / Diploma', 'XII Board', 'XII College Name', 'XII CGPA', 'Year of passing 12th', 'Backlogs'],
+      backAlpha: 'T3'
     }
     this.ete.exportExcel(reportData);
   }
@@ -386,7 +405,7 @@ export class CompanydetailsComponent implements OnInit {
 
   singlestudentmail() {
     this.single = 'ADDING'
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/singlestudent', { organisation_id: sessionStorage.getItem("organisation_id"), ...this.companydetails, rollnumber: this.singlestudent }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/singlestudent', { organisation_id: sessionStorage.getItem("organisation_id"), ...this.companydetails, ...this.addstudent }).subscribe(
       (res: any) => { if (res.message == "success") { this.single = 'ADDED' } else if (res.message == "exist") { this.single = 'ALREADY EXIST' } },
       (err: any) => console.log(err)
     )

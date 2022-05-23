@@ -157,6 +157,7 @@ import { DbmsComponent } from './studentfolder/dbms/dbms.component';
 import { JavaComponent } from './studentfolder/java/java.component';
 import { NopageComponent } from './nopage/nopage.component';
 import { ContactComponent } from './contact/contact.component';
+import { OfferstatusComponent } from './adminfolders/offerstatus/offerstatus.component';
 // import { v4 as uuidv4} from 'uuid';
 
 const routes: Routes = [
@@ -306,7 +307,8 @@ const routes: Routes = [
           path: 'companies', component: AllcompaniesComponent, children: [
             { path: '', component: AllcompanieshomeComponent, pathMatch: 'full' }
           ]
-        }
+        },
+        { path: 'offerstatus', component: OfferstatusComponent, canActivate: [AuthGuard] }
       ]
     , canActivate: [AuthGuard]
   },
