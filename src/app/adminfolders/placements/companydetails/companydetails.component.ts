@@ -339,9 +339,10 @@ export class CompanydetailsComponent implements OnInit {
   showStudent: any = false
 
   fetchstudent() {
-    this.single = 'ADD'
+    this.single = 'ADD';
+    this.removestudentstatus = 'Remove'
     this.showStudent = false
-    this.commonservice.postrequest('http://localhost:4000/studentdata/findbyrollnumber', { organisation_id: sessionStorage.getItem("organisation_id"), rollnumber: this.singlestudent }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/studentdata/findbyrollnumber', { organisation_id: sessionStorage.getItem("organisation_id"), rollnumber: this.singlestudent, ...this.companydetails }).subscribe(
       (res: any) => {
         this.addstudent = res.data;
         this.showStudent = true
@@ -421,6 +422,7 @@ export class CompanydetailsComponent implements OnInit {
   entryupload = true
 
 
+
   addapplicantmodal() {
     this.addapplicantdisplay = 'block'; this.validatemsg = ''; this.applicants = ''; this.applicantstatus = 'Add'; this.addapplicants = "ADD"
   }
@@ -430,6 +432,16 @@ export class CompanydetailsComponent implements OnInit {
   }
 
   rollnos: any;
+  removestudentstatus: any = 'Remove'
+  removestudent() {
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), ...{ eligible: false, mail: this.addstudent.mail, placementcyclename: this.companydetails.placementcyclename, companyname: this.companydetails.companyname } }).subscribe(
+      (res: any) => { this.removestudentstatus = 'Successfully removed' },
+      (err: any) => console.log(err)
+    )
+
+  }
+
+
 
   addapplicant() {
     if (this.entryupload) {

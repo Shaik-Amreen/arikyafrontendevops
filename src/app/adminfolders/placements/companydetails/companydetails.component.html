@@ -206,7 +206,7 @@
                     <div class="row">
                         <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">ADD
                         </strong>
-                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm ">HIRING
+                        <strong style="padding: 0.5rem;margin-right: 0.3rem;color: #1b1c1e;" class="col-sm-3">HIRING
                             HIERARCHY</strong>
                     </div>
                     <div class="row">
@@ -217,12 +217,12 @@
                                 <div style="display: flex;">
                                     <input class="form-control shadow-none" [(ngModel)]="singlestudent"
                                         (click)="single='ADD';addstudent={};showStudent=false" width="50vw" />&nbsp;
-                                    <button *ngIf="singlestudent.length==10" (click)="fetchstudent()"
+                                    <button *ngIf="singlestudent.length==10 && !showStudent" (click)="fetchstudent()"
                                         style="background-color: #00b0ff;" class="btn btn-primary">Fetch</button>
                                 </div><br />
                                 <span *ngIf="showStudent">
                                     <span *ngIf="addstudent else nostudent">
-                                        <table class="table table-bordered" style="font-size: 0.7rem;">
+                                        <table class="table table-bordered text-center" style="font-size: 0.7rem;">
                                             <tbody>
                                                 <tr>
                                                     <td>Name </td>
@@ -231,6 +231,7 @@
                                                     <td>Course</td>
                                                     <td>Department</td>
                                                     <td>Mobile</td>
+                                                    <td>Eligible</td>
                                                 </tr>
                                                 <tr>
                                                     <td>{{addstudent.firstname + addstudent.middlename +
@@ -240,12 +241,20 @@
                                                     <td>{{addstudent.course}}</td>
                                                     <td>{{addstudent.department}}</td>
                                                     <td>{{addstudent.mobile}}</td>
+                                                    <td>
+                                                        <span *ngIf="addstudent.eligible=='-'">-</span>
+                                                        <span *ngIf="addstudent.eligible==true">Yes</span>
+                                                        <span *ngIf="!addstudent.eligible">No</span>
+                                                    </td>
                                                 </tr>
-
                                             </tbody>
                                         </table>
-                                        <button class="btn" (click)="singlestudentmail()"
-                                            style="background-color: #00b0ff;border-radius: 7px;color: white;">{{single}}</button>
+                                        <button class="btn btn-danger" (click)="removestudent()"
+                                            *ngIf="addstudent.eligible && addstudent.eligible!='-' else remove">{{removestudentstatus}}</button>
+                                        <ng-template #remove>
+                                            <button class="btn" (click)="singlestudentmail()"
+                                                style="background-color: #00b0ff;border-radius: 7px;color: white;">{{single}}</button>
+                                        </ng-template>
                                     </span>
                                     <ng-template #nostudent>
                                         <span style="color: crimson">We could not find any students !</span>
@@ -275,7 +284,7 @@
                             </ng-template>
                         </div>
 
-                        <div class="col-sm table-responsive"
+                        <div class="col-sm-3 table-responsive"
                             style="border-radius:2px;max-height:40vh;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;margin-bottom: 0.3rem;padding: 0.7rem;">
                             <div *ngFor="let level of companydetails.hiringworkflow;index as i">
                                 <strong>{{level[0].level}} </strong><span
@@ -754,6 +763,9 @@
                             </div><br>
                         </div>
                     </div>
+                    <textarea type="text" class="form-control applicants" style="height: 50vh;white-space: pre-wrap;"
+                        placeholder="Enter single or bulk list of rollnumbers." [(ngModel)]="applicants"></textarea>
+                    <span style="color: #a5081a;size:0.5rem">{{validatemsg}}&nbsp;</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary applicants"
