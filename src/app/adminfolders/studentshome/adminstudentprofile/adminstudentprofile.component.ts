@@ -401,6 +401,7 @@ export class AdminstudentprofileComponent implements OnInit {
     this.commonservice.postrequest('http://localhost:4000/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("studentmail") }).subscribe(
       (res: any) => {
         // console.log("res.data", res)
+        this.stdrates=true
         this.stdallcodedata = res.stdallcodedata
         this.stdallquizdata = res.stdallquizdata
         this.stdallratedata = res.stdallratedata
@@ -418,6 +419,25 @@ export class AdminstudentprofileComponent implements OnInit {
 
         this.setOptions()
       })
+  }
+
+  notyet:any;all:any;stdrates=false
+  allenvelop() {
+    this.commonservice.postrequest('http://localhost:4000/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+      (res: any) => {
+        this.notyet = res.filter((e: any) => e.verified == 'notyet')
+        res.forEach((e: any) => {
+          (e.verifiedbymail == sessionStorage.getItem('mail')) ? e.verifiedby = 'You' : null
+        });
+        this.all = res
+        // console.log("this.all", this.all)
+        // res.forEach((e: any) => {
+        //   (e.doneby == sessionStorage.getItem('mail')) ? e.firstname = 'You' : null
+        // });
+        // this.adminotifications = res
+      },
+      (err: any) => console.log(err)
+    );
   }
 
   downloadofferPdf(a: any, b: any) {

@@ -69,6 +69,7 @@ export class LoginComponent implements OnInit {
   viewforgotpass: any = true
   changeMode() { this.mail = ''; this.viewforgotpass = !this.viewforgotpass }
   buttonMode = 'SEND OTP';
+  
   forget(f: NgForm) {
     this.mailerr = ''; f.value.mail = f.value.mail.toLowerCase()
     this.buttonMode = 'SENDING'; this.invalidotp = false

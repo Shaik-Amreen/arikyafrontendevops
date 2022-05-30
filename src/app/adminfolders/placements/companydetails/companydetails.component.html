@@ -308,11 +308,14 @@
                         style="max-height:'90vh';border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;padding: 1rem;padding-left: 2rem;text-align: center;">
                         <div>
                             <span style="color:#00b0ff;font-weight: 600;">{{placed}} PLACED </span><br>
-                            <span style="color:#00b0ff;font-weight: 600;">{{registered}} APPLICANTS&nbsp; <i
-                                    style="font-size: 0.8rem;color: green; cursor: pointer;" class='bx bx-plus-circle'
-                                    (click)="addapplicantmodal()"></i>&nbsp;<i
-                                    style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
-                                    (click)="removeapplicantmodal()"></i></span><br>
+                            <span style="color:#00b0ff;font-weight: 600;">{{registered}} APPLICANTS&nbsp;
+                                <span *ngIf="eligible">
+                                    <i style="font-size: 0.8rem;color: green; cursor: pointer;"
+                                        class='bx bx-plus-circle' (click)="addapplicantmodal();rollnos=[]"></i>&nbsp;
+                                    <i style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
+                                        (click)="removeapplicantmodal();rollnos=[]"></i>
+                                </span>
+                            </span><br>
                             <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE</span><br>
                         </div>
                         <hr>
@@ -631,15 +634,126 @@
             <div class="modal-header">
                 <div style="display: flex;">
                     <h4 class="modal-title">{{applicantstatus}} Applicants</h4>&nbsp;
-                    <span style="padding-top: 0.6rem;">({{applicantstatus}} single or bulk students to the company).</span>
+                    <span style="padding-top: 0.6rem;">({{applicantstatus}} single or bulk students to the
+                        company).</span>
                 </div>
             </div>
             <div>
                 <div class="modal-body">
-                    <textarea type="text" class="form-control applicants" style="height: 50vh;white-space: pre-wrap;"
-                        placeholder="Enter single or bulk list of rollnumbers."
-                        [(ngModel)]="applicants"></textarea>
-                    <span style="color: #a5081a;size:0.5rem">{{validatemsg}}&nbsp;</span>
+                    <div class="row">
+                        <div class="col-6">
+                            <button style="background-color: #00B0FF;color: #fff;width: 100%;" class="btn" (click)="entryupload=true">Entry Upload</button>
+                        </div>
+                        <div class="col-6">
+                            <button style="background-color: #00B0FF;color: #fff;width: 100%;" class="btn" (click)="entryupload=false">Excel Upload</button>
+                        </div>
+                    </div>
+                    <div *ngIf="entryupload"><br>
+                        <textarea type="text" class="form-control applicants"
+                            style="height: 50vh;white-space: pre-wrap;"
+                            placeholder="Enter single or bulk list of rollnumbers." [(ngModel)]="applicants"></textarea>
+                        <span style="color: #a5081a;size:0.5rem">{{validatemsg}}&nbsp;</span>
+                    </div>
+                    <div *ngIf="!entryupload">
+                        <div class="table-responsive layout">
+                            <div><br>
+                                <span *ngIf="!validata ">
+                                    <div style="display: flex;justify-content: center;">
+                                        <strong *ngIf="errorMsg!=''" style="color: #a5081a;text-align: center;">⚠
+                                            {{errorMsg}}<br><br></strong>
+                                    </div>
+                                    <!-- <div style="display: flex;justify-content: center;">
+                                        <select class="form-select shadow-none " name='year' [(ngModel)]='year'
+                                            (click)="errorMsg=''" style="width:51vw">
+                                            <option value="" [disabled]="true">Select Course</option>
+                                            <option value="btech 1">BTECH Year I</option>
+                                            <option value="btech 2">BTECH Year II</option>
+                                            <option value="btech 3">BTECH Year III</option>
+                                            <option value="btech+ 4">BTECH Year IV</option>
+                                            <option value="mba 1"> MBA Year I</option>
+                                            <option value="mba 2"> MBA Year II</option>
+                                            <option value="mca 1">MCA Year I</option>
+                                            <option value="mca 2">MCA Year II</option>
+                                        </select><br>
+                                    </div> -->
+                                    <div style="display: flex;justify-content: center;align-items: center;">
+                                        <div class="col-sm-11 text-center"
+                                            style="border-radius:3px;background-color: #fff;;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;padding: 3rem;">
+                                            <div (click)="excel.click()" *ngIf="mapping.length==0"
+                                                style="border: 2px dashed #00B0FF;;border-radius: 7px;padding: 1rem;cursor: pointer;">
+                                                <i class='bx bxs-cloud-upload bx-tada'
+                                                    style="font-size: 5rem;color: #00B0FF;"></i><br>
+                                                <input #excel style="display: none;" type="file" accept=".xlsx"
+                                                    multiple="false" (change)="onfilesubmit1($event)">
+                                                <strong style="color:#00B0FF">Browse files </strong>
+                                            </div>
+                                            <div *ngIf="mapping.length!=0"
+                                                style="border: 2px dashed #00B0FF;;border-radius: 7px;padding: 1rem;cursor: pointer;">
+                                                <i class='bx bxs-file' style="font-size: 5rem;color: #00B0FF;"></i><br>
+
+                                                <strong style="color:#00B0FF">Yeah ! file selected </strong>
+                                            </div>
+                                            <br><br>
+                                            <div class="row">
+                                                <div class="col-sm-8"><strong>Excel format</strong><br>
+                                                    <table class="table table-bordered" style="font-size:0.8rem">
+                                                        <tbody>
+                                                            <tr style="background-color: whitesmoke;">
+                                                                <th>Roll number</th>
+                                                                <!-- <th>Mail Id</th> -->
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="color: grey;">College ID of the student</td>
+                                                                <!-- <td style="color: grey;">College Identified Mail Id</td> -->
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table class="table table-bordered" id="excel"
+                                                        style="display: none;">
+                                                        <tbody>
+                                                            <tr style="background-color: whitesmoke;">
+                                                                <th>Roll number</th>
+                                                                <!-- <th>Mail Id</th> -->
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-sm-4 " style="cursor: pointer;"
+                                                    (click)="exportexcel1('excel')"><br>
+                                                    <strong style="color: #00B0FF;">Download</strong><br>sample
+                                                    template<br><i class='bx bx-chevrons-down bx-tada'
+                                                        style="font-size: 2rem;color: #00B0FF;"></i>
+                                                </div>
+
+                                            </div>
+                                            <br>
+                                            <button class="btn" [disabled]="!saveMode"
+                                                style="background-color: #00B0FF;color: #fff;width: 100%;"
+                                                (click)="save1()">View RollNumbers</button>
+                                        </div>
+                                    </div>
+                                </span>
+                                <div style="display: flex;justify-content: center;max-height: 70vh;">
+                                    <table *ngIf="validata" class="table table-responsive table-bordered text-center "
+                                        style="background-color: #fff;margin: 4rem;margin-top: 0.2rem;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;">
+                                        <tbody>
+                                            <tr style="background-color: #1b1c1e;color: whitesmoke;">
+                                                <!-- <td>College ID</td> -->
+                                                <td>Roll number</td>
+                                                <!-- <td>Mail ID</td> -->
+                                            </tr>
+                                            <tr *ngFor="let row of mapping">
+                                                <!-- <td>{{row.organisation_id}}</td> -->
+                                                <td>{{row.rollnumber}}</td>
+                                                <!-- <td>{{row.mail}}</td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div><br>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary applicants"

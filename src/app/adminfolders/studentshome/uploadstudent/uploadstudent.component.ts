@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { CommonService } from '../../../services/common.service';
-import { Component, ElementRef, OnInit } from '@angular/core'; import { Router } from '@angular/router';
+import { Component, ElementRef, OnInit } from '@angular/core';
+ import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 import { ViewChild } from '@angular/core';
 import { ExportExcelService } from 'src/app/services/export-excel.service';
@@ -34,6 +35,7 @@ export class UploadstudentComponent implements OnInit {
   year = ''
   errorMsg = ''
   validata: any = false
+
   onfilesubmit(evt: any) {
     //if (evt.target.accept !== ".xlsx" ) throw Error("file must be excel sheet");
     const reader: FileReader = new FileReader();
