@@ -87,20 +87,20 @@
                     </div>
                     <div class="col-sm-1" ><br />
                         <div >
-                            <div class="row" style="font-size: 2rem;float: right;color: #00B0FF;cursor: pointer;">
+                            <div class="row" style="font-size: 1.5rem;float: right;color: #00B0FF;cursor: pointer;">
                                 <i class='bx bxs-pencil' (click)="edit=!edit;fillform()"></i>
                             </div>
-                            <!-- <div class="row" style="font-size: 0.8rem;cursor: pointer;">
-                                <div ngbDropdown class="d-inline-block">
-                                    <button style="color: #00B0FF;margin-right: 1rem;" class="btn shadow-none"
-                                        id="dropdownBasic1" ngbDropdownToggle><i class='bx bx-bell'></i>
-                                    </button><br>
+                            <div class="row" style="font-size: 1rem;cursor: pointer;position: fixed;right: 2%;">
+                                <div ngbDropdown class="d-inline-block"><br>
+                                    <button style="color: #00B0FF" class="btn shadow-none"
+                                        id="dropdownBasic1" ngbDropdownToggle (click)="allenvelop()"><i class='bx bx-bell'></i>
+                                    </button>
                                     <div class="table-responsive" ngbDropdownMenu aria-labelledby="dropdownBasic1"
                                         style="width: 25vw;max-height: 60vh;right: 0.005vw;background-color: #f4f7fb;border: none;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
-                                        <br>
-                                        <h5 style="position: fixed;top:15%;right:3%;cursor: pointer;" (click)="allenvelop()"><i
+                                        
+                                        <h5 style="position: fixed;top:5%;right:3%;cursor: pointer;" (click)="allenvelop()"><i
                                                 class='bx bx-refresh bx-tada bx-flip-horizontal'></i></h5><br />
-                                        <span *ngIf=" (all.length!=0) else nostu">
+                                        <span *ngIf="allLength!=0 else nostu">
                                             <span *ngFor="let c of all" style="align-items: left;font-size: 0.8rem;">
                                                 <div
                                                     style="color: grey;font-size:0.8rem;font-weight: 500;margin: 12px 16px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding: 0.5rem;border-radius: 7px;background-color: #fff;">
@@ -114,10 +114,10 @@
                                                         <span *ngIf="c.verified=='notyet'"><br /></span>
                                                         <button class="btn btn-primary shadow-none" *ngIf="c.verified=='notyet'"
                                                             style="font-size: 0.8rem;padding:0.4rem"
-                                                            (click)="accept(c,'accepted')">Accept</button>&nbsp;&nbsp;
+                                                            (click)="accept1(c,'accepted')">Accept</button>&nbsp;&nbsp;
                                                         <button class="btn btn-danger" *ngIf="c.verified=='notyet'"
                                                             style="font-size: 0.8rem;padding:0.4rem"
-                                                            (click)="accept(c,'rejected')">Reject</button>
+                                                            (click)="accept1(c,'rejected')">Reject</button>
         
                                                         <button class="btn btn-primary shadow-none"
                                                             style="font-size: 0.8rem;padding:0.4rem;width: 100%;"
@@ -141,7 +141,7 @@
                                         </ng-template>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -343,7 +343,7 @@ export class AdminstudentprofileComponent implements OnInit {
     this.fillform()
   }
 
-  codetopics: any = []; coderate: any = []; quiztopics: any = []; quizrate: any = []
+  codetopics: any = []; coderate: any = []; quiztopics: any = []; quizrate: any = [];studentmail=sessionStorage.getItem('studentmail');
 
   callconstructor() {
     this.sgpa = []
@@ -421,7 +421,7 @@ export class AdminstudentprofileComponent implements OnInit {
       })
   }
 
-  notyet:any;all:any;stdrates=false
+  notyet:any;all:any;stdrates=false;allLength:any
   allenvelop() {
     this.commonservice.postrequest('http://localhost:4000/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
@@ -430,6 +430,7 @@ export class AdminstudentprofileComponent implements OnInit {
           (e.verifiedbymail == sessionStorage.getItem('mail')) ? e.verifiedby = 'You' : null
         });
         this.all = res
+        this.allLength=this.all.length
         // console.log("this.all", this.all)
         // res.forEach((e: any) => {
         //   (e.doneby == sessionStorage.getItem('mail')) ? e.firstname = 'You' : null
@@ -523,6 +524,33 @@ export class AdminstudentprofileComponent implements OnInit {
       (res: any) => {
         this.notdat = this.notdat - 1
       },
+      (err: any) => console.log(err)
+    );
+  }
+
+  data12: any
+  accept1(c: any, d: any) {
+    c.verified = d
+    c.verifiedby = sessionStorage.getItem('firstname')
+    c.verifiedbymail = sessionStorage.getItem('mail')
+
+    if (d == 'accepted') {
+      let field = c.field
+      let value = c.current
+      this.data12 = { mail: c.mail, organisation_id: c.organisation_id }
+      this.data12[field] = value
+
+      this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac',
+        this.data12).subscribe(
+          (res: any) => {
+            if (res.message == "success") {
+              console.log("successfull update profile", this.data12)
+            }
+          })
+    }
+
+    this.commonservice.postrequest('http://localhost:4000/notification/updatenotifications', c).subscribe(
+      (res: any) => { },
       (err: any) => console.log(err)
     );
   }

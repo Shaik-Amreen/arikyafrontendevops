@@ -214,6 +214,7 @@ export class AdminNavbarComponent implements OnInit {
   changeNav() {
     this.navMode = !this.navMode
   }
+  
   data: any
   accept(c: any, d: any) {
     c.verified = d
