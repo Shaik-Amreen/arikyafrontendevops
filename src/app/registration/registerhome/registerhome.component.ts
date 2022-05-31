@@ -12,7 +12,6 @@ export class RegisterhomeComponent implements OnInit {
   constructor(private http: HttpClient, private commonservice: CommonService, private router: Router) {
     this.commonservice.postrequest('http://localhost:4000/company/findcompanytoregister', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companycode: sessionStorage.getItem('companyname') }).subscribe(
       (res: any) => {
-        // console.log(res);
         this.realplacement = res.companydetails.placementcyclename;
         this.realcompanyname = res.companydetails.companyname
         // console.log(this.realplacement, this.realcompanyname)
@@ -20,10 +19,9 @@ export class RegisterhomeComponent implements OnInit {
         this.wait = true
         this.commonservice.postrequest('http://localhost:4000/placementstatus/checkregistered', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: this.realplacement, companyname: this.realcompanyname, mail: sessionStorage.getItem('mail') }).subscribe(
           (rese: any) => {
-            if (new Date(res.companydetails.deadline) < new Date()) { this.registered = 'deadline' } else if (rese.message == 'success') { this.registered = 'yes' }
-
-
-
+            // console.log(rese.message, "llllllllllllllllllll")
+            if (new Date(res.companydetails.deadline) < new Date()) { this.registered = 'deadline' }
+            if (rese.message == 'done') { this.registered = 'yes' }
           },
           (err: any) => console.log(err)
 
@@ -38,7 +36,7 @@ export class RegisterhomeComponent implements OnInit {
   register() {
     if (new Date(this.data.deadline) >= new Date()) {
       this.commonservice.postrequest('http://localhost:4000/placementstatus/updateregistered', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: this.realplacement, companyname: this.realcompanyname, mail: sessionStorage.getItem('mail') }).subscribe(
-        (res: any) => { if (res.message == 'success') { this.registered = 'yes'; sessionStorage.clear(); sessionStorage.clear() } },
+        (res: any) => { if (res.message == 'success') { this.registered = 'yes'; sessionStorage.clear(); } },
         (err: any) => console.log(err)
       );
     }
