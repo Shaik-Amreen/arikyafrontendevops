@@ -341,6 +341,7 @@ export class CompanydetailsComponent implements OnInit {
 
   fetchstudent() {
     this.single = 'ADD';
+    this.removestudentstatus = 'Remove'
     this.showStudent = false
     this.commonservice.postrequest('http://localhost:4000/studentdata/findbyrollnumber', { organisation_id: sessionStorage.getItem("organisation_id"), rollnumber: this.singlestudent, ...this.companydetails }).subscribe(
       (res: any) => {
@@ -431,6 +432,16 @@ export class CompanydetailsComponent implements OnInit {
   }
 
   rollnos: any;
+  removestudentstatus: any = 'Remove'
+  removestudent() {
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), ...{ eligible: false, mail: this.addstudent.mail, placementcyclename: this.companydetails.placementcyclename, companyname: this.companydetails.companyname } }).subscribe(
+      (res: any) => { this.removestudentstatus = 'Successfully removed' },
+      (err: any) => console.log(err)
+    )
+
+  }
+
+
 
   addapplicant() {
     if (this.entryupload) {
