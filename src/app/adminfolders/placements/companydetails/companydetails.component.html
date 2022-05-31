@@ -231,7 +231,10 @@
                                                     <td>Course</td>
                                                     <td>Department</td>
                                                     <td>Mobile</td>
+                                                    <td>Eligible</td>
                                                 </tr>
+                                                {{addstudent | json}}
+
                                                 <tr>
                                                     <td>{{addstudent.firstname + addstudent.middlename +
                                                         addstudent.lastname}}</td>
@@ -240,12 +243,23 @@
                                                     <td>{{addstudent.course}}</td>
                                                     <td>{{addstudent.department}}</td>
                                                     <td>{{addstudent.mobile}}</td>
+                                                    <td>
+                                                        <span *ngIf="addstudent.eligible=='-'">-</span>
+                                                        <span *ngIf="addstudent.eligible==true">Yes</span>
+                                                        <span *ngIf="!addstudent.eligible">No</span>
+                                                    </td>
                                                 </tr>
 
                                             </tbody>
                                         </table>
                                         <button class="btn" (click)="singlestudentmail()"
                                             style="background-color: #00b0ff;border-radius: 7px;color: white;">{{single}}</button>
+                                        <button class="btn btn-danger" (click)="removestudent()"
+                                            *ngIf="addstudent.eligible && addstudent.eligible!='-' else remove">{{removestudentstatus}}</button>
+                                        <ng-template #remove>
+                                            <button class="btn" (click)="singlestudentmail()"
+                                                style="background-color: #00b0ff;border-radius: 7px;color: white;">{{single}}</button>
+                                        </ng-template>
                                     </span>
                                     <ng-template #nostudent>
                                         <span style="color: crimson">We could not find any students !</span>
@@ -642,10 +656,12 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-6">
-                            <button style="background-color: #00B0FF;color: #fff;width: 100%;" class="btn" (click)="entryupload=true">Entry Upload</button>
+                            <button style="background-color: #00B0FF;color: #fff;width: 100%;" class="btn"
+                                (click)="entryupload=true">Entry Upload</button>
                         </div>
                         <div class="col-6">
-                            <button style="background-color: #00B0FF;color: #fff;width: 100%;" class="btn" (click)="entryupload=false">Excel Upload</button>
+                            <button style="background-color: #00B0FF;color: #fff;width: 100%;" class="btn"
+                                (click)="entryupload=false">Excel Upload</button>
                         </div>
                     </div>
                     <div *ngIf="entryupload"><br>

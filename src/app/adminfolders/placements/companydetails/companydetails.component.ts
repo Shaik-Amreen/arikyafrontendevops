@@ -16,6 +16,7 @@ export class CompanydetailsComponent implements OnInit {
   companydetails: any = {}; data = []; nowshorted: any = []; rejectedlist: any = []; nodata: any = false
   mapping: any = [];
   singlestudent: any = ''
+
   keys: any; uploadindex: any = -5
   objkey: any = [];
   applicantslist: any = []; setedit: any = {}; addstudent: any
@@ -453,7 +454,7 @@ export class CompanydetailsComponent implements OnInit {
         this.validatemsg = "*Required"
       }
     }
-    else if (this.rollnos.length!=0) {
+    else if (this.rollnos.length != 0) {
       this.updateapplicants()
       this.rollnos = []
       this.mapping = []
