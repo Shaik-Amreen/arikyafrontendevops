@@ -233,7 +233,7 @@
                                                     <td>Mobile</td>
                                                     <td>Eligible</td>
                                                 </tr>
-                                                {{addstudent | json}}
+                                                <!-- {{addstudent | json}} -->
 
                                                 <tr>
                                                     <td>{{addstudent.firstname + addstudent.middlename +
@@ -252,8 +252,8 @@
 
                                             </tbody>
                                         </table>
-                                        <button class="btn" (click)="singlestudentmail()"
-                                            style="background-color: #00b0ff;border-radius: 7px;color: white;">{{single}}</button>
+                                        <!-- <button class="btn" (click)="singlestudentmail()"
+                                            style="background-color: #00b0ff;border-radius: 7px;color: white;">{{single}}</button>&nbsp; -->
                                         <button class="btn btn-danger" (click)="removestudent()"
                                             *ngIf="addstudent.eligible && addstudent.eligible!='-' else remove">{{removestudentstatus}}</button>
                                         <ng-template #remove>
@@ -283,7 +283,20 @@
                                         {{c.companyname | uppercase}}</option>
                                 </select>&nbsp;&nbsp;
                                 <button *ngIf="comselected!=''" class="btn btn-primary shadow-none"
-                                    style="background-color: #00b0ff;" (click)="addstu()">{{addstatus}}</button>
+                                    style="background-color: #00b0ff;" (click)="addstu()">{{addstatus}}</button>&nbsp;
+                                <button *ngIf="comselected!=''" class="btn btn-primary shadow-none"
+                                    style="background-color:  crimson;" (click)="removestu()">{{removestatus}}</button>
+                                <br>
+                            </div>
+                            <div><strong>Included Companies:</strong>&nbsp;
+                                <span *ngFor="let company of companydetails.acceptedList;index as i;">
+                                    {{i+1}}.{{company[0].companyname}}
+                                </span>
+                            </div>
+                            <div><strong>Excluded Companies:</strong>&nbsp;
+                                <span *ngFor="let company of companydetails.rejectedList;index as i;">
+                                    {{i+1}}.{{company[0].companyname}}
+                                </span>
                             </div>
                             <ng-template #fail><br>You cannot add ! This company is not accepting the applications now .
                             </ng-template>

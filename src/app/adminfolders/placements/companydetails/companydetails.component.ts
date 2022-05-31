@@ -20,7 +20,7 @@ export class CompanydetailsComponent implements OnInit {
   keys: any; uploadindex: any = -5
   objkey: any = [];
   applicantslist: any = []; setedit: any = {}; addstudent: any
-  ch = 0; deadline = ''; errdate = ''; mailstatus = 'SEND MAIL'; eligible = 0; registered = 0; comselected = ''; addstatus = 'ADD STUDENTS'; currentIndex = -1
+  ch = 0; deadline = ''; errdate = ''; mailstatus = 'SEND MAIL'; eligible = 0; registered = 0; comselected = ''; addstatus = 'ADD STUDENTS';removestatus='REMOVE STUDENTS'; currentIndex = -1
   eligibility: any[] = []; hiringflow: any[]
   allcom = [{ companyname: '' }]; listofstu = []; relen = 0; placed = 0; nextIndex = 0
 
@@ -46,7 +46,7 @@ export class CompanydetailsComponent implements OnInit {
     this.uploadindex = -5
     this.objkey = [];
     this.applicantslist = []; this.setedit = {}
-    this.ch = 0; this.deadline = ''; this.errdate = ''; this.mailstatus = 'SEND MAIL'; this.eligible = 0; this.registered = 0; this.comselected = ''; this.addstatus = 'ADD STUDENTS'; this.currentIndex = -1
+    this.ch = 0; this.deadline = ''; this.errdate = ''; this.mailstatus = 'SEND MAIL'; this.eligible = 0; this.registered = 0; this.comselected = ''; this.addstatus = 'ADD STUDENTS';this.removestatus='REMOVE STUDENTS'; this.currentIndex = -1
     this.eligibility = []; this.hiringflow = []
     this.allcom = [{ companyname: '' }]; this.listofstu = []; this.relen = 0; this.placed = 0; this.nextIndex = 0;
     this.image = "../../../../assets/companylogo.jpg";
@@ -58,7 +58,7 @@ export class CompanydetailsComponent implements OnInit {
     this.single = 'ADD'
     sessionStorage.removeItem('editcompany')
 
-    this.mailstatus = 'SEND MAIL'; this.addstatus = 'ADD STUDENTS'
+    this.mailstatus = 'SEND MAIL'; 
   }
 
   firstcall() {
@@ -329,14 +329,29 @@ export class CompanydetailsComponent implements OnInit {
 
   addstu() {
     this.companydetails.presentcompany = this.comselected;
-    this.addstatus = 'ADDING'
+    console.log(this.companydetails,"this.companydetails")
+    this.addstatus = 'ADDING...'
     this.commonservice.postrequest('http://localhost:4000/placementstatus/addstu', this.companydetails).subscribe(
       (res: any) => {
         this.addstatus = res.message
+        this.firstcall()
       },
       (err: any) => console.log(err)
     );
   }
+
+  removestu(){
+    this.removestatus='REMOVING...'
+    this.companydetails.presentcompany = this.comselected;
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/removestu', this.companydetails).subscribe(
+      (res: any) => {
+        this.removestatus = res.message
+        this.firstcall()
+      },
+      (err: any) => console.log(err)
+    );
+  }
+
   showStudent: any = false
 
   fetchstudent() {
@@ -351,6 +366,8 @@ export class CompanydetailsComponent implements OnInit {
       (err: any) => console.log(err)
     )
   }
+
+
 
 
 
