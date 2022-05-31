@@ -261,7 +261,7 @@
                             <strong> Students by company </strong><br>
                             <div *ngIf="companydetails.status!='submitted' else fail" class="p-3"
                                 style="display: flex;">
-                                <select (click)="addstatus='ADD STUDENTS';comselected=''" [(ngModel)]="comselected"
+                                <select (click)="addstatus='ADD STUDENTS';" [(ngModel)]="comselected"
                                     class="form-control" style="border-radius: 5px;font-size:0.8rem ;">
                                     <option value="" disabled>Please Select a company</option>
                                     <option *ngFor="let c of allcom" value={{c.companyname}}
