@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http'; import { CommonService } from '../../../services/common.service';
-import { Component, OnInit } from '@angular/core'; import { Router, ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, OnInit } from '@angular/core'; import { Router, ActivatedRoute } from '@angular/router';
 import * as XLSX from 'xlsx';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ExportExcelService } from 'src/app/services/export-excel.service';
+import { ViewChild } from '@angular/core';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
@@ -339,7 +340,6 @@ export class CompanydetailsComponent implements OnInit {
 
   fetchstudent() {
     this.single = 'ADD';
-    this.removestudentstatus = 'Remove'
     this.showStudent = false
     this.commonservice.postrequest('http://localhost:4000/studentdata/findbyrollnumber', { organisation_id: sessionStorage.getItem("organisation_id"), rollnumber: this.singlestudent, ...this.companydetails }).subscribe(
       (res: any) => {
@@ -418,6 +418,8 @@ export class CompanydetailsComponent implements OnInit {
   validatemsg = ""
   addapplicants = 'ADD'
   applicantstatus = ''
+  entryupload = true
+
 
   addapplicantmodal() {
     this.addapplicantdisplay = 'block'; this.validatemsg = ''; this.applicants = ''; this.applicantstatus = 'Add'; this.addapplicants = "ADD"
@@ -427,55 +429,175 @@ export class CompanydetailsComponent implements OnInit {
     this.addapplicantdisplay = 'block'; this.applicantstatus = 'Remove'; this.validatemsg = ''; this.applicants = ''; this.addapplicants = "REMOVE"
   }
 
-  removestudentstatus: any = 'Remove'
-  removestudent() {
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), ...{ eligible: false, mail: this.addstudent.mail, placementcyclename: this.companydetails.placementcyclename, companyname: this.companydetails.companyname } }).subscribe(
-      (res: any) => { this.removestudentstatus = 'Successfully removed' },
-      (err: any) => console.log(err)
-    )
-
-  }
-
-
+  rollnos: any;
 
   addapplicant() {
-    this.validate = true
-    this.validatemsg = ""
-    if (this.applicants) {
-      let rollnos = this.applicants.trim().replace(/\n/g, ',').split(',');
-      console.log(rollnos)
-      rollnos.forEach((data: any, index: any) => {
-        if ((data.length != 10 || !/^[A-Za-z0-9]*$/.test(data)) && !this.validatemsg) {
-          this.validatemsg = `*Invalid Input ${data} at Line No ${index + 1}`
-          if (rollnos.length == index + 1) {
-            this.validatemsg = `*Invalid Input ${data} At End`
-          }
-        }
-      });
-      if (!this.validatemsg) {
-        (this.applicantstatus == 'Add') ? this.addapplicants = 'Adding...' : this.addapplicants = 'Removing...';
-        this.commonservice.postrequest('http://localhost:4000/placementstatus/updateregistered', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname'), rollnumbers: rollnos, applicantstatus: this.applicantstatus }).subscribe(
-          (res: any) => {
-            if (res.message == 'success') {
-              this.firstcall()
-              this.display = true;; (this.applicantstatus == 'Add') ? (this.addapplicants = 'ADD', this.popup = "Applicants Added") : (this.addapplicants = 'REMOVE', this.popup = "Applicants Removed"); this.addapplicantdisplay = 'none'
-              setTimeout(() => {
-                this.display = false;
-              }, 5000)
+    if (this.entryupload) {
+      this.validate = true
+      this.validatemsg = ""
+      if (this.applicants) {
+        this.rollnos = this.applicants.toLowerCase().trim().replace(/\n/g, ',').replace(/ /g, "").split(',');
+        this.rollnos.forEach((data: any, index: any) => {
+          if ((data.length != 10 || !/^[A-Za-z0-9]*$/.test(data)) && !this.validatemsg) {
+            this.validatemsg = `*Invalid Input ${data} at Line No ${index + 1}`
+            if (this.rollnos.length == index + 1) {
+              this.validatemsg = `*Invalid Input ${data} At End`
             }
-          },
-          (err: any) => console.log(err)
-        );
+          }
+        });
+        if (!this.validatemsg) {
+          this.updateapplicants()
+        }
+      }
+      else {
+        this.validatemsg = "*Required"
       }
     }
-    else {
-      this.validatemsg = "*Required"
+    else if (this.rollnos.length!=0) {
+      this.updateapplicants()
+      this.rollnos = []
+      this.mapping = []
+      this.mapping = []; this.saveMode = false; this.keys = [];
+      this.data = [];
+      this.objkey = [];
+      this.validata = false
+      this.savingMode = 'Save';
+      this.reset();
     }
 
   }
 
+  updateapplicants() {
+    (this.applicantstatus == 'Add') ? this.addapplicants = 'Adding...' : this.addapplicants = 'Removing...';
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateregisteredmulti', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname'), rollnumbers: this.rollnos, applicantstatus: this.applicantstatus }).subscribe(
+      (res: any) => {
+        if (res.message == 'success') {
+          console.log(res.message, "res.message")
+          this.firstcall()
+          this.display = true;; (this.applicantstatus == 'Add') ? (this.addapplicants = 'ADD', this.popup = "Applicants Added") : (this.addapplicants = 'REMOVE', this.popup = "Applicants Removed"); this.addapplicantdisplay = 'none'
+          setTimeout(() => {
+            this.display = false;
+          }, 5000)
+        }
+      },
+      (err: any) => console.log(err)
+    );
+  }
 
 
+
+  //applicants excel upload
+
+  @ViewChild('excel')
+  public myInputVariable: ElementRef;
+
+  reset() { this.myInputVariable.nativeElement.value = ""; }
+  // console.log(this.myInputVariable.nativeElement.files);
+
+  saveMode = false
+
+  savingMode = 'Save'
+  year = ''
+  errorMsg = ''
+  validata: any = false
+
+  onfilesubmit1(evt: any) {
+    //if (evt.target.accept !== ".xlsx" ) throw Error("file must be excel sheet");
+    const reader: FileReader = new FileReader();
+    reader.readAsBinaryString(evt.target.files[0]);
+    reader.onload = (x: any) => {
+      const bstr: string = x.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+      this.data = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+      this.keys = this.data.shift();
+      if (this.keys.length !== 1) { alert("invalid format"); window.location.reload() }
+      console.log(this.data)
+      let data1: any = [];
+      this.data.forEach((a: any) => {
+        console.log("a", a)
+        if (a.length != 0) {
+          data1.push(a)
+        }
+      })
+      this.data = data1
+      console.log("this.data", this.data)
+      this.mapping = this.data.map((e: any) => {
+        if (e.length != 0) {
+          let obj: any = {};
+          this.keys[0] = 'rollnumber'
+          // this.keys[1] = 'mail';
+          this.keys.forEach((key: any, i: any) => {
+            let a = (e[i] + '').trim()
+            if (a.length != 0 && e[i]) {
+              console.log("obj", e[i])
+              obj[key] = e[i];
+            }
+          });
+          return obj;
+        }
+      });
+      console.log("this.mapping", this.mapping)
+      this.keys.forEach((value: any, key: any) => {
+        this.objkey[key] = value.replace(/ /g, ' ')
+      });
+      this.saveMode = true;
+      // console.log("this.mapping", this.mapping)
+      this.rollnos = []
+      for (let c of this.mapping) {
+        this.rollnos.push((c.rollnumber).toLowerCase())
+      }
+
+      console.log(this.rollnos, "this.rollnos")
+    }
+    evt.target.value = ''
+  }
+
+
+  save1() {
+    this.validata = true
+  }
+
+  // savefinal() {
+  //   let course = this.year.split(' ');
+  //   for (let c of this.mapping) { c.course = course[0]; c.currentyear = course[1] }
+  //   this.savingMode = 'Saving';
+  //   // console.log("this.mapping", this.mapping)
+  //   this.commonservice.postrequest('http://localhost:4000/Studentdata/createStudentdata',
+  //     this.mapping).subscribe(
+  //       (res: any) => {
+  //         console.log("res", res)
+  //         this.mapping = []
+  //         console.log("resssssssssss", res);
+  //         this.mapping = []; this.saveMode = false; this.keys = [];
+  //         this.display = true;
+  //         setTimeout(() => { this.display = false }, 5000)
+  //         this.year = '';
+  //         this.data = [];
+  //         this.objkey = [];
+  //         this.validata = false
+  //         this.savingMode = 'Save';
+  //         this.reset();
+  //       },
+  //       (err: any) => console.log(err)
+  //     );
+  // }
+
+  exportexcel1(t: any): void {
+    const fileName = `sample template to upload students list.xlsx`;
+    /* table id is passed over here */
+    let element = document.getElementById('excel');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element, { raw: true });
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, fileName);
+
+  }
 
 
 
