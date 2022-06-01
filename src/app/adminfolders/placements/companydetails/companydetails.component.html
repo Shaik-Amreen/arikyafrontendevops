@@ -20,6 +20,44 @@
         </div>
     </div>
 </div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':viewplacementstatus}">
+    <div class="modal-dialog modal-lg" role="document" *ngIf="viewhiringlevel!=''">
+        <div class="modal-content text-center"><br />
+            <span style="color: #1b1c1e;font-size: 1.2rem;"><strong> {{ viewhiringlevel}}</strong></span>
+            <div class="modal-header" style="display: flex;justify-content: center;align-items: center;">
+
+                <table class="table table-bordered text-center">
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>Rollnumber</td>
+                            <td>Course</td>
+                            <td>Department</td>
+                            <td>Mobile</td>
+                            <td>Mail</td>
+                        </tr>
+                        <tr [ngClass]="placementstatus[viewhiringlevel].includes(row.rollnumber)? 'selected' : 'notselected'"
+                            *ngFor="let row of applicantslist">
+                            <td>{{row.firstname}} {{row.middlename}} {{row.lastname}}</td>
+                            <td>{{row.rollnumber}}</td>
+                            <td>{{row.course}}</td>
+                            <td>{{row.department}}</td>
+                            <td>{{row.mobile}}</td>
+                            <td>{{row.mail}}</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="viewplacementstatus='none';">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div *ngIf="nodata else nodat">
     <div style="padding: 1rem;font-size: 0.8rem;padding-bottom: 0.2rem;"><span style="cursor:pointer"
             [routerLink]="['/admin/placements']">
@@ -354,7 +392,7 @@
                         <hr>
                         <div>
                             <div *ngIf="ch==0  else dis">
-                                <div>
+                                <div *ngIf="companydetails.status!='submitted'">
                                     <span *ngIf="companydetails.deadline!='not updated'">{{companydetails.deadline |
                                         date:'medium'}}<br></span>
                                     <div *ngIf="companydetails.deadline=='not updated'">Deadline is
@@ -368,10 +406,12 @@
                                 <div *ngIf="companydetails.status=='not updated'"><button class="btn btn-primary"
                                         style="background-color: #00B0FF;" (click)="ch=1">Open
                                         applications</button></div>
-                                <div *ngIf="companydetails.status=='closed'"><button class="btn btn-primary"
-                                        style="background-color: #00B0FF;" (click)="ch=1">Reopen
-                                        applications</button>
-                                    <br>or<br><button (click)="exportexcel()" class="btn"
+                                <div *ngIf="companydetails.status=='closed' || companydetails.status=='submitted'">
+                                    <span *ngIf="companydetails.status!='submitted'">
+                                        <button class="btn btn-primary" style="background-color: #00B0FF;"
+                                            (click)="ch=1">Reopen
+                                            applications</button>
+                                        <br>or<br></span><button (click)="exportexcel()" class="btn"
                                         style="background-color: #1b1c1e;color: white;">Download
                                         Applicants </button>
                                 </div>
@@ -399,6 +439,7 @@
                         <div>
 
                             <div class="table-responsive" *ngIf="registered>0">
+
                                 <span *ngFor="let level of hiringflow;index as i">
                                     <!-- <div style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"
                                         *ngIf="i&lt;=currentIndex+nextIndex && companydetails.status=='closed'">
@@ -415,7 +456,7 @@
                                                     style="color: white;background-color: #a5081a;">Close</button><br>
                                             </span>
                                             <input #file1 (click)="file1.value = ''" value="" style="display:none"
-                                                type="file" accept=".xlsx" (change)="onfilesubmit($event,i)">
+                                                type="file" accept=".xlsx" (change)="onfilesubmit($event,i,'upload')">
                                            
                                             <a *ngIf="mapping.length==0" (click)="file1.click()"
                                                 style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
@@ -460,7 +501,7 @@
                                                    
                                                     <input #file (click)="file.value = ''" value=""
                                                         style="display: none;" type="file" accept=".xlsx"
-                                                        multiple="false" (change)="onfilesubmit($event,i)">
+                                                        multiple="false" (change)="onfilesubmit($event,i,'upload')">
                                                     <a *ngIf="mapping.length==0" (click)="file.click()"
                                                         style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
                                                         <strong>Click
@@ -492,7 +533,7 @@
                                                 </span><br />
 
                                                 <input #file2 style="display: none;" type="file" accept=".xlsx"
-                                                    multiple="false" (change)="onfilesubmit($event,i)">
+                                                    multiple="false" (change)="onfilesubmit($event,i,'upload')">
                                                 <a (click)="file2.click()" *ngIf="mapping.length==0"
                                                     style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
                                                     <strong>Click
@@ -517,23 +558,43 @@
 
 
                                     </div> -->
-                                    <div *ngIf="i<=currentIndex && lastItem"
-                                        style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
-                                        <strong>{{level.level}} <i *ngIf="companydetails.status!='submitted'"
-                                                style="float: right;" class="bx bxs-pencil"
-                                                (click)="setedit[i]=true"></i></strong><br />
+
+                                    <!-- {{lastItem}}
+                                    {{currentIndex}}
+                                    {{i}}
+                                    {{nodataupload}}
+                                    {{setedit | json}} -->
+
+                                    <div *ngIf="i<=currentIndex+1 && nodataupload"
+                                        style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;width: 98%;">
+                                        <strong>
+
+                                            <div class="row">
+                                                <div class="col-sm-1" style="cursor: pointer;"
+                                                    (click)="viewhiringlevel = level.level;viewplacementstatus='block'">
+                                                    <i class="bx bxs-show"></i>
+                                                </div>
+                                                <div class="col-sm"> {{level.level}}</div>
+                                                <div class="col-sm-1"> <i
+                                                        *ngIf="companydetails.status!='submitted' && i==currentIndex && !setedit[i] "
+                                                        style="float: right;" class="bx bxs-pencil"
+                                                        (click)="setedit={};setedit[i]=true;submitcompany=false"></i>
+                                                </div>
+                                            </div>
+                                        </strong>
                                         <span style="font-size: 0.7rem;">{{level.sub}}</span>
-                                        <span *ngIf="setedit[i]">
-                                            <span *ngIf="mapping.length>0"> <br>
+                                        <span *ngIf="setedit[i] || i==currentIndex+1">
+                                            <span *ngIf="mapping.length>0 && uploadindex==i "> <br>
                                                 <button class="btn btn-primary" style="background-color:#00B0FF ;"
                                                     (click)="updatethelist(level)">{{saveButton}}</button>&nbsp;&nbsp;
                                                 <button (click)="mapping=[];keys=[];" class="btn"
                                                     style="color: white;background-color: #a5081a;">Close</button><br>
                                             </span>
                                             <input #file1 (click)="file1.value = ''" value="" style="display:none"
-                                                type="file" accept=".xlsx" (change)="onfilesubmit($event,i)">
-                                            <i (click)="setedit[i]=false" *ngIf="mapping.length==0"
-                                                style="color: #a5081a;" class='bx bxs-x-circle'></i><br />
+                                                type="file" accept=".xlsx" (change)="onfilesubmit($event,i,'edit')">
+                                            <span *ngIf="mapping.length==0 && setedit[i]"> <i (click)="setedit[i]=false"
+                                                    style="color: #a5081a;" class='bx bxs-x-circle'></i><br />
+                                            </span>
                                             <a *ngIf="mapping.length==0" (click)="file1.click()"
                                                 style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
                                                 <strong>Click
@@ -553,19 +614,33 @@
                                                 </table>
                                             </div>
                                         </span>
-                                        <div *ngIf="i==currentIndex && mapping.length==0">
+                                        <div *ngIf="i==currentIndex && mapping.length==0 && lastItem && !setedit[i]">
                                             <br />
-                                            <button class="btn btn-primary"
-                                                style="background-color: #00B0FF;font-size: 0.8rem;">Click to
-                                                submit </button><br /><br />
-                                            <input class="form-control"
-                                                placeholder="enter otp recieved to your mail" /><br />
-                                            <button class="btn btn-dark">Verify Otp</button>
+                                            <span *ngIf="companydetails.status!='submitted' else submitted">
+                                                <button class="btn btn-primary" (click)="sendotptomail()"
+                                                    style="background-color: #00B0FF;font-size: 0.8rem;">
+                                                    <span *ngIf="submitcompany">Resend otp</span>
+                                                    <span *ngIf="!submitcompany">Click to
+                                                        submit</span> </button><br /><br />
+                                                <span *ngIf="submitcompany">
+                                                    <input class="form-control" [(ngModel)]="otpentered"
+                                                        placeholder="enter otp recieved to your mail" /><br />
+                                                    <button [disabled]="otpentered.length==0" (click)="verifyOtp()"
+                                                        class="btn btn-dark">Verify
+                                                        Otp</button><br />
+                                                    <span style="color: crimson;font-weight:700"> {{otpstatus}}</span>
+                                                </span>
+                                            </span>
+                                            <ng-template #submitted>
+                                                <button class="btn btn-primary"
+                                                    style="background-color: #00b0ff;">Submitted</button>
+                                            </ng-template>
                                         </div>
                                     </div>
-                                    <div *ngIf="i==currentIndex && !lastItem"
+
+                                    <div *ngIf="i==currentIndex && !nodataupload"
                                         style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
-                                        <strong>{{level.level}} </strong><br />
+                                        <i class="bx bxs-show"></i><strong>{{level.level}} </strong><br />
                                         <span style="font-size: 0.7rem;">{{level.sub}}</span>
                                         <span>
                                             <span *ngIf="mapping.length>0"> <br>
@@ -575,7 +650,7 @@
                                                     style="color: white;background-color: #a5081a;">Close</button><br>
                                             </span>
                                             <input #file1 (click)="file1.value = ''" value="" style="display:none"
-                                                type="file" accept=".xlsx" (change)="onfilesubmit($event,i)">
+                                                type="file" accept=".xlsx" (change)="onfilesubmit($event,i,'upload')">
                                             <a *ngIf="mapping.length==0 && companydetails.status!='submitted'"
                                                 (click)="file1.click()"
                                                 style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">

@@ -214,10 +214,10 @@ export class AdminNavbarComponent implements OnInit {
   changeNav() {
     this.navMode = !this.navMode
   }
-  
+
   data: any
   accept(c: any, d: any) {
-    c.verified = d
+    // c.verified = d
     c.verifiedby = sessionStorage.getItem('firstname')
     c.verifiedbymail = sessionStorage.getItem('mail')
 

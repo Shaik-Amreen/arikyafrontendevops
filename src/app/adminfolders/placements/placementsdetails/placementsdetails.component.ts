@@ -131,9 +131,20 @@ export class PlacementsdetailsComponent implements OnInit {
   }
 
 
+
+
   setstatus() {
     sessionStorage.setItem('editplacements', 'yes')
     this.router.navigate(["/admin/placements/addeditplacements"])
+  }
+
+  verifyButtonStatus: any = 'Verify all students'
+  verifyallstudents() {
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/verifyStudent', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
+      (res: any) => {
+        this.verifyButtonStatus = 'Verified'
+      })
+
   }
 
   addstudentstoplacementcycle() {

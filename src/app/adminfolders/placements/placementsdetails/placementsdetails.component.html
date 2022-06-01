@@ -57,7 +57,7 @@
         </tbody>
       </table>
       <div *ngIf="tempdatafunc().length==0">
-        <div style="display: flex;justify-content: center;align-items: center;height:75 vh;">
+        <div style="display: flex;justify-content: center;align-items: center;height:75vh;">
           <div style="text-align: center;">
             <img src="../../../assets/search.gif" style="max-height: 400px;"><br>
             <h5><strong>No companies yet in this placement cycle ! Please add .</strong></h5>
@@ -66,7 +66,7 @@
       </div>
     </div>
     <div class="card shadow col-sm-3 table-responsive"
-      style="margin-right: 45px;margin-left: 15px;padding: 30px;height: 77vh;">
+      style="margin-right: 45px;margin-left: 15px;padding: 30px;padding-bottom:10px ;height: 80vh;">
       <h6><strong style="color: black;">{{place | uppercase}}<br>
           <span style="font-size: 0.7rem;color: grey;">{{placementdetails.fromdate | date}} - {{placementdetails.todate
             |
@@ -79,15 +79,14 @@
       <br />
 
       <div style="display: flex;">
-        <div
-          style="cursor: pointer;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;font-size: 0.7rem;margin-right: 15px;"
+        <div style="cursor: pointer;font-size: 0.7rem;padding-right: 7px; border-right: 2px solid lightgray;"
           (click)="exportexcel(studenteligibleplacementstatus.eligible)">
           <strong>ELIGIBLE : {{studenteligibleplacementstatus.eligible.length}}
           </strong><br><span style="font-size: 0.65rem;">click here
             to
             download &nbsp;&nbsp;<i class='bx bxs-downvote'></i></span>
         </div><br />
-        <div style="cursor: pointer;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;font-size: 0.7rem;"
+        <div style="cursor: pointer;font-size: 0.7rem;padding-left: 7px;"
           (click)="exportexcel(studenteligibleplacementstatus.addedstudents)">
           <strong>ADDED STUDENTS : {{studenteligibleplacementstatus.addedstudents.length}}</strong><br><span
             style="font-size: 0.65rem;">click
@@ -96,17 +95,17 @@
             download &nbsp;&nbsp;<i class='bx bxs-downvote'></i></span>
         </div>
       </div>
-      <br />
+      <hr>
       <div style="display: flex;">
         <div (click)="exportexcel(studenteligibleplacementstatus.interested)"
-          style="cursor: pointer;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;font-size: 0.7rem;margin-right: 15px;">
+          style="cursor: pointer;font-size: 0.7rem;padding-right: 7px; border-right: 2px solid lightgray;">
           <strong>INTERESTED : {{studenteligibleplacementstatus.interested.length}}
           </strong><br><span style="font-size: 0.65rem;">click here
             to
             download &nbsp;&nbsp;<i class='bx bxs-downvote'></i></span>
         </div>
         <div (click)="exportexcel(studenteligibleplacementstatus.notinterested)"
-          style="cursor: pointer;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;font-size: 0.7rem;">
+          style="cursor: pointer;font-size: 0.7rem;padding-left: 7px;">
           <strong>NOT INTERESTED : {{studenteligibleplacementstatus.notinterested.length}}</strong> <br><span
             style="font-size: 0.65rem;">click
             here tos
@@ -127,7 +126,6 @@
 
 
       <strong style=" color: black;">SEND MAIL </strong>
-
       <select class="form-select shadow-none" [(ngModel)]="category" style="font-size: 10px;">
         <option value="" disabled selected> select category to send mail</option>
         <option value="eligible">ELIGIBLE</option>
@@ -137,11 +135,18 @@
         <option value="notinterested">NOT INTERESTED</option>
       </select>
       <textarea [(ngModel)]="content" class="form-control shadow-none" style="font-size: 0.8rem;"
-        placeholder="Type content to send mail"></textarea><br>
-      <button class="btn btn-primary" (click)="sendmail()"
+        placeholder="Type content to send mail"></textarea>
+      <button class="btn btn-primary" (click)="sendmail()" style="margin-top: 3px;"
         [disabled]="content=='' || category==''"><strong>{{buttonStatus}}</strong></button>
+
+
+      <br />
+      <button class="btn btn-dark" (click)="verifyallstudents()"
+        style="background-color: #1b1c1e;"><strong>{{verifyButtonStatus}}</strong></button>
     </div>
+
   </div>
+
 
 
 

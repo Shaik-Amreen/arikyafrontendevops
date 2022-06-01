@@ -7,7 +7,16 @@ tr {
   border-bottom: 0.5px solid whitesmoke;
 }
 
+.selected{
+  background-color: rgb(177, 213, 177);
+  color: green;
+}
 
+
+.notselected{
+  background-color: lightpink;
+  color: crimson;
+}
 
 .imag {
   width: 70px;

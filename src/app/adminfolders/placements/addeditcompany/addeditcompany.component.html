@@ -3,7 +3,8 @@
         </strong></span>
     <span style="cursor: pointer;" [routerLink]="['/admin/placements/placementsdetails']"><strong
             style="font-size: 0.8rem;">PLACEMENT DETAILS</strong></span> >
-    <span style="font-size: 0.8rem;">ADD COMPANY</span>
+    <span style="font-size: 0.8rem;" *ngIf="!editMode">ADD COMPANY</span>
+    <span style="font-size: 0.8rem;" *ngIf="editMode">EDIT COMPANY</span>
 </span>
 <div class=" addform table-responsive">
     <form [formGroup]="addcompanyform" (ngSubmit)="submitCompany()">

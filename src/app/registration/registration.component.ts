@@ -20,7 +20,7 @@ export class RegistrationComponent implements OnInit {
     sessionStorage.setItem('organisation_id', this.organisation_id)
     this.commonservice.postrequest('http://localhost:4000/placementstatus/checktoken', { organisation_id: this.organisation_id, token: this.token, placementcyclename: this.placementcyclename, companyname: this.companyname }).subscribe(
       (res: any) => {
-        console.log(res)
+        // console.log(res)
         this.displaycompanyname = res.companyname; this.displayplacement = res.placementcyclename
         if (res.message == 'invalid') {
           this.router.navigate(['/login'])

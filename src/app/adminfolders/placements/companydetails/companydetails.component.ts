@@ -16,7 +16,8 @@ export class CompanydetailsComponent implements OnInit {
   companydetails: any = {}; data = []; nowshorted: any = []; rejectedlist: any = []; nodata: any = false
   mapping: any = [];
   singlestudent: any = ''
-
+  removestudentstatus: any = 'Remove'
+  placementstatus: any = {};
   keys: any; uploadindex: any = -5
   objkey: any = [];
   applicantslist: any = []; setedit: any = {}; addstudent: any
@@ -37,6 +38,8 @@ export class CompanydetailsComponent implements OnInit {
     this.firstcall()
   }
 
+  viewplacementstatus: any = 'none'
+  viewhiringlevel: any = ''
 
   datainitialize() {
     this.display = false;
@@ -57,30 +60,29 @@ export class CompanydetailsComponent implements OnInit {
     this.dataForExcel = []
     this.single = 'ADD'
     sessionStorage.removeItem('editcompany')
-
-    this.mailstatus = 'SEND MAIL'; 
+    this.mailstatus = 'SEND MAIL'; this.addstatus = 'ADD STUDENTS'
   }
+
+  // filterApplicants(level: any) {
+  //   this.viewhiringlevel = level
+  //   return this.applicants.filter((e: any) => this.placementstatus[level].includes(e.rollnumber))
+  // }
 
   firstcall() {
     this.commonservice.postrequest('http://localhost:4000/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (res: any) => {
-        // console.log(res);
         this.commonservice.postrequest('http://localhost:4000/placementstatus/eligible', res.companydetails).subscribe(
           (rese: any) => {
-            // console.log(rese, "companydetails");
             this.nodata = true
             this.registered = rese.rdata.length; this.eligible = rese.data.length;
             this.placed = rese.edata.length
-            if (new Date(res.companydetails.deadline) < new Date() && res.companydetails.deadline != 'not updated') {
+            if (new Date(res.companydetails.deadline) < new Date() && res.companydetails.deadline != 'not updated' && res.companydetails.status != 'submitted') {
               res.companydetails.status = 'closed';
               this.commonservice.postrequest('http://localhost:4000/company/updatestatus', res.companydetails).subscribe(
                 (response: any) => {
-                  // console.log("responseeeeeeeeeeeeeee")
-                  // console.log(response)
                   this.companydetails = res.companydetails;
                   this.hiringflow = this.companydetails.hiringworkflow.flat();
-                  // this.companydetails.companylogo=(res.companydetails.companylogo);
-                  // console.log("this.companydetails.companylogo111", this.companydetails.companylogo);
+                  this.companydetails.companylogo = (res.companydetails.companylogo);
                   (this.companydetails.companylogo == null || this.companydetails.companylogo == '') ? this.companydetails.companylogo = "../../../.././assets/companylogo.jpg" : null;
                   this.image = this.companydetails.companylogo;
                   this.getWorkflow()
@@ -91,11 +93,12 @@ export class CompanydetailsComponent implements OnInit {
             }
             else {
               this.companydetails = res.companydetails;
-              // console.log("this.companydetails.companylogo", this.companydetails.companylogo);
-              // this.companydetails.companylogo=(res.companydetails.companylogo);
+              this.hiringflow = this.companydetails.hiringworkflow.flat();
               (this.companydetails.companylogo == null || this.companydetails.companylogo == '') ? this.companydetails.companylogo = "../../../.././assets/companylogo.jpg" : null;
               this.image = this.companydetails.companylogo
+              this.getWorkflow();
             }
+
           },
           (erer: any) => console.log(erer)
         )
@@ -106,18 +109,29 @@ export class CompanydetailsComponent implements OnInit {
 
   }
 
+  nodataupload: any = false
+  companywisehiring: any = false
   getWorkflow() {
     this.lastItem = false
-    this.companydetails.status == 'closed'
+    this.nodataupload = false
+
     this.commonservice.postrequest('http://localhost:4000/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (reset: any) => {
-        // console.log("reset", reset)
         reset = reset.reverse()
-
         if (reset.length == 0) {
           this.currentIndex = 0
         }
         else {
+
+
+          this.hiringflow.map((r: any, ir: any) => {
+            // let index = this.hiringflow.findIndex(e => e.level === r.hiringflowname);
+            this.placementstatus[r.level] = reset.filter((e: any, i: any) => e.hiringflowname == r.level).map((obj: any) => obj.rollnumber)
+            // console.log(this.hiringflow[ir])
+          })
+
+          console.log(this.hiringflow, "hiring wirk flow")
+          this.nodataupload = true
           this.currentIndex = this.hiringflow.findIndex(e => e.level === reset[0].hiringflowname);
           if (this.currentIndex == this.hiringflow.length - 1) {
             this.lastItem = true
@@ -125,19 +139,12 @@ export class CompanydetailsComponent implements OnInit {
           else {
             this.lastItem = false
           }
-          // this.relen = 1; this.nextIndex = 1
-          // if (reset.length >= this.hiringflow.length - 1) {
-          //   this.lastItem = true
-          // }
-          // console.log(reset, this.hiringflow, ">>>>>>>>>>>>>>>>>>")
-          // console.log(this.hiringflow, reset[0].hiringflowname)
-          // this.currentIndex = this.hiringflow.findIndex(e => e.level === reset[0].hiringflowname);
-          // this.nowshorted = reset.filter((e: any) => e.hiringflowname == reset[0].hiringflowname)
-          // console.log("this.nowshorted ", this.nowshorted)
+
+          this.nowshorted = reset.filter((e: any, i: any) => e.hiringflowname == reset[0].hiringflowname)
+          let tempreset = reset.filter((e: any, i: any) => e.hiringflowname != reset[0].hiringflowname)
+          this.companywisehiring = tempreset.filter((e: any, i: any) => e.hiringflowname == tempreset[0].hiringflowname)
+          // console.log(this.nowshorted, this.companywisehiring)
         }
-        // if (this.currentIndex == -1) {
-        //   this.currentIndex = this.hiringflow.length - 1
-        // }
       }
     )
   }
@@ -228,7 +235,7 @@ export class CompanydetailsComponent implements OnInit {
       else { this.companydetails.status = 'opened' }
       this.commonservice.postrequest('http://localhost:4000/company/updatestatus', this.companydetails).subscribe(
         (res: any) => {
-          console.log(res)
+          // console.log(res)
           this.companydetails = res.data; this.ch = 0; this.getWorkflow()
           // this.firstcall()
         },
@@ -254,10 +261,10 @@ export class CompanydetailsComponent implements OnInit {
 
 
 
-  onfilesubmit(evt: any, i: any) {
+  onfilesubmit(evt: any, i: any, type: any) {
 
     this.uploadindex = i
-
+    console.log(this.uploadindex)
     //  console.log(this.uploadindex, ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
     //if (evt.target.accept !== ".xlsx" ) throw Error("file must be excel sheet");
     const reader: FileReader = new FileReader();
@@ -286,33 +293,28 @@ export class CompanydetailsComponent implements OnInit {
         this.objkey[key] = value.replace(/ /g, ' ')
       });
       // console.log(this.applicantslist)
-
-
-
-
-
-
-
+      let comparearr = (type == 'edit') ? this.companywisehiring : this.nowshorted
       this.mapping = this.mapping.filter((m: any) => (this.applicantslist.some((a: any) => (a.rollnumber == m.rollnumber))))
       // console.log(this.mapping, this.nowshorted, "helooooooshorteddddddddddddddddd")
       this.mapping.filter((v: any, i: any, a: any) => a.findIndex((v2: any) => (v2.id === v.id)) === i)
-      this.nowshorted.map((e: any) => {
+      comparearr.map((e: any) => {
         let a: any = true;
         this.mapping.map((n: any) => {
           n.rollnumber == e.rollnumber ? a = false : null;
         });
         a != false ? this.rejectedlist.push(e) : null;
       });
-      // this.rejectedlist = this.nowshorted.filter((s: any) => console.log(s))
-
-      this.mapping = this.mapping.filter((s: any) => (this.nowshorted.map((n: any) => n.rollnumber == s.rollnumber)))
-
+      // this.rejectedlist = comparearr.filter((s: any) => console.log(s))
+      // console.log(this.mapping, comparearr, "file")
+      this.mapping = this.mapping.filter((s: any) => (comparearr.map((n: any) => n.rollnumber == s.rollnumber)))
+      console.log(comparearr)
       // console.log(this.currentIndex, this.relen, ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
-      if (this.currentIndex == 0 && this.relen == 0) {
-
-        this.rejectedlist = this.applicantslist.filter((m: any) => (this.mapping.some((a: any) => (a.rollnumber !== m.rollnumber))))
+      if (this.currentIndex == 0 || !this.nodataupload) {
+        console.log(this.applicantslist, "applicants list")
+        this.rejectedlist = this.applicantslist.filter((m: any) => (this.mapping.every((a: any) => (a.rollnumber !== m.rollnumber))))
         // console.log(this.rejectedlist, "rejecteddddddddddddddddddddddddddddddddddlistttttttttttt")
       }
+
       for (let c of this.mapping) {
         c.rollnumber = c.rollnumber.toLowerCase()
         c.placementcyclename = sessionStorage.getItem("placementcyclename")
@@ -326,6 +328,18 @@ export class CompanydetailsComponent implements OnInit {
 
 
   }
+
+
+
+  removestudent() {
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), ...{ eligible: false, mail: this.addstudent.mail, placementcyclename: this.companydetails.placementcyclename, companyname: this.companydetails.companyname } }).subscribe(
+      (res: any) => { this.removestudentstatus = 'Successfully removed' },
+      (err: any) => console.log(err)
+    )
+
+  }
+
+
 
   addstu() {
     this.companydetails.presentcompany = this.comselected;
@@ -356,7 +370,6 @@ export class CompanydetailsComponent implements OnInit {
 
   fetchstudent() {
     this.single = 'ADD';
-    this.removestudentstatus = 'Remove'
     this.showStudent = false
     this.commonservice.postrequest('http://localhost:4000/studentdata/findbyrollnumber', { organisation_id: sessionStorage.getItem("organisation_id"), rollnumber: this.singlestudent, ...this.companydetails }).subscribe(
       (res: any) => {
@@ -376,6 +389,7 @@ export class CompanydetailsComponent implements OnInit {
     this.saveButton = "SAVING"
     let data = { organisation_id: sessionStorage.getItem("organisation_id"), accepted: this.mapping, rejected: this.rejectedlist, lastItem: this.lastItem }
     // console.log("data---->", data)
+    // console.log(this.mapping, this.rejectedlist)
     this.commonservice.postrequest('http://localhost:4000/hiringstudent/posthiringstudent', data).subscribe(
       (res: any) => { this.getWorkflow(); this.saveButton = "SAVE"; this.mapping = []; this.keys = []; },
       (err: any) => console.log(err)
@@ -384,6 +398,7 @@ export class CompanydetailsComponent implements OnInit {
 
 
   updatethelist(level: any) {
+    console.log(this.mapping)
     this.commonservice.postrequest('http://localhost:4000/hiringstudent/hiringupdate', { organisation_id: sessionStorage.getItem("organisation_id"), accepted: this.mapping, rejected: this.rejectedlist, lastItem: this.lastItem }).subscribe(
       (res: any) => { this.saveButton = "SAVE"; this.mapping = []; this.keys = []; this.setedit = false; this.getWorkflow() },
       (err: any) => console.log(err)
@@ -420,9 +435,31 @@ export class CompanydetailsComponent implements OnInit {
   }
 
 
+  submitcompany: any = false
+  otpstatus: any = ''
+  otpentered: any = ''
 
 
+  sendotptomail() {
+    this.submitcompany = false
+    this.otpstatus = ''
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/submitcompanystatus', { mail: sessionStorage.getItem("mail"), ... this.companydetails }).subscribe(
+      (res: any) => { this.submitcompany = true },
+      (err: any) => console.log(err)
+    )
+  }
 
+  verifyOtp() {
+    this.otpstatus = ''
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/verifyOtp', { ... this.companydetails, submitcodeentered: this.otpentered }).subscribe(
+      (res: any) => {
+        if (!res.message) { this.otpstatus = "Otp entered is incorrect" } else {
+          this.companydetails.status = 'submitted'
+        }
+      },
+      (err: any) => console.log(err)
+    )
+  }
   singlestudentmail() {
     this.single = 'ADDING'
     console.log("this.companydetails,this.addstudent",this.companydetails,this.addstudent)
@@ -450,16 +487,6 @@ export class CompanydetailsComponent implements OnInit {
   }
 
   rollnos: any;
-  removestudentstatus: any = 'Remove'
-  removestudent() {
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), ...{ eligible: false, mail: this.addstudent.mail, placementcyclename: this.companydetails.placementcyclename, companyname: this.companydetails.companyname } }).subscribe(
-      (res: any) => { this.removestudentstatus = 'Successfully removed' },
-      (err: any) => console.log(err)
-    )
-
-  }
-
-
 
   addapplicant() {
     if (this.entryupload) {
