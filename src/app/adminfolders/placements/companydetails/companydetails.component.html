@@ -383,9 +383,10 @@
                             <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE&nbsp;
                                 <span *ngIf="eligible">
                                     <i style="font-size: 0.8rem;color: green; cursor: pointer;"
-                                        class='bx bx-plus-circle' (click)="addapplicantmodal();updateeligibility=true;rollnos=[]"></i>&nbsp;
+                                        class='bx bx-plus-circle'
+                                        (click)="updateeligibility=true;rollnos=[];addapplicantmodal();"></i>&nbsp;
                                     <i style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
-                                        (click)="removeapplicantmodal();rollnos=[]"></i>
+                                        (click)="updateeligibility=true;removeapplicantmodal();rollnos=[]"></i>
                                 </span>
                             </span><br>
                         </div>
@@ -574,7 +575,14 @@
                                                     (click)="viewhiringlevel = level.level;viewplacementstatus='block'">
                                                     <i class="bx bxs-show"></i>
                                                 </div>
-                                                <div class="col-sm"> {{level.level}}</div>
+                                                <div class="col-sm"> {{level.level}}
+                                                    <!-- <i style="font-size: 0.8rem;color: green; cursor: pointer;"
+                                                        class='bx bx-plus-circle'
+                                                        (click)="rollnos=[];addapplicantmodal();"></i>&nbsp;
+                                                    <i style="font-size: 0.8rem;color: red;cursor: pointer;"
+                                                        class='bx bx-minus-circle'
+                                                        (click)="rollnos=[];removeapplicantmodal();"></i> -->
+                                                </div>
                                                 <div class="col-sm-1"> <i
                                                         *ngIf="companydetails.status!='submitted' && i==currentIndex && !setedit[i] "
                                                         style="float: right;" class="bx bxs-pencil"
@@ -654,8 +662,7 @@
                                             <a *ngIf="mapping.length==0 && companydetails.status!='submitted'"
                                                 (click)="file1.click()"
                                                 style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
-                                                <strong>Click
-                                                    to upload qualified students in above level</strong></a>
+                                                <strong>Click to upload qualified students in above level</strong></a>
                                             <br><br>
                                             <div style="max-height:50vh" class="table-responsive">
                                                 <table class="table table-bordered"
@@ -741,7 +748,7 @@
         <div class="modal-content" style="width: 40vw;">
             <div class="modal-header">
                 <div style="display: flex;">
-                    <h4 class="modal-title">{{applicantstatus}} Applicants</h4>&nbsp;
+                    <h4 class="modal-title">{{applicantstatus}} {{studentlevel}}</h4>&nbsp;
                     <span style="padding-top: 0.6rem;">({{applicantstatus}} single or bulk students to the
                         company).</span>
                 </div>
@@ -772,20 +779,6 @@
                                         <strong *ngIf="errorMsg!=''" style="color: #a5081a;text-align: center;">⚠
                                             {{errorMsg}}<br><br></strong>
                                     </div>
-                                    <!-- <div style="display: flex;justify-content: center;">
-                                        <select class="form-select shadow-none " name='year' [(ngModel)]='year'
-                                            (click)="errorMsg=''" style="width:51vw">
-                                            <option value="" [disabled]="true">Select Course</option>
-                                            <option value="btech 1">BTECH Year I</option>
-                                            <option value="btech 2">BTECH Year II</option>
-                                            <option value="btech 3">BTECH Year III</option>
-                                            <option value="btech+ 4">BTECH Year IV</option>
-                                            <option value="mba 1"> MBA Year I</option>
-                                            <option value="mba 2"> MBA Year II</option>
-                                            <option value="mca 1">MCA Year I</option>
-                                            <option value="mca 2">MCA Year II</option>
-                                        </select><br>
-                                    </div> -->
                                     <div style="display: flex;justify-content: center;align-items: center;">
                                         <div class="col-sm-11 text-center"
                                             style="border-radius:3px;background-color: #fff;;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;padding: 3rem;">

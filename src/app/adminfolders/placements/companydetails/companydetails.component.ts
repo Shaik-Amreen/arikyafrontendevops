@@ -474,16 +474,19 @@ export class CompanydetailsComponent implements OnInit {
   validate = false;
   validatemsg = ""
   addapplicants = 'ADD'
-  applicantstatus = ''
+  applicantstatus = '';
+  studentlevel=''
   entryupload = true
 
 
   addapplicantmodal() {
-    this.addapplicantdisplay = 'block'; this.validatemsg = ''; this.applicants = ''; this.applicantstatus = 'Add'; this.addapplicants = "ADD"
+    this.addapplicantdisplay = 'block'; this.validatemsg = ''; this.applicants = ''; this.applicantstatus = 'Add';this.studentlevel="Applicants" ;this.addapplicants = "ADD";
+    if(this.updateeligibility){this.studentlevel="Eligibilities"}
   }
 
   removeapplicantmodal() {
-    this.addapplicantdisplay = 'block'; this.applicantstatus = 'Remove'; this.validatemsg = ''; this.applicants = ''; this.addapplicants = "REMOVE"
+    this.addapplicantdisplay = 'block'; this.applicantstatus = 'Remove'; this.validatemsg = ''; this.applicants = '';this.studentlevel="Applicants"; this.addapplicants = "REMOVE";
+    if(this.updateeligibility){this.studentlevel="Eligibilities";this.updateeligibility=false}
   }
 
   rollnos: any;
