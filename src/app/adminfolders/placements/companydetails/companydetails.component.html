@@ -375,7 +375,7 @@
                             <span style="color:#00b0ff;font-weight: 600;">{{registered}} APPLICANTS&nbsp;
                                 <span *ngIf="eligible">
                                     <i style="font-size: 0.8rem;color: green; cursor: pointer;"
-                                        class='bx bx-plus-circle' (click)="addapplicantmodal();rollnos=[]"></i>&nbsp;
+                                        class='bx bx-plus-circle' (click)="hierarchylevel='';rollnos=[];addapplicantmodal();"></i>&nbsp;
                                     <i style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
                                         (click)="removeapplicantmodal();rollnos=[]"></i>
                                 </span>
@@ -384,7 +384,7 @@
                                 <span *ngIf="eligible">
                                     <i style="font-size: 0.8rem;color: green; cursor: pointer;"
                                         class='bx bx-plus-circle'
-                                        (click)="updateeligibility=true;rollnos=[];addapplicantmodal();"></i>&nbsp;
+                                        (click)="updateeligibility=true;rollnos=[];hierarchylevel='';addapplicantmodal();"></i>&nbsp;
                                     <i style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
                                         (click)="updateeligibility=true;removeapplicantmodal();rollnos=[]"></i>
                                 </span>
@@ -569,19 +569,18 @@
                                     <div *ngIf="i<=currentIndex+1 && nodataupload"
                                         style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;width: 98%;">
                                         <strong>
-
                                             <div class="row">
                                                 <div class="col-sm-1" style="cursor: pointer;"
                                                     (click)="viewhiringlevel = level.level;viewplacementstatus='block'">
                                                     <i class="bx bxs-show"></i>
                                                 </div>
                                                 <div class="col-sm"> {{level.level}}
-                                                    <!-- <i style="font-size: 0.8rem;color: green; cursor: pointer;"
+                                                    <i style="font-size: 0.8rem;color: green; cursor: pointer;"
                                                         class='bx bx-plus-circle'
-                                                        (click)="rollnos=[];addapplicantmodal();"></i>&nbsp;
+                                                        (click)="rollnos=[];hierarchylevel=level.level;addapplicantmodal();"></i>&nbsp;
                                                     <i style="font-size: 0.8rem;color: red;cursor: pointer;"
                                                         class='bx bx-minus-circle'
-                                                        (click)="rollnos=[];removeapplicantmodal();"></i> -->
+                                                        (click)="rollnos=[];hierarchylevel=level.level;removeapplicantmodal();"></i>
                                                 </div>
                                                 <div class="col-sm-1"> <i
                                                         *ngIf="companydetails.status!='submitted' && i==currentIndex && !setedit[i] "

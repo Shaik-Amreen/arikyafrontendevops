@@ -475,17 +475,20 @@ export class CompanydetailsComponent implements OnInit {
   addapplicants = 'ADD'
   applicantstatus = '';
   studentlevel = ''
-  entryupload = true
+  entryupload = true;
+  hierarchylevel = "";
 
 
   addapplicantmodal() {
     this.addapplicantdisplay = 'block'; this.validatemsg = ''; this.applicants = ''; this.applicantstatus = 'Add'; this.studentlevel = "Applicants"; this.addapplicants = "ADD";
     if (this.updateeligibility) { this.studentlevel = "Eligibilities" }
+    if (this.hierarchylevel) { this.studentlevel = "Students to " + this.hierarchylevel }
   }
 
   removeapplicantmodal() {
     this.addapplicantdisplay = 'block'; this.applicantstatus = 'Remove'; this.validatemsg = ''; this.applicants = ''; this.studentlevel = "Applicants"; this.addapplicants = "REMOVE";
     if (this.updateeligibility) { this.studentlevel = "Eligibilities"; this.updateeligibility = false }
+    if (this.hierarchylevel) { this.studentlevel = "Students to " + this.hierarchylevel }
   }
 
   rollnos: any;
@@ -505,7 +508,11 @@ export class CompanydetailsComponent implements OnInit {
           }
         });
         if (!this.validatemsg) {
-          this.updateapplicants()
+          if (this.hierarchylevel) {
+            if (this.applicantstatus == 'Add') { this.addIntoLevel(this.hierarchylevel) }
+            else { this.removeIntoLevel(this.hierarchylevel) }
+          }
+          else { this.updateapplicants(); }
         }
       }
       else {
@@ -513,7 +520,11 @@ export class CompanydetailsComponent implements OnInit {
       }
     }
     else if (this.rollnos.length != 0) {
-      this.updateapplicants()
+      if (this.hierarchylevel) {
+        if (this.applicantstatus == 'Add') { this.addIntoLevel(this.hierarchylevel) }
+        else { this.removeIntoLevel(this.hierarchylevel) }
+      }
+      else { this.updateapplicants(); }
       this.rollnos = []
       this.mapping = []
       this.mapping = []; this.saveMode = false; this.keys = [];
@@ -622,30 +633,6 @@ export class CompanydetailsComponent implements OnInit {
     this.validata = true
   }
 
-  // savefinal() {
-  //   let course = this.year.split(' ');
-  //   for (let c of this.mapping) { c.course = course[0]; c.currentyear = course[1] }
-  //   this.savingMode = 'Saving';
-  //   // console.log("this.mapping", this.mapping)
-  //   this.commonservice.postrequest('http://localhost:4000/Studentdata/createStudentdata',
-  //     this.mapping).subscribe(
-  //       (res: any) => {
-  //         console.log("res", res)
-  //         this.mapping = []
-  //         console.log("resssssssssss", res);
-  //         this.mapping = []; this.saveMode = false; this.keys = [];
-  //         this.display = true;
-  //         setTimeout(() => { this.display = false }, 5000)
-  //         this.year = '';
-  //         this.data = [];
-  //         this.objkey = [];
-  //         this.validata = false
-  //         this.savingMode = 'Save';
-  //         this.reset();
-  //       },
-  //       (err: any) => console.log(err)
-  //     );
-  // }
 
   exportexcel1(t: any): void {
     const fileName = `sample template to upload students list.xlsx`;
@@ -671,13 +658,14 @@ export class CompanydetailsComponent implements OnInit {
     let leveltoadd = this.hiringflow.filter((e: any, i: any) => i <= index)
     let addstudents = []
     for (let d of leveltoadd) {
-      for (let c of this.mapping) {
-        c.rollnumber = c.rollnumber.toLowerCase()
-        c.placementcyclename = this.placementcyclename
-        c.companyname = this.companyname
-        c.hiringflowname = d.level
-        c.organisation_id = this.organisation_id
-        addstudents.push(c)
+      for (let c of this.rollnos) {
+        let data:any={}
+        data.rollnumber = c.toLowerCase()
+        data.placementcyclename = this.placementcyclename
+        data.companyname = this.companyname
+        data.hiringflowname = d.level
+        data.organisation_id = this.organisation_id
+        addstudents.push(data)
       }
     }
   }
@@ -689,14 +677,16 @@ export class CompanydetailsComponent implements OnInit {
     let leveltoremove = this.hiringflow.filter((e: any, i: any) => i >= index)
     let removestudents = []
     for (let d of leveltoremove) {
-      for (let c of this.mapping) {
-        c.rollnumber = c.rollnumber.toLowerCase()
-        c.placementcyclename = this.placementcyclename
-        c.companyname = this.companyname
-        c.hiringflowname = d.level 
-        c.organisation_id = this.organisation_id
-        removestudents.push(c)
+      for (let c of this.rollnos) {
+        let data:any={}
+        data.rollnumber = c.toLowerCase()
+        data.placementcyclename = this.placementcyclename
+        data.companyname = this.companyname
+        data.hiringflowname = d.level
+        data.organisation_id = this.organisation_id
+        removestudents.push(data)
       }
     }
+
   }
 }
