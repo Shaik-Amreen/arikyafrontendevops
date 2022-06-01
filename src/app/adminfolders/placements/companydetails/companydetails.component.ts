@@ -21,7 +21,7 @@ export class CompanydetailsComponent implements OnInit {
   keys: any; uploadindex: any = -5
   objkey: any = [];
   applicantslist: any = []; setedit: any = {}; addstudent: any
-  ch = 0; deadline = ''; errdate = ''; mailstatus = 'SEND MAIL'; eligible = 0; registered = 0; comselected = ''; addstatus = 'ADD STUDENTS';removestatus='REMOVE STUDENTS'; currentIndex = -1
+  ch = 0; deadline = ''; errdate = ''; mailstatus = 'SEND MAIL'; eligible = 0; registered = 0; comselected = ''; addstatus = 'ADD STUDENTS'; removestatus = 'REMOVE STUDENTS'; currentIndex = -1
   eligibility: any[] = []; hiringflow: any[]
   allcom = [{ companyname: '' }]; listofstu = []; relen = 0; placed = 0; nextIndex = 0
 
@@ -49,7 +49,7 @@ export class CompanydetailsComponent implements OnInit {
     this.uploadindex = -5
     this.objkey = [];
     this.applicantslist = []; this.setedit = {}
-    this.ch = 0; this.deadline = ''; this.errdate = ''; this.mailstatus = 'SEND MAIL'; this.eligible = 0; this.registered = 0; this.comselected = ''; this.addstatus = 'ADD STUDENTS';this.removestatus='REMOVE STUDENTS'; this.currentIndex = -1
+    this.ch = 0; this.deadline = ''; this.errdate = ''; this.mailstatus = 'SEND MAIL'; this.eligible = 0; this.registered = 0; this.comselected = ''; this.addstatus = 'ADD STUDENTS'; this.removestatus = 'REMOVE STUDENTS'; this.currentIndex = -1
     this.eligibility = []; this.hiringflow = []
     this.allcom = [{ companyname: '' }]; this.listofstu = []; this.relen = 0; this.placed = 0; this.nextIndex = 0;
     this.image = "../../../../assets/companylogo.jpg";
@@ -69,7 +69,7 @@ export class CompanydetailsComponent implements OnInit {
   // }
 
   firstcall() {
-    this.commonservice.postrequest('http://localhost:4000/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: this.companyname }).subscribe(
       (res: any) => {
         this.commonservice.postrequest('http://localhost:4000/placementstatus/eligible', res.companydetails).subscribe(
           (rese: any) => {
@@ -115,7 +115,7 @@ export class CompanydetailsComponent implements OnInit {
     this.lastItem = false
     this.nodataupload = false
 
-    this.commonservice.postrequest('http://localhost:4000/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: this.companyname }).subscribe(
       (reset: any) => {
         reset = reset.reverse()
         if (reset.length == 0) {
@@ -201,7 +201,7 @@ export class CompanydetailsComponent implements OnInit {
   ngOnInit(): void {
     this.commonservice.postrequest('http://localhost:4000/company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
       (res: any) => {
-        this.commonservice.postrequest('http://localhost:4000/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: this.companyname }).subscribe(
           (rese: any) => {
             this.applicantslist = rese; this.allcom = res;
           },
@@ -317,10 +317,10 @@ export class CompanydetailsComponent implements OnInit {
 
       for (let c of this.mapping) {
         c.rollnumber = c.rollnumber.toLowerCase()
-        c.placementcyclename = sessionStorage.getItem("placementcyclename")
-        c.companyname = sessionStorage.getItem('companyname')
+        c.placementcyclename = this.placementcyclename
+        c.companyname = this.companyname
         c.hiringflowname = this.hiringflow[i].level,
-          c.organisation_id = sessionStorage.getItem('organisation_id')
+          c.organisation_id = this.organisation_id
       }
 
     };
@@ -343,7 +343,7 @@ export class CompanydetailsComponent implements OnInit {
 
   addstu() {
     this.companydetails.presentcompany = this.comselected;
-    console.log(this.companydetails,"this.companydetails")
+    console.log(this.companydetails, "this.companydetails")
     this.addstatus = 'ADDING...'
     this.commonservice.postrequest('http://localhost:4000/placementstatus/addstu', this.companydetails).subscribe(
       (res: any) => {
@@ -354,8 +354,8 @@ export class CompanydetailsComponent implements OnInit {
     );
   }
 
-  removestu(){
-    this.removestatus='REMOVING...'
+  removestu() {
+    this.removestatus = 'REMOVING...'
     this.companydetails.presentcompany = this.comselected;
     this.commonservice.postrequest('http://localhost:4000/placementstatus/removestu', this.companydetails).subscribe(
       (res: any) => {
@@ -462,7 +462,7 @@ export class CompanydetailsComponent implements OnInit {
   }
   singlestudentmail() {
     this.single = 'ADDING'
-    console.log("this.companydetails,this.addstudent",this.companydetails,this.addstudent)
+    console.log("this.companydetails,this.addstudent", this.companydetails, this.addstudent)
     this.commonservice.postrequest('http://localhost:4000/placementstatus/singlestudent', { organisation_id: sessionStorage.getItem("organisation_id"), ...this.companydetails, ...this.addstudent }).subscribe(
       (res: any) => { if (res.message == "success") { this.single = 'ADDED' } else if (res.message == "exist") { this.single = 'ALREADY EXIST' } },
       (err: any) => console.log(err)
@@ -524,16 +524,16 @@ export class CompanydetailsComponent implements OnInit {
 
   }
 
-  updateeligibility:any=false;
+  updateeligibility: any = false;
   updateapplicants() {
-    console.log(this.updateeligibility,"updateeligibility");
+    console.log(this.updateeligibility, "updateeligibility");
     (this.applicantstatus == 'Add') ? this.addapplicants = 'Adding...' : this.addapplicants = 'Removing...';
-    console.log(this.companydetails,"this.companydetails")
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateregisteredmulti', { organisation_id: sessionStorage.getItem("organisation_id"),...this.companydetails, rollnumbers: this.rollnos, applicantstatus: this.applicantstatus,updateeligibility:this.updateeligibility }).subscribe(
+    console.log(this.companydetails, "this.companydetails")
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateregisteredmulti', { organisation_id: sessionStorage.getItem("organisation_id"), ...this.companydetails, rollnumbers: this.rollnos, applicantstatus: this.applicantstatus, updateeligibility: this.updateeligibility }).subscribe(
       (res: any) => {
         if (res.message == 'success') {
           console.log(res.message, "res.message")
-          this.updateeligibility=false
+          this.updateeligibility = false
           this.firstcall()
           this.display = true; (this.applicantstatus == 'Add') ? (this.addapplicants = 'ADD', this.popup = "Applicants Added") : (this.addapplicants = 'REMOVE', this.popup = "Applicants Removed"); this.addapplicantdisplay = 'none'
           setTimeout(() => {
@@ -660,8 +660,41 @@ export class CompanydetailsComponent implements OnInit {
 
   }
 
+  placementcyclename: any = sessionStorage.getItem("placementcyclename")
+  companyname: any = sessionStorage.getItem('companyname')
+  organisation_id: any = sessionStorage.getItem('organisation_id')
+
+  addIntoLevel(level: any) {
+    let index = this.hiringflow.findIndex(e => e.level === level);
+    let leveltoadd = this.hiringflow.filter((e: any, i: any) => i <= index)
+    let addstudents = []
+    for (let d of leveltoadd) {
+      for (let c of this.mapping) {
+        c.rollnumber = c.rollnumber.toLowerCase()
+        c.placementcyclename = this.placementcyclename
+        c.companyname = this.companyname
+        c.hiringflowname = d.level
+        c.organisation_id = this.organisation_id
+        addstudents.push(c)
+      }
+    }
+  }
 
 
 
-
+  removeIntoLevel(level: any) {
+    let index = this.hiringflow.findIndex(e => e.level === level);
+    let leveltoremove = this.hiringflow.filter((e: any, i: any) => i >= index)
+    let removestudents = []
+    for (let d of leveltoremove) {
+      for (let c of this.mapping) {
+        c.rollnumber = c.rollnumber.toLowerCase()
+        c.placementcyclename = this.placementcyclename
+        c.companyname = this.companyname
+        c.hiringflowname = d.level 
+        c.organisation_id = this.organisation_id
+        removestudents.push(c)
+      }
+    }
+  }
 }
