@@ -69,7 +69,7 @@ export class CompanydetailsComponent implements OnInit {
   // }
 
   firstcall() {
-    this.commonservice.postrequest('http://localhost:4000/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: this.companyname }).subscribe(
       (res: any) => {
         this.commonservice.postrequest('http://localhost:4000/placementstatus/eligible', res.companydetails).subscribe(
           (rese: any) => {
@@ -114,7 +114,7 @@ export class CompanydetailsComponent implements OnInit {
     this.lastItem = false
     this.nodataupload = false
 
-    this.commonservice.postrequest('http://localhost:4000/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: this.companyname }).subscribe(
       (reset: any) => {
         reset = reset.reverse()
         if (reset.length == 0) {
@@ -200,7 +200,7 @@ export class CompanydetailsComponent implements OnInit {
   ngOnInit(): void {
     this.commonservice.postrequest('http://localhost:4000/company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
       (res: any) => {
-        this.commonservice.postrequest('http://localhost:4000/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: this.companyname }).subscribe(
           (rese: any) => {
             this.applicantslist = rese; this.allcom = res;
           },
@@ -316,10 +316,10 @@ export class CompanydetailsComponent implements OnInit {
 
       for (let c of this.mapping) {
         c.rollnumber = c.rollnumber.toLowerCase()
-        c.placementcyclename = sessionStorage.getItem("placementcyclename")
-        c.companyname = sessionStorage.getItem('companyname')
+        c.placementcyclename = this.placementcyclename
+        c.companyname = this.companyname
         c.hiringflowname = this.hiringflow[i].level,
-          c.organisation_id = sessionStorage.getItem('organisation_id')
+          c.organisation_id = this.organisation_id
       }
 
     };
@@ -662,8 +662,41 @@ export class CompanydetailsComponent implements OnInit {
 
   }
 
+  placementcyclename: any = sessionStorage.getItem("placementcyclename")
+  companyname: any = sessionStorage.getItem('companyname')
+  organisation_id: any = sessionStorage.getItem('organisation_id')
+
+  addIntoLevel(level: any) {
+    let index = this.hiringflow.findIndex(e => e.level === level);
+    let leveltoadd = this.hiringflow.filter((e: any, i: any) => i <= index)
+    let addstudents = []
+    for (let d of leveltoadd) {
+      for (let c of this.mapping) {
+        c.rollnumber = c.rollnumber.toLowerCase()
+        c.placementcyclename = this.placementcyclename
+        c.companyname = this.companyname
+        c.hiringflowname = d.level
+        c.organisation_id = this.organisation_id
+        addstudents.push(c)
+      }
+    }
+  }
 
 
 
-
+  removeIntoLevel(level: any) {
+    let index = this.hiringflow.findIndex(e => e.level === level);
+    let leveltoremove = this.hiringflow.filter((e: any, i: any) => i >= index)
+    let removestudents = []
+    for (let d of leveltoremove) {
+      for (let c of this.mapping) {
+        c.rollnumber = c.rollnumber.toLowerCase()
+        c.placementcyclename = this.placementcyclename
+        c.companyname = this.companyname
+        c.hiringflowname = d.level 
+        c.organisation_id = this.organisation_id
+        removestudents.push(c)
+      }
+    }
+  }
 }
