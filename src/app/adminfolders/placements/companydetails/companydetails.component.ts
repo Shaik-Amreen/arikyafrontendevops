@@ -425,6 +425,7 @@ export class CompanydetailsComponent implements OnInit {
 
   singlestudentmail() {
     this.single = 'ADDING'
+    console.log("this.companydetails,this.addstudent",this.companydetails,this.addstudent)
     this.commonservice.postrequest('http://localhost:4000/placementstatus/singlestudent', { organisation_id: sessionStorage.getItem("organisation_id"), ...this.companydetails, ...this.addstudent }).subscribe(
       (res: any) => { if (res.message == "success") { this.single = 'ADDED' } else if (res.message == "exist") { this.single = 'ALREADY EXIST' } },
       (err: any) => console.log(err)
@@ -496,14 +497,18 @@ export class CompanydetailsComponent implements OnInit {
 
   }
 
+  updateeligibility:any=false;
   updateapplicants() {
+    console.log(this.updateeligibility,"updateeligibility");
     (this.applicantstatus == 'Add') ? this.addapplicants = 'Adding...' : this.addapplicants = 'Removing...';
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateregisteredmulti', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname'), rollnumbers: this.rollnos, applicantstatus: this.applicantstatus }).subscribe(
+    console.log(this.companydetails,"this.companydetails")
+    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateregisteredmulti', { organisation_id: sessionStorage.getItem("organisation_id"),...this.companydetails, rollnumbers: this.rollnos, applicantstatus: this.applicantstatus,updateeligibility:this.updateeligibility }).subscribe(
       (res: any) => {
         if (res.message == 'success') {
           console.log(res.message, "res.message")
+          this.updateeligibility=false
           this.firstcall()
-          this.display = true;; (this.applicantstatus == 'Add') ? (this.addapplicants = 'ADD', this.popup = "Applicants Added") : (this.addapplicants = 'REMOVE', this.popup = "Applicants Removed"); this.addapplicantdisplay = 'none'
+          this.display = true; (this.applicantstatus == 'Add') ? (this.addapplicants = 'ADD', this.popup = "Applicants Added") : (this.addapplicants = 'REMOVE', this.popup = "Applicants Removed"); this.addapplicantdisplay = 'none'
           setTimeout(() => {
             this.display = false;
           }, 5000)

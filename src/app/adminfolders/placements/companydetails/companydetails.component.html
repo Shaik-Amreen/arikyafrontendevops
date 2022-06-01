@@ -342,7 +342,14 @@
                                         (click)="removeapplicantmodal();rollnos=[]"></i>
                                 </span>
                             </span><br>
-                            <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE</span><br>
+                            <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE&nbsp;
+                                <span *ngIf="eligible">
+                                    <i style="font-size: 0.8rem;color: green; cursor: pointer;"
+                                        class='bx bx-plus-circle' (click)="addapplicantmodal();updateeligibility=true;rollnos=[]"></i>&nbsp;
+                                    <i style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
+                                        (click)="removeapplicantmodal();rollnos=[]"></i>
+                                </span>
+                            </span><br>
                         </div>
                         <hr>
                         <div>
@@ -785,9 +792,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary applicants"
-                        (click)="addapplicant()">{{addapplicants}}</button>
+                        (click)="addapplicant();">{{addapplicants}}</button>
                     <button type="button" class="btn btn-danger applicants"
-                        (click)="addapplicantdisplay='none';validatemsg='';applicants=''">CLOSE</button>
+                        (click)="addapplicantdisplay='none';updateeligibility=false;validatemsg='';applicants=''">CLOSE</button>
                 </div>
             </div>
         </div>
