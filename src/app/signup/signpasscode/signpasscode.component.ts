@@ -14,9 +14,9 @@ export class SignpasscodeComponent implements OnInit {
   studentsignup: any[] = [
     {
       tags: 'combine', 'cname': 'col-sm-4', 'fields': [
-        { "value": '', "label": "First Name", "formname": "firstname", "valid": true, "tags": "input", "type": "text", "placeholder": "Enter first name", "patternerror": "Enter valid name", validations: [Validators.required, Validators.pattern("^[a-zA-Z]+$"), Validators.maxLength(20)] },
+        { "value": '', "label": "First Name", "formname": "firstname", "valid": true, "tags": "input", "type": "text", "placeholder": "Enter first name", "patternerror": "Enter valid name", validations: [Validators.required, Validators.pattern("^[a-zA-Z ]+$"), Validators.maxLength(20)] },
         { "value": '', "label": "Middle Name", "formname": "middlename", "tags": "input", "type": "text", "placeholder": "Enter middle name" },
-        { "value": '', "label": "Last Name", "formname": "lastname", "valid": true, "tags": "input", "type": "text", "placeholder": "Enter lastname", "patternerror": "last name must alphabetical", validations: [Validators.required, Validators.pattern("^[a-zA-Z]+$"), Validators.maxLength(20)] }]
+        { "value": '', "label": "Last Name", "formname": "lastname", "valid": true, "tags": "input", "type": "text", "placeholder": "Enter lastname", "patternerror": "last name must alphabetical", validations: [Validators.required, Validators.pattern("^[a-zA-Z ]+$"), Validators.maxLength(20)] }]
     },
     { "label": "organisation_id", "formname": "organisation_id", "type": "none", "value": sessionStorage.getItem('organisation_id') },
     { "value": sessionStorage.getItem("mail"), "label": "Email address", "formname": "mail", "valid": true, "tags": "input", "type": "email", "placeholder": "Enter Email", "icon": "bx bxs-envelope", "patternerror": "invalid mail", validations: [Validators.required, Validators.pattern("^[a-zA-Z0-9]+([\.-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([\.-]?[a-zA-Z0-9]+)*(\.[a-zA-Z0-9]{2,3})+$")] },
