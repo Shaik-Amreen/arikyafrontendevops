@@ -315,7 +315,7 @@ export class CompanydetailsComponent implements OnInit {
       }
 
       for (let c of this.mapping) {
-        c.rollnumber = c.rollnumber.toLowerCase()
+        c.rollnumber = c.rollnumber.toString().toLowerCase()
         c.placementcyclename = this.placementcyclename
         c.companyname = this.companyname
         c.hiringflowname = this.hiringflow[i].level,
@@ -660,25 +660,25 @@ export class CompanydetailsComponent implements OnInit {
     leveltoadd.forEach((d: any, i: any) => {
       this.rollnos.forEach((c: any) => {
         let data: any = {}
-        data.rollnumber = c.toLowerCase()
+        data.rollnumber = c.toString().toLowerCase()
         data.placementcyclename = this.placementcyclename
         data.companyname = this.companyname
         data.hiringflowname = d.level
         data.organisation_id = this.organisation_id
         addstudents.push(data)
       });
-      if (i == leveltoadd.length-1) {
+      if (i == leveltoadd.length - 1) {
         this.commonservice.postrequest('http://localhost:4000/placementstatus/addIntoLevel', addstudents).subscribe(
           (res: any) => {
             if (res.message = "success") {
               // this.firstcall()
               this.display = true;
-              this.popup = "Applicants Added To "+this.hierarchylevel;
+              this.popup = "Applicants Added To " + this.hierarchylevel;
               this.addapplicantdisplay = 'none'
               setTimeout(() => {
                 this.display = false;
               }, 5000)
-              this.hierarchylevel=""
+              this.hierarchylevel = ""
             }
           })
       }
@@ -692,28 +692,28 @@ export class CompanydetailsComponent implements OnInit {
     let index = this.hiringflow.findIndex(e => e.level === level);
     let leveltoremove = this.hiringflow.filter((e: any, i: any) => i >= index)
     let removestudents: any = [];
-    leveltoremove.forEach((d: any,i:any) => {
+    leveltoremove.forEach((d: any, i: any) => {
       this.rollnos.forEach((c: any) => {
         let data: any = {}
-        data.rollnumber = c.toLowerCase()
+        data.rollnumber = c.toString().toLowerCase()
         data.placementcyclename = this.placementcyclename
         data.companyname = this.companyname
         data.hiringflowname = d.level
         data.organisation_id = this.organisation_id
         removestudents.push(data)
       });
-      if (i == leveltoremove.length-1) {
+      if (i == leveltoremove.length - 1) {
         this.commonservice.postrequest('http://localhost:4000/placementstatus/removeIntoLevel', removestudents).subscribe(
           (res: any) => {
             if (res.message = "success") {
               // this.firstcall()
               this.display = true;
-              this.popup = "Applicants Added To "+this.hierarchylevel;
+              this.popup = "Applicants Added To " + this.hierarchylevel;
               this.addapplicantdisplay = 'none'
               setTimeout(() => {
                 this.display = false;
               }, 5000)
-              this.hierarchylevel=''
+              this.hierarchylevel = ''
             }
           })
       }

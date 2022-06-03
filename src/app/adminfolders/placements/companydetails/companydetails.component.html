@@ -375,13 +375,14 @@
                             <span style="color:#00b0ff;font-weight: 600;">{{registered}} APPLICANTS&nbsp;
                                 <span *ngIf="eligible">
                                     <i style="font-size: 0.8rem;color: green; cursor: pointer;"
-                                        class='bx bx-plus-circle' (click)="hierarchylevel='';rollnos=[];addapplicantmodal();"></i>&nbsp;
+                                        class='bx bx-plus-circle'
+                                        (click)="hierarchylevel='';rollnos=[];addapplicantmodal();"></i>&nbsp;
                                     <i style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
                                         (click)="removeapplicantmodal();rollnos=[]"></i>
                                 </span>
                             </span><br>
                             <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE&nbsp;
-                                <span >
+                                <span>
                                     <i style="font-size: 0.8rem;color: green; cursor: pointer;"
                                         class='bx bx-plus-circle'
                                         (click)="updateeligibility=true;rollnos=[];hierarchylevel='';addapplicantmodal();"></i>&nbsp;
@@ -439,7 +440,8 @@
                         <hr>
                         <div>
 
-                            <div class="table-responsive" *ngIf="registered>0">
+                            <div class="table-responsive"
+                                *ngIf="registered>0 && (companydetails.status=='closed' || companydetails.status=='submitted')">
 
                                 <span *ngFor="let level of hiringflow;index as i">
                                     <!-- <div style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"
@@ -589,7 +591,7 @@
                                                 </div>
                                             </div>
                                         </strong>
-                                        <span style="font-size: 0.7rem;">{{level.sub}}</span>
+                                        <span style="font-size: 0.7rem;">{{level.sub}}</span><br />
                                         <span *ngIf="setedit[i] || i==currentIndex+1">
                                             <span *ngIf="mapping.length>0 && uploadindex==i "> <br>
                                                 <button class="btn btn-primary" style="background-color:#00B0FF ;"
@@ -648,7 +650,7 @@
                                     <div *ngIf="i==currentIndex && !nodataupload"
                                         style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                                         <i class="bx bxs-show"></i><strong>{{level.level}} </strong><br />
-                                        <span style="font-size: 0.7rem;">{{level.sub}}</span>
+                                        <span style="font-size: 0.7rem;">{{level.sub}}</span><br />
                                         <span>
                                             <span *ngIf="mapping.length>0"> <br>
                                                 <button class="btn btn-primary" style="background-color:#00B0FF ;"
