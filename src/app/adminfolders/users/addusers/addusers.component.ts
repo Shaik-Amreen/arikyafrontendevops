@@ -19,7 +19,7 @@ export class AddusersComponent implements OnInit {
       { "label": "Role", "formname": "role", "value": '', "valid": true, "tags": "select", "options": [{ "label": "Admin", "value": "admin" }, { "label": "Faculty", "value": "faculty" }, { "label": "Student", "value": "student" }, { "label": "Technical trainer", "value": "technicaltrainer" }] }
       , { "formname": "organisation_id", value: sessionStorage.getItem('organisation_id') },
       { "formname": "password", value: "" },
-      { "formname": "createdby", value: sessionStorage.getItem('createdby') },
+      { "formname": "createdby", value: sessionStorage.getItem('mail') },
       { "formname": "status", value: "true" }
     ]
 

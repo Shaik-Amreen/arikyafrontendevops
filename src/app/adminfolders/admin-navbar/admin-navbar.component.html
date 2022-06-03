@@ -316,7 +316,7 @@
         <nav class="navbar navstyle ">
             <span style="text-align: left;font-size: 1rem;font-weight: 500;">{{collegeName}}</span>
             <div style="font-size: 0.8rem;">
-                <div ngbDropdown class="d-inline-block">
+                <div *ngIf="role=='admin'" ngbDropdown class="d-inline-block">
                     <button style="color: #00B0FF;margin-right: 1rem;" class="btn shadow-none" id="dropdownBasic1"
                         ngbDropdownToggle><i class='bx bx-bell'></i>
                     </button><br>
@@ -342,7 +342,7 @@
                     </div>
                 </div>
 
-                <div ngbDropdown class="d-inline-block">
+                <div *ngIf="role=='admin'" ngbDropdown class="d-inline-block">
                     <button style="color: #00B0FF;margin-right: 1rem;" class="btn shadow-none" id="dropdownBasic1"
                         ngbDropdownToggle><i class='bx bx-envelope'></i>
                     </button><br>
@@ -391,7 +391,7 @@
                     </div>
                 </div>
 
-                <div ngbDropdown class="d-inline-block">
+                <div *ngIf="role=='admin'" ngbDropdown class="d-inline-block">
                     <button style="color: #00B0FF;margin-right: 1rem;" class="btn shadow-none" id="dropdownBasic1"
                         ngbDropdownToggle><i class='bx bxs-widget'></i>
                     </button><br>
