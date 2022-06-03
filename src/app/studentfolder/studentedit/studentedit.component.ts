@@ -97,8 +97,8 @@ export class StudenteditComponent implements OnInit {
 
     {
       tags: 'combine', 'cname': 'col-sm-6', fields: [
-        { "value": "", "label": "Current address", "formname": "currentaddress", "tags": "input", "type": "text", "valid": true, "placeholder": "Enter current address", "patternerror": "Invalid address", validations: [Validators.required, Validators.pattern("[a-zA-Z0-9+/,:;@#|'.\-_^*()! ]+$")] },
-        { "value": "", "label": "Permanent address", "formname": "permanentaddress", "tags": "input", "type": "text", "valid": true, "placeholder": "Enter permanent address", "patternerror": "Invalid address", validations: [Validators.required, Validators.pattern("[a-zA-Z0-9$&/+,:\-;_=?@#|'<>.^*()%! ]+$")] },
+        { "value": "", "label": "Current address", "formname": "currentaddress", "tags": "input", "type": "text", "valid": true, "placeholder": "Enter current address", "patternerror": "Invalid address", validations: [Validators.required ]},
+        { "value": "", "label": "Permanent address", "formname": "permanentaddress", "tags": "input", "type": "text", "valid": true, "placeholder": "Enter permanent address", "patternerror": "Invalid address", validations: [Validators.required] },
       ]
     },
 
@@ -434,13 +434,18 @@ export class StudenteditComponent implements OnInit {
       }
 
       else {
-        this.commonservice.postrequest('http://localhost:4000/notification/postnotifications', finaldat).subscribe(
-          (res1: any) => {
-            // console.log(res1)
-            this.router.navigate(['student/profile'])
-            sessionStorage.setItem("successpopup", 'success')
-          },
-          (err1: any) => { })
+        this.data.data.verified = 'no'
+        this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac', this.data.data).subscribe(
+          (res: any) => {
+
+            this.commonservice.postrequest('http://localhost:4000/notification/postnotifications', finaldat).subscribe(
+              (res1: any) => {
+                // console.log(res1)
+                this.router.navigate(['student/profile'])
+                sessionStorage.setItem("successpopup", 'success')
+              },
+              (err1: any) => { })
+          })
       }
     }
     else {

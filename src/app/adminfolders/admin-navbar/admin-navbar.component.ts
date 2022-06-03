@@ -217,24 +217,29 @@ export class AdminNavbarComponent implements OnInit {
 
   data: any
   accept(c: any, d: any) {
-    // c.verified = d
+    let check = this.notyet.filter((n: any) => n.rollnumber == c.rollnumber)
+    c.verified = d
+
+    console.log(check)
     c.verifiedby = sessionStorage.getItem('firstname')
     c.verifiedbymail = sessionStorage.getItem('mail')
+    this.data = { mail: c.mail, organisation_id: c.organisation_id, verified: 'no' }
 
     if (d == 'accepted') {
       let field = c.field
       let value = c.current
-      this.data = { mail: c.mail, organisation_id: c.organisation_id }
       this.data[field] = value
-
-      this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac',
-        this.data).subscribe(
-          (res: any) => {
-            if (res.message == "success") {
-              console.log("successfull update profile", this.data)
-            }
-          })
+      if (check.length == 1) { this.data.verified = 'yes' }
     }
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac',
+      this.data).subscribe(
+        (res: any) => {
+          if (res.message == "success") {
+            this.allenvelop()
+            console.log("successfull update profile", this.data)
+          }
+        })
+
 
     this.commonservice.postrequest('http://localhost:4000/notification/updatenotifications', c).subscribe(
       (res: any) => { },

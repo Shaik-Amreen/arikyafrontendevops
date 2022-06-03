@@ -84,7 +84,7 @@ export class StudentresultComponent implements OnInit {
     // console.log(this.mapping)
     this.savingMode = 'Saving'
     this.mapping.forEach((element: any) => {
-      element.rollnumber = element.rollnumber.toLowerCase()
+      element.rollnumber = element.rollnumber.toString().toLowerCase()
     });
     // console.log(this.mapping)
     this.commonservice.postrequest('http://localhost:4000/Studentdata/updatemarks', { organisation_id: sessionStorage.getItem("organisation_id"), data: this.mapping, sem: this.sem }).subscribe(

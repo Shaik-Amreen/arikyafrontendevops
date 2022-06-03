@@ -16,7 +16,7 @@ export class AddusersComponent implements OnInit {
   formdata: any[] =
     [
       { "label": "Email address", "formname": "mail", "value": "", "valid": true, "tags": "input", "type": "email", "placeholder": "Enter new user mail", "icon": 'bx bxs-envelope', 'pattern': "^[a-zA-Z0-9]+([\.-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([\.-]?[a-zA-Z0-9]+)*(\.[a-zA-Z0-9]{2,3})+$", "patternerror": "invalid mail" },
-      { "label": "Role", "formname": "role", "value": '', "valid": true, "tags": "select", "options": [{ "label": "Admin", "value": "admin" }, { "label": "Faculty", "value": "faculty" }, { "label": "Student", "value": "student" }] }
+      { "label": "Role", "formname": "role", "value": '', "valid": true, "tags": "select", "options": [{ "label": "Admin", "value": "admin" }, { "label": "Faculty", "value": "faculty" }, { "label": "Student", "value": "student" }, { "label": "Technical trainer", "value": "technicaltrainer" }] }
       , { "formname": "organisation_id", value: sessionStorage.getItem('organisation_id') },
       { "formname": "password", value: "" },
       { "formname": "createdby", value: sessionStorage.getItem('createdby') },

@@ -104,8 +104,8 @@
 
 </div>
 <span *ngIf="validata"><br>
-    <button (click)="savefinal()" style="background-color:  #1b1c1e"
-        class="btn btn-secondary">{{savingMode}}</button>&nbsp;
+    <button (click)="savefinal()" style="background-color:  #1b1c1e" class="btn btn-secondary"
+        [disabled]="savingMode=='Saving'">{{savingMode}}</button>&nbsp;
     <button (click)="mapping=[];validata=false" class="btn btn-danger">Close</button>
 </span>
 
