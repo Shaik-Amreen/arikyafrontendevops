@@ -665,6 +665,7 @@ export class CompanydetailsComponent implements OnInit {
         data.companyname = this.companyname
         data.hiringflowname = d.level
         data.organisation_id = this.organisation_id
+        data.lastItem = this.lastItem
         addstudents.push(data)
       });
       if (i == leveltoadd.length - 1) {
@@ -700,6 +701,7 @@ export class CompanydetailsComponent implements OnInit {
         data.companyname = this.companyname
         data.hiringflowname = d.level
         data.organisation_id = this.organisation_id
+        data.lastItem = this.lastItem
         removestudents.push(data)
       });
       if (i == leveltoremove.length - 1) {
