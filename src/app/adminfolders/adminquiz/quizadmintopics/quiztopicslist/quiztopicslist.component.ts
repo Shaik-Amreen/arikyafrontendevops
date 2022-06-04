@@ -8,10 +8,13 @@ import { Router } from '@angular/router'
   styleUrls: ['./quiztopicslist.component.css']
 })
 export class QuiztopicslistComponent implements OnInit {
-
+  compare: any = { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }
   nodata: any = false; display = false
   quiztopics: any = []; len2: any; type1: any = ''
   constructor(private commonservice: CommonService, private router: Router) {
+    if (sessionStorage.getItem('role') == 'technicaltrainer') {
+      this.compare.createdby = sessionStorage.getItem('mail')
+    }
     if (sessionStorage.getItem("successpopup")) {
       this.display = true
       setTimeout(() => {
@@ -19,7 +22,7 @@ export class QuiztopicslistComponent implements OnInit {
         sessionStorage.removeItem("successpopup")
       }, 5000)
     }
-    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
       (res: any) => {
         // console.log(res)
 

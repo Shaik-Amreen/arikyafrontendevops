@@ -12,7 +12,11 @@ export class CodetopicslistComponent implements OnInit {
 
   nodata: any = false; display = false
   codetopics: any = []; len1: any; type: any = '';
+  compare: any = { organisation_id: sessionStorage.getItem("organisation_id"), type: 'code' }
   constructor(private commonservice: CommonService, private activatedroute: ActivatedRoute, private router: Router) {
+    if (sessionStorage.getItem('role') == 'technicaltrainer') {
+      this.compare.createdby = sessionStorage.getItem('mail')
+    }
     if (sessionStorage.getItem("successpopup")) {
       this.display = true
       setTimeout(() => {
@@ -20,7 +24,7 @@ export class CodetopicslistComponent implements OnInit {
         sessionStorage.removeItem("successpopup")
       }, 5000)
     }
-    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'code' }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
       (res1: any) => { this.codetopics = res1; this.len1 = res1.length; this.nodata = true; this.codetopics.reverse() })
   }
 

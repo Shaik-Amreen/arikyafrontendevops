@@ -16,14 +16,17 @@ export class OverallcodequizComponent implements OnInit {
   type: any = ''
   status: any = "all"
   loadstatus: any = false
-
+  compare: any = { organisation_id: sessionStorage.getItem('organisation_id') }
   constructor(private http: HttpClient, private commonservice: CommonService, public ete: ExportExcelService) {
     this.nodata = false
+    if (sessionStorage.getItem('role') == 'technicaltrainer') {
+      this.compare.createdby = sessionStorage.getItem('mail')
+    }
     this.alldata()
   }
 
   alldata() {
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/allcodequiztestratings', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/allcodequiztestratings', this.compare).subscribe(
       (res: any) => {
         this.overalldata = res.data;
         this.nodata = true

@@ -14,23 +14,27 @@ export class TrainingComponent implements OnInit {
   deptdata: any;
   datareq: any = false
   obj: any;
+  compare: any
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService, public ete: ExportExcelService) {
     // console.log("training")
     this.commonservice.postrequest('http://localhost:4000/Practice/dashboardswaps', "").subscribe(
       (response: any) => {
-        // console.log("training1")
-        this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardquizdata', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+        this.compare = { organisation_id: sessionStorage.getItem('organisation_id') }
+        if (sessionStorage.getItem('role') == 'technicaltrainer') {
+          this.compare.createdby = sessionStorage.getItem('mail')
+        }
+        this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardquizdata', { ... this.compare, type: 'quiz' }).subscribe(
           (res: any) => {
             console.log("training2"), this.data = res; console.log('quiz', this.data)
 
           })
-        this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardcodedata', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardcodedata', { ...this.compare, type: 'code' }).subscribe(
           (resp: any) => {
             console.log("training3"), this.codedata = resp;
             // console.log('code', this.codedata) 
           })
         // console.log(this.codedata, 'kugcukweggewhjcgjegech')
-        this.commonservice.postrequest('http://localhost:4000/Dashboard/totaldata', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+        this.commonservice.postrequest('http://localhost:4000/Dashboard/totaldata', this.compare).subscribe(
           (respo: any) => {
             // console.log("training4"),
             this.totaldata = respo;
@@ -53,66 +57,66 @@ export class TrainingComponent implements OnInit {
   stdsallcodequiztest: any
   topic1: any; type1: any; obj2: any;
 
-  eachtest() {
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { organisation_id: sessionStorage.getItem("organisation_id"), topic: this.topic1, type: this.type1 }).subscribe(
-      (res: any) => {
-        this.stdseachtest = res.data
-        // console.log("this.stdseachtest", this.stdseachtest)
-        this.obj2 = {}
-        this.deptdata = []
-        this.stdseachtest.map((a: any, index: any) => {
-          if (!this.deptdata.includes(a.dept)) {
-            this.deptdata.push(a.dept)
-            this.obj2[a.dept] = [a]
-          }
-          else {
-            this.obj2[a.dept].push(a)
-          }
-        })
-        // console.log("this.obj", this.obj2)
-      })
-  }
+  // eachtest() {
+  //   this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { organisation_id: sessionStorage.getItem("organisation_id"), topic: this.topic1, type: this.type1 }).subscribe(
+  //     (res: any) => {
+  //       this.stdseachtest = res.data
+  //       // console.log("this.stdseachtest", this.stdseachtest)
+  //       this.obj2 = {}
+  //       this.deptdata = []
+  //       this.stdseachtest.map((a: any, index: any) => {
+  //         if (!this.deptdata.includes(a.dept)) {
+  //           this.deptdata.push(a.dept)
+  //           this.obj2[a.dept] = [a]
+  //         }
+  //         else {
+  //           this.obj2[a.dept].push(a)
+  //         }
+  //       })
+
+  //     })
+  // }
   obj1: any
-  allcodeorquiztests(type: any) {
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', { organisation_id: sessionStorage.getItem("organisation_id"), type: type }).subscribe(
-      (res: any) => {
+  // allcodeorquiztests(type: any) {
+  //   this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', { organisation_id: sessionStorage.getItem("organisation_id"), type: type }).subscribe(
+  //     (res: any) => {
 
-        this.stdsallcodeorquiztest = res.data
-        // console.log("this.stdsallcodeorquiztest", this.stdsallcodeorquiztest)
-        this.obj1 = {}
-        this.deptdata = []
-        this.stdsallcodeorquiztest.map((a: any, index: any) => {
-          if (!this.deptdata.includes(a.dept)) {
-            this.deptdata.push(a.dept)
-            this.obj1[a.dept] = [a]
-          }
-          else {
-            this.obj1[a.dept].push(a)
-          }
-        })
-        // console.log("this.obj", this.obj1)
-        return this.obj1
-      })
-  }
+  //       this.stdsallcodeorquiztest = res.data
+  //       // console.log("this.stdsallcodeorquiztest", this.stdsallcodeorquiztest)
+  //       this.obj1 = {}
+  //       this.deptdata = []
+  //       this.stdsallcodeorquiztest.map((a: any, index: any) => {
+  //         if (!this.deptdata.includes(a.dept)) {
+  //           this.deptdata.push(a.dept)
+  //           this.obj1[a.dept] = [a]
+  //         }
+  //         else {
+  //           this.obj1[a.dept].push(a)
+  //         }
+  //       })
+  //       // console.log("this.obj", this.obj1)
+  //       return this.obj1
+  //     })
+  // }
 
-  allcodequiztestratings() {
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/allcodequiztestratings', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
-      (res: any) => {
-        this.stdsallcodequiztest = res.data
-        // console.log("this.stdsallcodequiztest", this.stdsallcodequiztest)
-        this.obj = {}
-        this.stdsallcodequiztest.map((a: any, index: any) => {
-          if (!this.obj.hasOwnProperty(a.dept)) {
-            this.obj[a.dept] = [a]
-          }
-          else {
-            this.obj[a.dept].push(a)
-          }
-        })
-        // console.log("this.obj>>>>>>>>>>>>>>", this.obj)
-        return this.obj
-      })
-  }
+  // allcodequiztestratings() {
+  //   this.commonservice.postrequest('http://localhost:4000/Dashboard/allcodequiztestratings', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+  //     (res: any) => {
+  //       this.stdsallcodequiztest = res.data
+
+  //       this.obj = {}
+  //       this.stdsallcodequiztest.map((a: any, index: any) => {
+  //         if (!this.obj.hasOwnProperty(a.dept)) {
+  //           this.obj[a.dept] = [a]
+  //         }
+  //         else {
+  //           this.obj[a.dept].push(a)
+  //         }
+  //       })
+
+  //       return this.obj
+  //     })
+  // }
 
   totallen: any;
   view(e: any, f: any) {
