@@ -343,9 +343,10 @@ export class AdminstudentprofileComponent implements OnInit {
     this.fillform()
   }
 
-  codetopics: any = []; coderate: any = []; quiztopics: any = []; quizrate: any = [];studentmail=sessionStorage.getItem('studentmail');
-
+  codetopics: any = []; coderate: any = []; quiztopics: any = []; quizrate: any = []; studentmail = sessionStorage.getItem('studentmail');
+  role: any
   callconstructor() {
+    this.role = sessionStorage.getItem('role')
     this.sgpa = []
     this.profile = new FormGroup({
       profilepic: new FormControl(""),
@@ -401,7 +402,7 @@ export class AdminstudentprofileComponent implements OnInit {
     this.commonservice.postrequest('http://localhost:4000/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("studentmail") }).subscribe(
       (res: any) => {
         // console.log("res.data", res)
-        this.stdrates=true
+        this.stdrates = true
         this.stdallcodedata = res.stdallcodedata
         this.stdallquizdata = res.stdallquizdata
         this.stdallratedata = res.stdallratedata
@@ -421,7 +422,7 @@ export class AdminstudentprofileComponent implements OnInit {
       })
   }
 
-  notyet:any;all:any;stdrates=false;allLength:any
+  notyet: any; all: any; stdrates = false; allLength: any
   allenvelop() {
     this.commonservice.postrequest('http://localhost:4000/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
@@ -430,7 +431,7 @@ export class AdminstudentprofileComponent implements OnInit {
           (e.verifiedbymail == sessionStorage.getItem('mail')) ? e.verifiedby = 'You' : null
         });
         this.all = res
-        this.allLength=this.all.length
+        this.allLength = this.all.length
         // console.log("this.all", this.all)
         // res.forEach((e: any) => {
         //   (e.doneby == sessionStorage.getItem('mail')) ? e.firstname = 'You' : null

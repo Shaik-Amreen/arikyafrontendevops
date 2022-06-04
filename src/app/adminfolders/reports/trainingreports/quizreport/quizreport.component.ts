@@ -19,9 +19,12 @@ export class QuizreportComponent implements OnInit {
   type: any = '';
   loadstatus: any = false
   status: any = "all"
-  heading: any = "OVERALL TOPICS"
+  heading: any = "OVERALL TOPICS"; compare: any = { organisation_id: sessionStorage.getItem('organisation_id'), type: 'quiz' }
   constructor(private commonservice: CommonService, public ete: ExportExcelService) {
     sessionStorage.removeItem('topic');
+    if (sessionStorage.getItem('role') == 'technicaltrainer') {
+      this.compare.createdby = sessionStorage.getItem('mail')
+    }
     this.nodata = false
     this.gettopics()
     this.allcodeorquiztests()
@@ -37,7 +40,7 @@ export class QuizreportComponent implements OnInit {
     this.loadstatus = true
     this.topic1 = t
     this.heading = t
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { organisation_id: sessionStorage.getItem("organisation_id"), topic: this.topic1, type: "quiz" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { ...this.compare, topic: this.topic1 }).subscribe(
       (res: any) => {
         this.stdseachtest = res.data
         this.visibleData = res.data
@@ -48,7 +51,7 @@ export class QuizreportComponent implements OnInit {
   }
 
   allcodeorquiztests() {
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', { organisation_id: sessionStorage.getItem("organisation_id"), type: "quiz" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', this.compare).subscribe(
       (res: any) => {
         this.alldata = true
         this.nodata = true
@@ -59,7 +62,7 @@ export class QuizreportComponent implements OnInit {
   }
 
   gettopics() {
-    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
       (res: any) => {
         res = res.filter((e: any) => new Date(e.startson) <= new Date())
         this.topics = res;

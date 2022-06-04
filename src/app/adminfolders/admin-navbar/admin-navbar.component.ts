@@ -62,56 +62,55 @@ export class AdminNavbarComponent implements OnInit {
 
   fullname: any = ''
   mail = sessionStorage.getItem('mail')
-  role:any=''
+  role: any = ''
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
 
 
     this.commonservice.postrequest('http://localhost:4000/facultydetails/findoneAdmin', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': this.mail }).subscribe(
       (res: any) => {
-      // console.log(res,"llllllllllllllllllllllll")
+        // console.log(res,"llllllllllllllllllllllll")
         if (res.admindata == null) { this.router.navigate(['/login']) }
-      this.role=res.admindata.role
-     
-        if (res.admindata.role != 'admin' && res.admindata.role!='technicaltrainer') { this.router.navigate(['/login']) }
-        if(this.role=='technicaltrainer')
-        {
+        this.role = res.admindata.role
+        sessionStorage.setItem('role', this.role)
+        if (res.admindata.role != 'admin' && res.admindata.role != 'technicaltrainer') { this.router.navigate(['/login']) }
+        if (this.role == 'technicaltrainer') {
           this.router.navigate(['/admin/dashboard'])
-          this.content=[     
-        {
-          label: "Dashboard", rlink: "/admin/dashboard", icon: 'bx bx-bar-chart',
-          submenu: [
-            { label: "Training", rlink: "/admin/dashboard/training" },
-          
+          this.content = [
+            {
+              label: "Dashboard", rlink: "/admin/dashboard", icon: 'bx bx-bar-chart',
+              submenu: [
+                { label: "Training", rlink: "/admin/dashboard/training" },
+
+              ]
+            },
+            {
+              label: "Students", rlink: "/admin/student", icon: 'bx bxs-group',
+              submenu: [
+                { label: "Search", rlink: "/admin/student/search" },
+              ]
+            },
+            {
+              label: "Quiz", rlink: ["/admin/quiz"], icon: 'bx bx-notepad',
+              submenu: [
+                { label: "Topics", rlink: ["/admin/quiz/topics"] },
+                { label: "Add", rlink: ["/admin/quiz/add"] },]
+            },
+            {
+              label: "Coding", rlink: ["/admin/code"], icon: 'bx bx-laptop',
+              submenu: [
+                { label: "Topics", rlink: ["/admin/code/topics"] },
+                { label: "Add", rlink: ["/admin/code/add"] },]
+            },
+            {
+              label: "Reports", rlink: "/admin/reports", icon: 'bx bx-receipt',
+              submenu: [
+                { label: "Training", rlink: "/admin/reports/training/overallreport" },
+              ]
+            },
+            { label: "Calendar", rlink: "/admin/calendar", icon: 'bx bx-calendar' },
           ]
-        },
-        {
-          label: "Students", rlink: "/admin/student", icon: 'bx bxs-group',
-          submenu: [
-            { label: "Search", rlink: "/admin/student/search" },
-          ]
-        },
-        {
-          label: "Quiz", rlink: ["/admin/quiz"], icon: 'bx bx-notepad',
-          submenu: [
-            { label: "Topics", rlink: ["/admin/quiz/topics"] },
-            { label: "Add", rlink: ["/admin/quiz/add"] },]
-        },
-        {
-          label: "Coding", rlink: ["/admin/code"], icon: 'bx bx-laptop',
-          submenu: [
-            { label: "Topics", rlink: ["/admin/code/topics"] },
-            { label: "Add", rlink: ["/admin/code/add"] },]
-        },
-        {
-          label: "Reports", rlink: "/admin/reports", icon: 'bx bx-receipt',
-          submenu: [
-            { label: "Training", rlink: "/admin/reports/training/overallreport" },
-          ]
-        },
-        { label: "Calendar", rlink: "/admin/calendar", icon: 'bx bx-calendar' },
-      ]
         }
-        
+
         this.firstname = res.admindata.firstname; sessionStorage.setItem('firstname', this.firstname)
         this.fullname = res.admindata.firstname + res.admindata.middlename + res.admindata.lastname
       },
@@ -217,7 +216,7 @@ export class AdminNavbarComponent implements OnInit {
   }
 
   logout() {
-    sessionStorage.removeItem('mail');
+    // sessionStorage.removeItem('mail');
     sessionStorage.clear();
     this.router.navigate(['/arikya'])
   }

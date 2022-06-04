@@ -19,9 +19,13 @@ export class CodereportComponent implements OnInit {
   value: any = "";
   type: any = ''
   status: any = "all"
-  heading: any = "OVERALL TOPICS"
+  heading: any = "OVERALL TOPICS";
+  compare: any = { organisation_id: sessionStorage.getItem('organisation_id'), type: 'code' }
   constructor(private commonservice: CommonService, public ete: ExportExcelService) {
     this.nodata = false
+    if (sessionStorage.getItem('role') == 'technicaltrainer') {
+      this.compare.createdby = sessionStorage.getItem('mail')
+    }
     sessionStorage.removeItem('topic');
     this.gettopics()
     this.allcodeorquiztests()
@@ -37,7 +41,7 @@ export class CodereportComponent implements OnInit {
     this.loadstatus = true
     this.topic1 = t
     this.heading = t
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { organisation_id: sessionStorage.getItem("organisation_id"), topic: this.topic1, type: "code" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { ...this.compare, topic: this.topic1 }).subscribe(
       (res: any) => {
         this.stdseachtest = res.data
         this.visibleData = res.data
@@ -48,7 +52,7 @@ export class CodereportComponent implements OnInit {
   }
 
   allcodeorquiztests() {
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', { organisation_id: sessionStorage.getItem("organisation_id"), type: "code" }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', this.compare).subscribe(
       (res: any) => {
         // console.log(res)
         this.alldata = true
@@ -60,7 +64,7 @@ export class CodereportComponent implements OnInit {
   }
 
   gettopics() {
-    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'code' }).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
       (res: any) => {
         this.topics = res;
         this.display = false
