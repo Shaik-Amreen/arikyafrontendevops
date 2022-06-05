@@ -677,7 +677,7 @@ export class CompanydetailsComponent implements OnInit {
         this.commonservice.postrequest('http://localhost:4000/placementstatus/addIntoLevel', addstudents).subscribe(
           (res: any) => {
             if (res.message = "success") {
-              // this.firstcall()
+              this.firstcall()
               this.display = true;
               this.popup = "Applicants Added To " + this.hierarchylevel;
               this.addapplicantdisplay = 'none'
@@ -713,7 +713,7 @@ export class CompanydetailsComponent implements OnInit {
         this.commonservice.postrequest('http://localhost:4000/placementstatus/removeIntoLevel', removestudents).subscribe(
           (res: any) => {
             if (res.message = "success") {
-              // this.firstcall()
+              this.firstcall();
               this.display = true;
               this.popup = "Applicants Added To " + this.hierarchylevel;
               this.addapplicantdisplay = 'none'

@@ -77,11 +77,11 @@
                                     class='bx bxs-x-circle'></i>
                             </div>
                             <div style="height: 5px;width: 25vw;"
-                                [ngClass]="c.offerstatus=='yes'?'activeline':c.offerstatus=='no'?'rejected':'emptyline'">
+                                [ngClass]="(c.offerstatus=='offered' || c.offerstatus=='accepted')?'activeline':c.offerstatus=='no'?'rejected':'emptyline'">
                             </div>
                             <div>
                                 <i *ngIf="c.offerstatus!='no'" style="font-size:2rem" class='bx bxs-check-circle'
-                                    [ngClass]="c.offerstatus=='yes'?'active':'empty'"></i>
+                                    [ngClass]="(c.offerstatus=='offered' || c.offerstatus=='accepted')?'active':'empty'"></i>
                                 <i *ngIf="c.offerstatus=='no'" style="color: #a5081a;font-size: 2rem;"
                                     class='bx bxs-x-circle'></i>
                             </div>
