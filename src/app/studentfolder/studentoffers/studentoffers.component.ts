@@ -54,7 +54,8 @@ export class StudentoffersComponent implements OnInit {
 
   save(c: any) {
     c.offerletter = this.base64Output;
-    c.placed = "-"
+    c.placed = '-'
+    if (this.offerstatus == 'yes') { c.placed = "yes" }
     this.commonservice.postrequest('http://localhost:4000/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), companyname: c.companyname, offerletter: this.base64Output, offerstatus: this.offerstatus, mail: sessionStorage.getItem('mail'), verifiedoffer: 'no', placed: c.placed }).subscribe(
       (res: any) => {
         // console.log("it works2");

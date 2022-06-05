@@ -75,27 +75,18 @@
     style="max-height: 81vh;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
     <br>
     <div>
-
-
       <!-- <angular-editor [config]="editorConfig" [ngModel]="question[0].questionis">
       </angular-editor> -->
-
-
       <div [innerHTML]="question[0].questionis"></div>
-
-
       <br>
-
     </div><br>
     <div style="background-color: whitesmoke;width: 70vw;">
       <span style="display: flex;justify-content: flex-end;align-items: center;">
         <label style="margin-right: 0.5rem;">Language </label>
         <select class="form-select" style="width: 10vw;background-color: whitesmoke;" [(ngModel)]="language"
           (ngModelChange)="modo()">
-          <option value="c">C</option>
-          <option value="java">JAVA</option>
           <option value="py">PYTHON</option>
-          <option value="cpp">C++</option>
+          <option value="java">JAVA</option>
         </select>
       </span>
     </div>
