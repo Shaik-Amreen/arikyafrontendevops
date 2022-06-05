@@ -715,7 +715,7 @@ export class CompanydetailsComponent implements OnInit {
             if (res.message = "success") {
               this.firstcall();
               this.display = true;
-              this.popup = "Applicants Added To " + this.hierarchylevel;
+              this.popup = "Applicants Removed From " + this.hierarchylevel;
               this.addapplicantdisplay = 'none'
               setTimeout(() => {
                 this.display = false;
