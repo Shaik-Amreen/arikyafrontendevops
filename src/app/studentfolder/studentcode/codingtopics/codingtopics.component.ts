@@ -10,7 +10,7 @@ import { DOCUMENT } from '@angular/common';
 
 export class CodingtopicsComponent implements OnInit {
 
-  topics: any = [0]; viewRating: any = []
+  topics: any = [0]; viewRating: any = [];currentValuecharts:any=[];
   searchtopic: any = ''
   currentValue: any = []; codesubmit: any = false
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService, @Inject(DOCUMENT) private document: any) {
@@ -39,6 +39,7 @@ export class CodingtopicsComponent implements OnInit {
           if (s && s.length > 0 && s[0].starttime != "-") {
             this.viewRating.push(true);
             this.currentValue.push(parseFloat(s[0].main).toFixed(2))
+            this.currentValuecharts.push(parseFloat(s[0].main).toFixed(2))
           }
           else {
             if(new Date() >= new Date(data.startson)){
@@ -83,6 +84,7 @@ export class CodingtopicsComponent implements OnInit {
           // }
 
         });
+
         this.setOptions()
       },
       (err: any) => { console.log(err) }
@@ -132,7 +134,7 @@ export class CodingtopicsComponent implements OnInit {
 
       xAxis: {
         type: 'category',
-        data: this.currentValue
+        data: this.currentValuecharts
       },
       yAxis: {
         type: 'value'
@@ -152,7 +154,7 @@ export class CodingtopicsComponent implements OnInit {
       },
       series: [
         {
-          data: this.currentValue,
+          data: this.currentValuecharts,
           type: 'line'
         }
       ]

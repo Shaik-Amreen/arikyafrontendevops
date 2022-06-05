@@ -371,6 +371,7 @@ export class AttemptcodingComponent implements OnInit {
           // console.log(this.editorOptions)
           this.commonservice.postrequest('http://localhost:4000/Practice/testanswer', { organisation_id: sessionStorage.getItem("organisation_id"), ans: this.ans[this.questionno - 1], mail: this.mail, question: this.question[0], paramvalues: this.paramvalues[this.questionno - 1], paramconditions: this.paramconditions[this.questionno - 1], topic: sessionStorage.getItem('topic'), language: this.language }).subscribe(
             (res: any) => {
+              console.log(res,"res")
               this.showtest = true
 
               this.result[this.questionno - 1] = res.data;

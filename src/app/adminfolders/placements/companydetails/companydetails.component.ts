@@ -480,6 +480,7 @@ export class CompanydetailsComponent implements OnInit {
 
 
   addapplicantmodal() {
+    console.log(this.hierarchylevel,"this.hierarchylevel")
     this.addapplicantdisplay = 'block'; this.validatemsg = ''; this.applicants = ''; this.applicantstatus = 'Add'; this.studentlevel = "Applicants"; this.addapplicants = "ADD";
     if (this.updateeligibility) { this.studentlevel = "Eligibilities" }
     if (this.hierarchylevel) { this.studentlevel = "Students to " + this.hierarchylevel }
@@ -701,7 +702,7 @@ export class CompanydetailsComponent implements OnInit {
         data.companyname = this.companyname
         data.hiringflowname = d.level
         data.organisation_id = this.organisation_id
-        data.lastItem = this.lastItem
+        
         removestudents.push(data)
       });
       if (i == leveltoremove.length - 1) {

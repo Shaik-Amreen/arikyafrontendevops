@@ -25,7 +25,8 @@ export class CodetopicslistComponent implements OnInit {
       }, 5000)
     }
     this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
-      (res1: any) => { this.codetopics = res1; this.len1 = res1.length; this.nodata = true; this.codetopics.reverse() })
+      (res1: any) => { this.codetopics = res1; this.len1 = res1.length; this.nodata = true;  
+      })
   }
 
   ngOnInit(): void {

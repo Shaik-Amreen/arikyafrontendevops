@@ -3,7 +3,6 @@
 
 
 <div class="layout">
-
     <div class="row" style="padding: 1vw;" *ngIf="topics[0]!=0 && topics.length>0">
         <h5 style="color: #1b1c1e;"><strong>CODING TOPICS</strong>
             <div
@@ -12,11 +11,9 @@
                     placeholder="start typing topic name"
                     style="border: none;background-color: #fff;font-size: 0.8rem;" />
                 <i class="bx bx-search" style="font-size: 1rem;font-weight: 600"></i>&nbsp;
-
             </div>
         </h5>
         <div class="row">
-
             <div class="col-sm-6" style="height: 90vh;">
                 <br /><br /><br />
                 <div echarts [options]="quizoption"></div>

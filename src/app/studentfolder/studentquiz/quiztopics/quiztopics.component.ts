@@ -8,7 +8,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./quiztopics.component.css']
 })
 export class QuiztopicsComponent implements OnInit {
-  topics: any = [0]; viewRating: any = []; date: any = new Date().toISOString();
+  topics: any = [0]; viewRating: any = []; date: any = new Date().toISOString();currentValuecharts:any=[]
   currentValue: any = []; quizsubmit = false
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService, @Inject(DOCUMENT) private document: any) {
 
@@ -38,6 +38,7 @@ export class QuiztopicsComponent implements OnInit {
           if (s && s.length > 0 && s[0].starttime != "-") {
             this.viewRating.push(true);
             this.currentValue.push(parseFloat(s[0].main).toFixed(2))
+            this.currentValuecharts.push(parseFloat(s[0].main).toFixed(2))
           }
           else {
             if (new Date() >= new Date(data.startson) && new Date() <= new Date(data.endson)) {
@@ -115,7 +116,7 @@ export class QuiztopicsComponent implements OnInit {
 
       xAxis: {
         type: 'category',
-        data: this.currentValue
+        data: this.currentValuecharts
       },
       yAxis: {
         type: 'value'
@@ -135,7 +136,7 @@ export class QuiztopicsComponent implements OnInit {
       },
       series: [
         {
-          data: this.currentValue,
+          data: this.currentValuecharts,
           type: 'line'
         }
       ]
