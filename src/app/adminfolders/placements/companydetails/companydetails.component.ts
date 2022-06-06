@@ -61,6 +61,9 @@ export class CompanydetailsComponent implements OnInit {
     this.single = 'ADD'
     sessionStorage.removeItem('editcompany')
     this.mailstatus = 'SEND MAIL'; this.addstatus = 'ADD STUDENTS'
+
+    this.viewplacementstatus='none'
+    this.viewhiringlevel=''
   }
 
   // filterApplicants(level: any) {
@@ -102,6 +105,17 @@ export class CompanydetailsComponent implements OnInit {
           (erer: any) => console.log(erer)
         )
 
+      },
+      (err: any) => console.log(err)
+    );
+    this.commonservice.postrequest('http://localhost:4000/company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
+      (res: any) => {
+        this.commonservice.postrequest('http://localhost:4000/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: this.companyname }).subscribe(
+          (rese: any) => {
+            this.applicantslist = rese; this.allcom = res;
+          },
+          (err: any) => console.log(err)
+        )
       },
       (err: any) => console.log(err)
     );
@@ -216,17 +230,7 @@ export class CompanydetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.commonservice.postrequest('http://localhost:4000/company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
-      (res: any) => {
-        this.commonservice.postrequest('http://localhost:4000/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: this.companyname }).subscribe(
-          (rese: any) => {
-            this.applicantslist = rese; this.allcom = res;
-          },
-          (err: any) => console.log(err)
-        )
-      },
-      (err: any) => console.log(err)
-    );
+   
   }
 
 
@@ -737,7 +741,7 @@ export class CompanydetailsComponent implements OnInit {
             if (res.message = "success") {
               this.firstcall();
               this.display = true;
-              this.popup = "Applicants Added To " + this.hierarchylevel;
+              this.popup = "Applicants Removed From " + this.hierarchylevel;
               this.addapplicantdisplay = 'none'
               setTimeout(() => {
                 this.display = false;
