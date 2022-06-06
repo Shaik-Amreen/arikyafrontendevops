@@ -25,7 +25,7 @@ export class CompanydetailsComponent implements OnInit {
   eligibility: any[] = []; hiringflow: any[]
   allcom = [{ companyname: '' }]; listofstu = []; relen = 0; placed = 0; nextIndex = 0
 
-  lastItem: any
+  lastItem: any = false
   image = "../../../../assets/companylogo.jpg";
   tempimg = "../../../../assets/companylogo.jpg";
   saveimg: any = "save"; popup: any = ""; imagemodal = "none"
@@ -110,6 +110,7 @@ export class CompanydetailsComponent implements OnInit {
 
   nodataupload: any = false
   companywisehiring: any = false
+  comparelevel: any = ''
   getWorkflow() {
     this.lastItem = false
     this.nodataupload = false
@@ -122,16 +123,27 @@ export class CompanydetailsComponent implements OnInit {
         }
         else {
 
-
+          let compareindex = 0
           this.hiringflow.map((r: any, ir: any) => {
             // let index = this.hiringflow.findIndex(e => e.level === r.hiringflowname);
+            if (ir == 0) {
+              this.comparelevel = r.level
+              compareindex = 0
+            }
+
             this.placementstatus[r.level] = reset.filter((e: any, i: any) => e.hiringflowname == r.level).map((obj: any) => obj.rollnumber)
+            if (this.placementstatus[r.level].length != 0) {
+              if (compareindex < ir) {
+                compareindex = ir;
+                this.comparelevel = r.level
+              }
+            }
             // console.log(this.hiringflow[ir])
           })
 
-          console.log(this.hiringflow, "hiring wirk flow")
+          console.log(this.placementstatus, "hiring wirk flow")
           this.nodataupload = true
-          this.currentIndex = this.hiringflow.findIndex(e => e.level === reset[0].hiringflowname);
+          this.currentIndex = this.hiringflow.findIndex(e => e.level === this.comparelevel);
           if (this.currentIndex == this.hiringflow.length - 1) {
             this.lastItem = true
           }
@@ -139,10 +151,16 @@ export class CompanydetailsComponent implements OnInit {
             this.lastItem = false
           }
 
-          this.nowshorted = reset.filter((e: any, i: any) => e.hiringflowname == reset[0].hiringflowname)
-          let tempreset = reset.filter((e: any, i: any) => e.hiringflowname != reset[0].hiringflowname)
-          this.companywisehiring = tempreset.filter((e: any, i: any) => e.hiringflowname == tempreset[0].hiringflowname)
+          this.nowshorted = reset.filter((e: any, i: any) => e.hiringflowname == this.comparelevel)
+          // let tempreset = reset.filter((e: any, i: any) => e.hiringflowname != this.comparelevel)
           // console.log(this.nowshorted, this.companywisehiring)
+          if (compareindex != 0) {
+            this.companywisehiring = reset.filter((e: any, i: any) => e.hiringflowname == this.hiringflow[compareindex - 1].level)
+
+          }
+          else {
+            this.companywisehiring = []
+          }
         }
       }
     )
@@ -480,7 +498,7 @@ export class CompanydetailsComponent implements OnInit {
 
 
   addapplicantmodal() {
-    console.log(this.hierarchylevel,"this.hierarchylevel")
+    console.log(this.hierarchylevel, "this.hierarchylevel")
     this.addapplicantdisplay = 'block'; this.validatemsg = ''; this.applicants = ''; this.applicantstatus = 'Add'; this.studentlevel = "Applicants"; this.addapplicants = "ADD";
     if (this.updateeligibility) { this.studentlevel = "Eligibilities" }
     if (this.hierarchylevel) { this.studentlevel = "Students to " + this.hierarchylevel }
@@ -659,6 +677,9 @@ export class CompanydetailsComponent implements OnInit {
     let leveltoadd = this.hiringflow.filter((e: any, i: any) => i <= index)
     let addstudents: any = []
     leveltoadd.forEach((d: any, i: any) => {
+      if (this.hiringflow[this.hiringflow.length - 1].level == d.level) {
+        this.lastItem = true
+      }
       this.rollnos.forEach((c: any) => {
         let data: any = {}
         data.rollnumber = c.toString().toLowerCase()
@@ -669,6 +690,7 @@ export class CompanydetailsComponent implements OnInit {
         data.lastItem = this.lastItem
         addstudents.push(data)
       });
+
       if (i == leveltoadd.length - 1) {
         this.commonservice.postrequest('http://localhost:4000/placementstatus/addIntoLevel', addstudents).subscribe(
           (res: any) => {
@@ -695,6 +717,10 @@ export class CompanydetailsComponent implements OnInit {
     let leveltoremove = this.hiringflow.filter((e: any, i: any) => i >= index)
     let removestudents: any = [];
     leveltoremove.forEach((d: any, i: any) => {
+      console.log(this.hiringflow);
+      if (this.hiringflow[this.hiringflow.length - 1].level == d.level) {
+        this.lastItem = true
+      }
       this.rollnos.forEach((c: any) => {
         let data: any = {}
         data.rollnumber = c.toString().toLowerCase()
@@ -702,7 +728,7 @@ export class CompanydetailsComponent implements OnInit {
         data.companyname = this.companyname
         data.hiringflowname = d.level
         data.organisation_id = this.organisation_id
-        
+        data.lastItem = this.lastItem
         removestudents.push(data)
       });
       if (i == leveltoremove.length - 1) {
