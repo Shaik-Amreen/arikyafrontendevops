@@ -21,13 +21,13 @@ export class StudentHomeComponent implements OnInit {
     }
     // this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
     //   (res: any) => {
-        // console.log(res);
-        this.commonservice.postrequest('http://localhost:4000/Studentdata/studentplacementinterest', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') ,query2:"placementstatusmails"}).subscribe(
-          (response: any) => {
-            console.log("response", response)
-            this.placementsinterest = response.data1.reverse()
-            this.overdata = response.data2;//data2 is placementstatus student check mail number
-          // })
+    // console.log(res);
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/studentplacementinterest', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), query2: "placementstatusmails" }).subscribe(
+      (response: any) => {
+
+        this.placementsinterest = response.data1.reverse()
+        this.overdata = response.data2.reverse()//data2 is placementstatus student check mail number
+        // })
       },
       (err: any) => console.log(err)
     );

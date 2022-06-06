@@ -577,12 +577,14 @@
                                                     <i class="bx bxs-show"></i>
                                                 </div>
                                                 <div class="col-sm"> {{level.level}}
-                                                    <i style="font-size: 0.8rem;color: green; cursor: pointer;"
-                                                        class='bx bx-plus-circle'
-                                                        (click)="rollnos=[];hierarchylevel=level.level;addapplicantmodal();"></i>&nbsp;
-                                                    <i style="font-size: 0.8rem;color: red;cursor: pointer;"
-                                                        class='bx bx-minus-circle'
-                                                        (click)="rollnos=[];hierarchylevel=level.level;removeapplicantmodal();"></i>
+                                                    <span *ngIf="uploadedlevels.includes(level.level)">
+                                                        <i style="font-size: 0.8rem;color: green; cursor: pointer;"
+                                                            class='bx bx-plus-circle'
+                                                            (click)="rollnos=[];hierarchylevel=level.level;addapplicantmodal();"></i>&nbsp;
+                                                        <i style="font-size: 0.8rem;color: red;cursor: pointer;"
+                                                            class='bx bx-minus-circle'
+                                                            (click)="rollnos=[];hierarchylevel=level.level;removeapplicantmodal();"></i>
+                                                    </span>
                                                 </div>
                                                 <div class="col-sm-1"> <i
                                                         *ngIf="companydetails.status!='submitted' && i==currentIndex && !setedit[i] "
@@ -650,12 +652,14 @@
                                     <div *ngIf="i==currentIndex && !nodataupload"
                                         style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                                         <i class="bx bxs-show"></i><strong>{{level.level}}
-                                            <i style="font-size: 0.8rem;color: green; cursor: pointer;"
-                                                class='bx bx-plus-circle'
-                                                (click)="rollnos=[];hierarchylevel=level.level;addapplicantmodal();"></i>&nbsp;
-                                            <i style="font-size: 0.8rem;color: red;cursor: pointer;"
-                                                class='bx bx-minus-circle'
-                                                (click)="rollnos=[];hierarchylevel=level.level;removeapplicantmodal();"></i>
+
+
+
+
+
+
+
+
                                         </strong><br />
                                         <span style="font-size: 0.7rem;">{{level.sub}}</span><br />
                                         <span>

@@ -62,8 +62,8 @@ export class CompanydetailsComponent implements OnInit {
     sessionStorage.removeItem('editcompany')
     this.mailstatus = 'SEND MAIL'; this.addstatus = 'ADD STUDENTS'
 
-    this.viewplacementstatus='none'
-    this.viewhiringlevel=''
+    this.viewplacementstatus = 'none'
+    this.viewhiringlevel = ''
   }
 
   // filterApplicants(level: any) {
@@ -125,6 +125,7 @@ export class CompanydetailsComponent implements OnInit {
   nodataupload: any = false
   companywisehiring: any = false
   comparelevel: any = ''
+  uploadedlevels: any = []
   getWorkflow() {
     this.lastItem = false
     this.nodataupload = false
@@ -147,6 +148,7 @@ export class CompanydetailsComponent implements OnInit {
 
             this.placementstatus[r.level] = reset.filter((e: any, i: any) => e.hiringflowname == r.level).map((obj: any) => obj.rollnumber)
             if (this.placementstatus[r.level].length != 0) {
+              this.uploadedlevels.push(r.level)
               if (compareindex < ir) {
                 compareindex = ir;
                 this.comparelevel = r.level
@@ -230,7 +232,7 @@ export class CompanydetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+
   }
 
 
@@ -408,8 +410,12 @@ export class CompanydetailsComponent implements OnInit {
   savethelist() {
     // console.log(this.currentIndex, "llllllllllllllllllllllllllllll", this.relen)
     this.saveButton = "SAVING"
+    if (this.hiringflow[this.hiringflow.length - 1].level == this.mapping[0].hiringflowname) {
+      this.lastItem = true
+    }
     let data = { organisation_id: sessionStorage.getItem("organisation_id"), accepted: this.mapping, rejected: this.rejectedlist, lastItem: this.lastItem }
     // console.log("data---->", data)
+
     // console.log(this.mapping, this.rejectedlist)
     this.commonservice.postrequest('http://localhost:4000/hiringstudent/posthiringstudent', data).subscribe(
       (res: any) => { this.getWorkflow(); this.saveButton = "SAVE"; this.mapping = []; this.keys = []; },
@@ -420,6 +426,9 @@ export class CompanydetailsComponent implements OnInit {
 
   updatethelist(level: any) {
     console.log(this.mapping)
+    if (this.hiringflow[this.hiringflow.length - 1].level == this.mapping[0].hiringflowname) {
+      this.lastItem = true
+    }
     this.commonservice.postrequest('http://localhost:4000/hiringstudent/hiringupdate', { organisation_id: sessionStorage.getItem("organisation_id"), accepted: this.mapping, rejected: this.rejectedlist, lastItem: this.lastItem }).subscribe(
       (res: any) => { this.saveButton = "SAVE"; this.mapping = []; this.keys = []; this.setedit = false; this.getWorkflow() },
       (err: any) => console.log(err)

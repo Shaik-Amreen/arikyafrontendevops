@@ -51,7 +51,8 @@
                                 <td>Date of visit</td>
                                 <td *ngIf="companydetails.dateofvisit!='not updated'">{{companydetails.dateofvisit |
                                     date }}</td>
-                                <td *ngIf="companydetails.dateofvisit!='updated' ">{{companydetails.dateofvisit }}</td>
+                                <td *ngIf="companydetails.dateofvisit=='notupdated' ">{{companydetails.dateofvisit }}
+                                </td>
 
                             </tr>
                             <tr>

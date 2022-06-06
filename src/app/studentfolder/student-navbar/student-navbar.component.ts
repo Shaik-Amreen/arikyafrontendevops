@@ -48,7 +48,7 @@ export class StudentNavbarComponent implements OnInit {
               console.log(response,"llllllllllllllllll")
               response = response.data1 .filter((r: any) => r[r.placementcyclename] != '')
               if (response.length != 0) {
-                this.content.splice(4, 0, { label: "Offers", rlink: "/student/offers", icon: 'bx bx-buildings' })
+                this.content.splice(1, 0, { label: "Offers", rlink: "/student/offers", icon: 'bx bx-buildings' })
               }
               else {
                 // console.log("not interested tabssssssssssssss")

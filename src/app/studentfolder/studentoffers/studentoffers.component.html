@@ -38,19 +38,21 @@
             </div>
 
           </ng-template><br />
-          Offer letter is
+          <span *ngIf="c.placed!='no'">
+            Offer letter is
 
-          <span *ngIf="(c.offerletter=='-' || c.offerletter==null ||  c.offerletter=='')  else showoffer">
-            not uploaded yet !
-            <input type="file" [disabled]='choose || base64Output' style="display: none;"
-              (change)="onFileSelected($event,i)" accept="application/pdf" #upload>
-            <button class="btn shadow-none" style="color:#00b0ff;" (click)="upload.click()">click
-              to upload offer letter<i class="bi bi-upload"></i></button>
-            <button class="btn btn" style="background:#00b0ff;color: aliceblue;" *ngIf="base64Output"
-              (click)="save(c)">Save</button>
+            <span *ngIf="(c.offerletter=='-' || c.offerletter==null ||  c.offerletter=='')  else showoffer">
+              not uploaded yet !
+              <input type="file" [disabled]='choose || base64Output' style="display: none;"
+                (change)="onFileSelected($event,i)" accept="application/pdf" #upload>
+              <button class="btn shadow-none" style="color:#00b0ff;" (click)="upload.click()">click
+                to upload offer letter<i class="bi bi-upload"></i></button>
+              <button class="btn btn" style="background:#00b0ff;color: aliceblue;" *ngIf="base64Output"
+                (click)="save(c)">Save</button>
 
+            </span>
+            <ng-template #showoffer>uploaded</ng-template>
           </span>
-          <ng-template #showoffer>uploaded</ng-template>
           <span *ngIf="c.placed=='onhold' else showplaced" style="color: crimson;">
             Resubmit your offer letter
           </span>
