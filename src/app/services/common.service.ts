@@ -5,11 +5,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CommonService {
 
-  constructor(private http : HttpClient ) { }
+  constructor(private http: HttpClient) { }
 
 
-    postrequest(url:any,data:any){
-      return this.http.post(url,data)
-    }
+  postrequest(url: any, data: any) {
+    console.log(data, "dtayaiguduiqwiud")
+    data = { data: btoa(JSON.stringify(data)) }
+    console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    let response: any = this.http.post(url, data)
+    console.log(response, "response")
+    // return { message: "success" }
+    return response.data
+  }
 
 }
