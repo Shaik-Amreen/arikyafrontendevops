@@ -359,13 +359,13 @@ export class AdminstudentprofileComponent implements OnInit {
 
         if (this.data.sgpa) {
           res.data.sgpa.forEach((e: any) => {
-            console.log(e, "hgfuyfiyfiyfiyfiygfiy")
+            // console.log(e, "hgfuyfiyfiyfiyfiygfiy")
             this.sgpa.push(...Object.values(e[0]))
-            console.log(this.sgpa)
+            // console.log(this.sgpa)
           });
         }
 
-        console.log(this.sgpa, ";;;;;;;;;;;;;;;;;;;;;;;;;")
+        // console.log(this.sgpa, ";;;;;;;;;;;;;;;;;;;;;;;;;")
         this.data.yearofjoining = parseInt(res.data.yearofjoining)
         this.data.profilepic == '' ? this.data.profilepic = "../../../../assets/user.png" : null;
         this.image = this.data.profilepic
@@ -534,7 +534,7 @@ export class AdminstudentprofileComponent implements OnInit {
     let check = this.notyet.filter((n: any) => n.rollnumber == c.rollnumber)
     c.verified = d
 
-    console.log(check)
+    // console.log(check)
     c.verifiedby = sessionStorage.getItem('firstname')
     c.verifiedbymail = sessionStorage.getItem('mail')
     this.data = { mail: c.mail, organisation_id: c.organisation_id, verified: 'no' }

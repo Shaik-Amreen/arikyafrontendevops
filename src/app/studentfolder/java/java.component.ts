@@ -44,7 +44,7 @@ export class JavaComponent implements OnInit {
   }
 
   page(e: any) {
-    console.log(e,"e",this.content[e])
+    // console.log(e,"e",this.content[e])
     this.currentpage = e
     // this.content[this.currentpage]=this.sanitizer.bypassSecurityTrustHtml(this.content[this.currentpage])
     // this.content[this.currentpage]="abcd"

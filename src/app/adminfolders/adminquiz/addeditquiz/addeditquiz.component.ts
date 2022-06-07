@@ -131,11 +131,11 @@ export class AddeditquizComponent implements OnInit {
     this.inputvalue = true;
     let startson: any = new Date(this.final.value.startson)
     let endson: any = new Date(this.final.value.endson)
-    console.log("heloo1", this.final.value.startson, startson)
+    // console.log("heloo1", this.final.value.startson, startson)
     this.inputvalue = true;
     let diffInMs = Math.abs(endson - startson);
     diffInMs = diffInMs / (1000 * 60);
-    console.log(diffInMs)
+    // console.log(diffInMs)
     if (diffInMs < this.final.value.totaltime) {
       this.timerror = 'Please extend the last date'
     }
@@ -207,7 +207,7 @@ export class AddeditquizComponent implements OnInit {
           document.getElementById(control)?.scrollIntoView({ behavior: "smooth", block: 'center' });
         }
       });
-      console.log("A", a, this.ques.errors)
+      // console.log("A", a, this.ques.errors)
 
       this.display = true
       this.popup = "INVALID INPUT DATA"

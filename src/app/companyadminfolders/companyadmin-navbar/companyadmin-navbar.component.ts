@@ -218,7 +218,7 @@ export class CompanyadminNavbarComponent implements OnInit {
     c.verifiedoffer = d
     this.commonservice.postrequest('http://localhost:4000/placementstatus/adminplaced', c).subscribe(
       (res: any) => {
-        console.log(res)
+        // console.log(res)
       },
       (err: any) => console.log(err)
     );

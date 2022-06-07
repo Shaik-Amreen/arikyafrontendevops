@@ -45,7 +45,7 @@ export class StudentNavbarComponent implements OnInit {
               if (res.data.firstname == null) { this.router.navigate(['/login']) }
               this.firstname = sessionStorage.getItem('firstname')
               this.pId = this.firstname.charAt(0)
-              console.log(response,"llllllllllllllllll")
+              // console.log(response,"llllllllllllllllll")
               response = response.data1 .filter((r: any) => r[r.placementcyclename] != '')
               if (response.length != 0) {
                 this.content.splice(1, 0, { label: "Offers", rlink: "/student/offers", icon: 'bx bx-buildings' })
@@ -70,7 +70,7 @@ export class StudentNavbarComponent implements OnInit {
 
     this.commonservice.postrequest('http://localhost:4000/verify', 'verify').subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         (res.status !== 'success') ? this.router.navigate(['/login']) : null
       },
       (err: any) => this.router.navigate(['/login'])
@@ -113,7 +113,7 @@ export class StudentNavbarComponent implements OnInit {
   notification() {
     this.commonservice.postrequest('http://localhost:4000/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
-        console.log("notifyacceptreject", res)
+        // console.log("notifyacceptreject", res)
         this.comnotify = res.data1
 
         this.placenotify = res.data2
@@ -128,15 +128,15 @@ export class StudentNavbarComponent implements OnInit {
           (e.doneby == sessionStorage.getItem('mail')) ? e.firstname = 'You' : null
         });
         this.adminotifications = res
-        console.log("this.adminotifications", this.adminotifications)
+        // console.log("this.adminotifications", this.adminotifications)
       },
       (err: any) => console.log(err)
     );
     this.commonservice.postrequest('http://localhost:4000/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
-        console.log("findnotifications--------------------11111",res)
+        // console.log("findnotifications--------------------11111",res)
         this.all = res.filter((e: any) => e.mail == sessionStorage.getItem('mail'))
-        console.log("this.all", this.all)
+        // console.log("this.all", this.all)
         this.combinedata = [...this.placenotify, ...this.adminotifications, ...this.all]
         this.combinedata.sort((a: any, b: any) => (a.date > b.date) ? 1 : ((b.date > a.date) ? -1 : 0))
         this.combinedata = this.combinedata.reverse()
@@ -217,7 +217,7 @@ export class StudentNavbarComponent implements OnInit {
     c.verifiedoffer = d
     this.commonservice.postrequest('http://localhost:4000/placementstatus/adminplaced', c).subscribe(
       (res: any) => {
-        console.log(res)
+        // console.log(res)
       },
       (err: any) => console.log(err)
     );

@@ -38,9 +38,9 @@ export class StudentcompanyComponent implements OnInit {
                 (response: any) => {
                   // console.log(response)
                   this.companydetails = res.companydetails;
-                  this.hiringflow = this.companydetails.hiringworkflow.flat()
+                  this.hiringflow = this.companydetails.hiringworkflow.flat();
                   // this.companydetails.companylogo=(res.companydetails.companylogo);
-                  console.log("this.companydetails.companylogo111", this.companydetails.companylogo);
+                  // console.log("this.companydetails.companylogo111", this.companydetails.companylogo);
                   (this.companydetails.companylogo == null || this.companydetails.companylogo == '') ? this.companydetails.companylogo = "../../../.././assets/companylogo.jpg" : null;
                   this.image = this.companydetails.companylogo;
                   this.getWorkflow()
@@ -121,7 +121,7 @@ export class StudentcompanyComponent implements OnInit {
     this.companydetails.organisation_id = sessionStorage.getItem("organisation_id")
     this.commonservice.postrequest('http://localhost:4000/company/updatecompany', this.companydetails).subscribe(
       (res: any) => {
-        console.log("res image", res)
+        // console.log("res image", res)
         this.imagemodal = "none"
         this.saveimg = "save"
         this.display = true

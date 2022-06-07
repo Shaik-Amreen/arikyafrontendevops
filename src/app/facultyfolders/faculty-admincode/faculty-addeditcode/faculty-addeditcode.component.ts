@@ -48,7 +48,7 @@ export class FacultyAddeditcodeComponent implements OnInit {
     if (sessionStorage.getItem('editcode') == 'yes') {
       this.commonservice.postrequest('http://localhost:4000/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "quiz" }).subscribe(
         (res: any) => {
-          this.data = res; console.log(res, "kkkkkkkkkkkkkkkkkkkkkkkkkkkk"); this.final.patchValue(this.data);
+          this.data = res; this.final.patchValue(this.data);
           this.data.questions.forEach((e: any, i: any) => {
 
             (<FormArray>this.final.get('questions')).push(new FormGroup({

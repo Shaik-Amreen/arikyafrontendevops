@@ -53,7 +53,7 @@ export class StudentoffersComponent implements OnInit {
       this.offerindex = index;
       event.target.value = ''
     });
-    console.log(this.base64Output);
+    // console.log(this.base64Output);
     this.choose = true
   }
 
@@ -66,7 +66,7 @@ export class StudentoffersComponent implements OnInit {
     this.commonservice.postrequest('http://localhost:4000/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), companyname: c.companyname, offerletter: this.base64Output, offerstatus: this.offerstatus, mail: sessionStorage.getItem('mail'), verifiedoffer: 'no', placed: c.placed }).subscribe(
       (res: any) => {
         // console.log("it works2");
-        console.log(res)
+        // console.log(res)
         this.base64Output = ''
         this.choose = false
         if (res.message == 'success') {

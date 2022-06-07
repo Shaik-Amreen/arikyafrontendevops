@@ -22,12 +22,12 @@ export class FacultyTrainingComponent implements OnInit {
         // console.log("training1")
         this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardquizdata', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
           (res: any) => {
-            console.log("training2"), this.data = res;
+            this.data = res;
             // console.log('quiz', this.data) 
           })
         this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardcodedata', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
           (resp: any) => {
-            console.log("training3"), this.codedata = resp;
+            this.codedata = resp;
             // console.log('code', this.codedata) 
           })
         // console.log(this.codedata, 'kugcukweggewhjcgjegech')
@@ -118,8 +118,7 @@ export class FacultyTrainingComponent implements OnInit {
   view(e: any, f: any) {
     (e == 'quiz') ? (this.viewdata = this.data.data[f], this.type = 'QUIZ', this.dept = f) :
       (e == 'code') ? (this.viewdata = this.codedata.data[f], this.type = 'CODE', this.dept = f) :
-        (e == 'overall') ? (this.viewdata = this.totaldata.data[f], this.type = 'OVERALL', this.dept = f, this.totallen = this.viewdata,
-          console.log(this.totallen)) : null
+        (e == 'overall') ? (this.viewdata = this.totaldata.data[f], this.type = 'OVERALL', this.dept = f, this.totallen = this.viewdata): null
   }
   //download data
   exportexcel(): void {

@@ -188,7 +188,7 @@ export class AddeditcompanyComponent implements OnInit {
       }
       this.addcompanyform = new FormGroup(form)
     })
-    console.log(this.addcompanyform)
+    // console.log(this.addcompanyform)
     //for suggestions of company companyname
     this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => this.data = res,
@@ -378,7 +378,7 @@ export class AddeditcompanyComponent implements OnInit {
       const controlErrors = this.addcompanyform.get(key).errors;
       if (controlErrors != null) {
         Object.keys(controlErrors).forEach(keyError => {
-          console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+          // console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
         });
       }
     });

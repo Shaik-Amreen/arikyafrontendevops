@@ -85,7 +85,9 @@ export class FacultyPlacementsComponent implements OnInit {
 
   ngOnInit(): void {
     this.commonservice.postrequest('http://localhost:4000/Studentdata/getAllCompanyNames', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
-      (res: any) => { console.log(res, "helloooooooooooooooooooooooooooooooooooooooooooo") })
+      (res: any) => { 
+        // console.log(res, "helloooooooooooooooooooooooooooooooooooooooooooo") 
+    })
   }
 
   te: any

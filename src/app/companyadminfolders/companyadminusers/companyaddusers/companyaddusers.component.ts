@@ -39,7 +39,7 @@ export class CompanyaddusersComponent implements OnInit {
         this.formgroupdata.reset();
         this.router.navigate(['/admin/users'])
       },
-      (err) => console.log(err)
+      (err: any) => console.log(err)
     )
   }
 

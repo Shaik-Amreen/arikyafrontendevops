@@ -93,7 +93,7 @@ export class AttemptquizComponent implements OnInit {
         this.get = true;
         (res.message == 'error') ? (sessionStorage.setItem("quizsubmit", "quizsubmit"), this.router.navigate(['/student/quiz'])) : null;
         if (res.message == "TEST TIME OUT") {
-          console.log("helooooooooooooooooooo")
+          // console.log("helooooooooooooooooooo")
           this.askfullscreen = false
           this.timeout = true;
           this.get = false
@@ -114,8 +114,8 @@ export class AttemptquizComponent implements OnInit {
               this.quesvisit = a.quesvisit
             }
           });
-          console.log("this.quiz", this.quiz)
-          console.log("this.quiz.tempratings.quesvisit", this.quesvisit)
+          // console.log("this.quiz", this.quiz)
+          // console.log("this.quiz.tempratings.quesvisit", this.quesvisit)
           if (!this.quesvisit) {
             this.quesvisit = { visit: { 1: true }, visited: 1, notvisited: this.totalques - 1, answer: {}, answered: 0, notanswered: this.totalques }
           }
@@ -124,7 +124,7 @@ export class AttemptquizComponent implements OnInit {
             keys.forEach((a: any) => {
               this.quiz['questions'][a - 1][0]['answeredoption'] = this.quesvisit.answer[a]
             })
-            console.log("this.quiz['questions']", this.quiz['questions'])
+            // console.log("this.quiz['questions']", this.quiz['questions'])
           }
           this.view = true;
           this.test = false;
@@ -144,7 +144,7 @@ export class AttemptquizComponent implements OnInit {
               // console.log("this.tabcount", this.tabcount)
             }
             if (this.tabcount > 5) {
-              console.log("st-Out ")
+              // console.log("st-Out ")
               // this.fullscreen = `
 
               // You switched the tab for ${this.tabcount} times ,
@@ -221,7 +221,7 @@ export class AttemptquizComponent implements OnInit {
       (element[0].answeredoption == element[0].correct) ? this.result = this.result + 1 : null
     });
     // let count = 0
-    console.log(this.quesvisit)
+    // console.log(this.quesvisit)
     let rating = { quesvisit: this.quesvisit, mail: this.mail, tabcount: this.tabcount, starttime: this.starttime, timeremained: `${this.minutes}:${this.seconds}`, topic: sessionStorage.getItem('topic'), marks: this.result, attemptedquiz: this.quiz.questions, organisation_id: sessionStorage.getItem("organisation_id") }
     // console.log("ratings:", rating)
     this.commonservice.postrequest('http://localhost:4000/Practice/quizratingstudentupdate', rating).subscribe(
@@ -231,7 +231,7 @@ export class AttemptquizComponent implements OnInit {
         if ((res.endtime && res.endtime != "") || new Date(this.quiz.endson) <= new Date()) {
           this.askfullscreen = false
           this.timeout = true;
-          console.log("welocmeeeeeeeeeeeeeeeeeeeeeeeeee")
+          // console.log("welocmeeeeeeeeeeeeeeeeeeeeeeeeee")
           this.msg = "TEST TIME OUT";
           this.view = true
           this.get = false;
@@ -378,7 +378,7 @@ export class AttemptquizComponent implements OnInit {
     this.quesvisit.visit[this.questionno] = true
     this.quesvisit.visited = Object.keys(this.quesvisit.visit).length
     this.quesvisit.notvisited = this.totalques - this.quesvisit.visited
-    console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
+    // console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
   }
 
   quesvisit: any;
@@ -388,7 +388,7 @@ export class AttemptquizComponent implements OnInit {
     this.quesvisit.answer[no] = option
     this.quesvisit.answered = Object.keys(this.quesvisit.answer).length
     this.quesvisit.notanswered = this.totalques - this.quesvisit.answered
-    console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
+    // console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
     this.quizupdate()
   }
 
@@ -399,7 +399,7 @@ export class AttemptquizComponent implements OnInit {
     this.quesvisit.visit[this.questionno] = true
     this.quesvisit.visited = Object.keys(this.quesvisit.visit).length
     this.quesvisit.notvisited = this.totalques - this.quesvisit.visited
-    console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
+    // console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
     this.quizupdate()
   }
 
@@ -410,14 +410,14 @@ export class AttemptquizComponent implements OnInit {
     this.quesvisit.visit[this.questionno] = true
     this.quesvisit.visited = Object.keys(this.quesvisit.visit).length
     this.quesvisit.notvisited = this.totalques - this.quesvisit.visited
-    console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
+    // console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
     this.quizupdate()
     // console.log(this.quiz);
   }
 
   Endtest() {
     this.result = 0
-    console.log("endit")
+    // console.log("endit")
     this.view = false;
     // console.log("this.result", this.result)
     this.quiz['questions'].forEach((element: any) => {
@@ -430,12 +430,12 @@ export class AttemptquizComponent implements OnInit {
     //topiname,list of question and result updated to respective studentdata and result tables by rollno
     // let a = 0
     let rating = { mail: this.mail, quesvisit: this.quesvisit, organisation_id: sessionStorage.getItem("organisation_id"), tabcount: this.tabcount, starttime: this.starttime, endtime: new Date(), timeremained: `${this.minutes}.${this.seconds}`, topic: sessionStorage.getItem('topic'), marks: this.result, attemptedquiz: this.quiz.questions }
-    console.log("kuykugvkyhtvyv")
+    // console.log("kuykugvkyhtvyv")
     this.commonservice.postrequest('http://localhost:4000/Practice/quizratingstudent', rating).subscribe(
       (res: any) => {
-        console.log("ressssssssssss", res)
+        // console.log("ressssssssssss", res)
         this.testtimeout()
-      }, (err) => { console.log(err, "hhhhhhhhhhhhhhhhhhhhh") });
+      }, (err: any) => { console.log(err, "hhhhhhhhhhhhhhhhhhhhh") });
     // (a==1)? alert('Congratulations ! you have successfully compeleted the quiz'):null;
   }
 

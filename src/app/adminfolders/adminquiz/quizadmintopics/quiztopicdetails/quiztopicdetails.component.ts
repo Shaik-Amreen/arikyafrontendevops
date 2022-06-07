@@ -40,7 +40,7 @@ export class QuiztopicdetailsComponent implements OnInit {
         if (res.tempratings && res.tempratings.length > 0) { this.totalcount = res.ratings.length; this.editcode = false }
         else if (res.endson <= this.newdatetodatetimelocal()) { this.editcode = false }
         this.nodata = true
-        console.log(" this.totalcount ", this.totalcount)
+        // console.log(" this.totalcount ", this.totalcount)
       })
   }
 
@@ -63,7 +63,7 @@ export class QuiztopicdetailsComponent implements OnInit {
 
   updatendate() {
     this.data.endson = this.endson
-    console.log(this.newdatetodatetimelocal(), this.data.endson)
+    // console.log(this.newdatetodatetimelocal(), this.data.endson)
     if (this.newdatetodatetimelocal() > this.data.endson) {
       this.endson = this.newdatetodatetimelocal()
       this.data.endson = this.endson
@@ -76,7 +76,7 @@ export class QuiztopicdetailsComponent implements OnInit {
 
   stop() {
     this.data.endson = new Date().toISOString().slice(0, 16)
-    console.log("this.data.endson", this.data.endson)
+    // console.log("this.data.endson", this.data.endson)
     this.commonservice.postrequest('http://localhost:4000/Practice/editcodequiz', this.data).subscribe((res: any) => {
       this.endedit = false
     }, (err: any) => { console.log(err) })

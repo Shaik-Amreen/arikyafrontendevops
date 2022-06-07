@@ -15,9 +15,9 @@ export class ViewcompletedquizzesComponent {
     this.commonservice.postrequest('http://localhost:4000/Practice/viewattemptedquiz', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), topic: sessionStorage.getItem('topic') }).subscribe(
       (res: any) => {
         this.score = res.data
-        console.log(res, "ressssssssssssssss")
+        // console.log(res, "ressssssssssssssss")
         this.quizdata = res.data.attemptedquiz;
-        console.log(this.quizdata, ";;;;;;;;;;;;;;;;;;;")
+        // console.log(this.quizdata, ";;;;;;;;;;;;;;;;;;;")
         this.quizdetails = res.details
         // console.log(this.score.endtime, this.score.starttime)
         if (this.score.starttime = "-") {

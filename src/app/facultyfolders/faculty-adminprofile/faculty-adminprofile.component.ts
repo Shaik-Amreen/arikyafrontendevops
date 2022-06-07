@@ -77,7 +77,7 @@ export class FacultyAdminprofileComponent implements OnInit {
       this.commonservice.postrequest('http://localhost:4000/facultydetails/updateAdmin',
         this.data.value).subscribe(
           (res: any) => {
-            console.log("resimg", res)
+            // console.log("resimg", res)
           })
     }
     evt.target.value = "";

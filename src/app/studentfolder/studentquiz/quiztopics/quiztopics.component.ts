@@ -32,7 +32,7 @@ export class QuiztopicsComponent implements OnInit {
         // console.log("res", res)
         this.topics.forEach((data: any) => {
           let s;
-          console.log(data,"dataquiz")
+          // console.log(data,"dataquiz")
 
           if (data.ratings) { s = data.ratings.filter((r: any) => r.mail == sessionStorage.getItem('mail')); }
           if (s && s.length > 0 && s[0].starttime != "-") {

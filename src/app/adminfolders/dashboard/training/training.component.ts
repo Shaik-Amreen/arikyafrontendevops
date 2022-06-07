@@ -25,12 +25,13 @@ export class TrainingComponent implements OnInit {
         }
         this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardquizdata', { ... this.compare, type: 'quiz' }).subscribe(
           (res: any) => {
-            console.log("training2"), this.data = res; console.log('quiz', this.data)
+             this.data = res;
 
           })
         this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardcodedata', { ...this.compare, type: 'code' }).subscribe(
           (resp: any) => {
-            console.log("training3"), this.codedata = resp;
+            // console.log("training3"), 
+            this.codedata = resp;
             // console.log('code', this.codedata) 
           })
         // console.log(this.codedata, 'kugcukweggewhjcgjegech')
@@ -122,8 +123,8 @@ export class TrainingComponent implements OnInit {
   view(e: any, f: any) {
     (e == 'quiz') ? (this.viewdata = this.data.data[f], this.type = 'QUIZ', this.dept = f) :
       (e == 'code') ? (this.viewdata = this.codedata.data[f], this.type = 'CODE', this.dept = f) :
-        (e == 'overall') ? (this.viewdata = this.totaldata.data[f], this.type = 'OVERALL', this.dept = f, this.totallen = this.viewdata,
-          console.log(this.totallen)
+        (e == 'overall') ? (this.viewdata = this.totaldata.data[f], this.type = 'OVERALL', this.dept = f, this.totallen = this.viewdata
+          // console.log(this.totallen)
         ) : null
   }
   //download data
@@ -164,6 +165,7 @@ export class TrainingComponent implements OnInit {
 
   setOptions() {
 
+    console.log(this.totaldata.message, this.codedata.message, this.data.message,"this.totaldata.message, this.codedata.message, this.data.message")
     let opt = [this.totaldata.message, this.codedata.message, this.data.message]
     let optkey = ['OVERALL', 'CODING ', 'QUIZ']
 

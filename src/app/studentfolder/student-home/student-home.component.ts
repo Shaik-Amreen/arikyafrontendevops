@@ -55,7 +55,7 @@ export class StudentHomeComponent implements OnInit {
     // console.log(this.placementsinterest, ";;;;;;;;;;;;;;;;;;;;llllllllllllll")
     this.commonservice.postrequest('http://localhost:4000/Studentdata/studentupdateinterest', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), eligibleplacementcycles: this.placementsinterest }).subscribe(
       (response: any) => {
-        console.log(response)
+        // console.log(response)
       })
   }
 

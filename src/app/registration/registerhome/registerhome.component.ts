@@ -10,7 +10,7 @@ export class RegisterhomeComponent implements OnInit {
   data: any; realplacement: any = ''; realcompanyname: any = ''
   registered = 'no'; wait: any = false
   constructor(private http: HttpClient, private commonservice: CommonService, private router: Router) {
-    console.log('heloooooooooooooooooooo')
+    // console.log('heloooooooooooooooooooo')
     this.commonservice.postrequest('http://localhost:4000/company/findcompanytoregister', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companycode: sessionStorage.getItem('companyname') }).subscribe(
       (res: any) => {
 

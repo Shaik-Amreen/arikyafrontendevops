@@ -154,7 +154,7 @@ export class AdminNavbarComponent implements OnInit {
   allbell() {
     this.commonservice.postrequest('http://localhost:4000/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
-        console.log("notify", res)
+        // console.log("notify", res)
 
         this.comnotify = res.data1
         this.comnotify = this.comnotify.filter((e: any) => e.offerletter != '-')
@@ -261,7 +261,7 @@ export class AdminNavbarComponent implements OnInit {
     let check = this.notyet.filter((n: any) => n.rollnumber == c.rollnumber)
     c.verified = d
 
-    console.log(check)
+    // console.log(check)
     c.verifiedby = sessionStorage.getItem('firstname')
     c.verifiedbymail = sessionStorage.getItem('mail')
     this.data = { mail: c.mail, organisation_id: c.organisation_id, verified: 'no' }
@@ -277,7 +277,7 @@ export class AdminNavbarComponent implements OnInit {
         (res: any) => {
           if (res.message == "success") {
             this.allenvelop()
-            console.log("successfull update profile", this.data)
+            // console.log("successfull update profile", this.data)
           }
         })
 

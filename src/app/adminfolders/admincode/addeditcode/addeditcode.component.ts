@@ -233,7 +233,7 @@ export class AddeditcodeComponent implements OnInit {
 
   onSubmit() {
     this.timerror = ''
-    console.log("this.final.value.startson", this.final.value.startson, typeof (this.final.value.startson))
+    // console.log("this.final.value.startson", this.final.value.startson, typeof (this.final.value.startson))
     let startson: any = new Date(this.final.value.startson)
     let endson: any = new Date(this.final.value.endson)
     this.inputvalue = true;
@@ -247,11 +247,11 @@ export class AddeditcodeComponent implements OnInit {
     if (sessionStorage.getItem('editcode') == 'yes') { url = 'http://localhost:4000/Practice/editcodequiz' }
     else { url = 'http://localhost:4000/Practice/uploadpractice' }
     let comparedate = new Date(this.datekill)
-    if (comparedate > startson) { console.log(1); document.getElementById("startson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
-    else if (endson <= startson) { console.log(2); document.getElementById("endson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
-    else if (this.timerror != '') { console.log(3); document.getElementById("totaltime")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
+    if (comparedate > startson) {  document.getElementById("startson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
+    else if (endson <= startson) {  document.getElementById("endson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
+    else if (this.timerror != '') {  document.getElementById("totaltime")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
     else if (this.final.status == 'VALID') {
-      console.log("this.final.status,this.ques.status----------->", this.final.value.startson)
+      // console.log("this.final.status,this.ques.status----------->", this.final.value.startson)
       // this.final.value.startson = startson.toISOString()
       // this.final.value.endson = endson.toISOString()
       // console.log("this.final.status,this.ques.status----------->",this.final.value.startson)
@@ -278,7 +278,7 @@ export class AddeditcodeComponent implements OnInit {
 
       // console.log("this.final.value.startson",this.final.value.startson,"     ",startson)
       this.final.value.createdby = sessionStorage.getItem("mail")
-      console.log("this.final.value", this.final.value)
+      // console.log("this.final.value", this.final.value)
       this.commonservice.postrequest(url, this.final.value).subscribe(
         (res: any) => {
           // console.log(res)
@@ -334,13 +334,13 @@ export class AddeditcodeComponent implements OnInit {
           document.getElementById(control)?.scrollIntoView({ behavior: "smooth", block: 'center' });
         }
       });
-      console.log("A", a, this.ques.errors)
+      // console.log("A", a, this.ques.errors)
 
       this.display = true
       this.popup = "INVALID INPUT DATA"
       setTimeout(() => { this.display = false }, 4000)
     }
-    console.log(this.final, this.errors, this.timerror)
+    // console.log(this.final, this.errors, this.timerror)
     // if (sessionStorage.getItem('editcode') == 'yes') { url = 'http://localhost:4000/Practice/editcodequiz' }
     // else { url = 'http://localhost:4000/Practice/uploadpractice' }
     // console.log(this.final)

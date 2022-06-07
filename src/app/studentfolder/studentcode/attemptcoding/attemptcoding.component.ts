@@ -192,7 +192,7 @@ export class AttemptcodingComponent implements OnInit {
           this.totalques = this.ques.questions.length
           if (!this.ques.quesvisit) {
             this.quesvisit = { visit: { 1: true }, visited: 1, notvisited: this.totalques - 1, answer: {}, answered: 0, notanswered: this.totalques }
-            console.log(this.quesvisit)
+            // console.log(this.quesvisit)
           }
           else {
             this.quesvisit = this.ques.quesvisit
@@ -293,7 +293,7 @@ export class AttemptcodingComponent implements OnInit {
     this.quesvisit.visit[this.questionno] = true
     this.quesvisit.visited = Object.keys(this.quesvisit.visit).length
     this.quesvisit.notvisited = this.totalques - this.quesvisit.visited
-    console.log("q", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
+    // console.log("q", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
   }
 
   updateswaps() {
@@ -351,7 +351,7 @@ export class AttemptcodingComponent implements OnInit {
     this.quesvisit.answer[no] = true
     this.quesvisit.answered = Object.keys(this.quesvisit.answer).length
     this.quesvisit.notanswered = this.totalques - this.quesvisit.answered
-    console.log("getvl", this.quesvisit.answered, this.quesvisit.notanswered, this.totalques)
+    // console.log("getvl", this.quesvisit.answered, this.quesvisit.notanswered, this.totalques)
     this.saveTestStatus = "Submitting code please wait ..."
     this.loadtestcases = false
     this.allowloading = true
@@ -371,7 +371,7 @@ export class AttemptcodingComponent implements OnInit {
           // console.log(this.editorOptions)
           this.commonservice.postrequest('http://localhost:4000/Practice/testanswer', { organisation_id: sessionStorage.getItem("organisation_id"), ans: this.ans[this.questionno - 1], mail: this.mail, question: this.question[0], paramvalues: this.paramvalues[this.questionno - 1], paramconditions: this.paramconditions[this.questionno - 1], topic: sessionStorage.getItem('topic'), language: this.language }).subscribe(
             (res: any) => {
-              console.log(res,"res")
+              // console.log(res,"res")
               this.showtest = true
 
               this.result[this.questionno - 1] = res.data;
@@ -410,7 +410,7 @@ export class AttemptcodingComponent implements OnInit {
   }
 
   closeFullscreen() {
-    console.log("closefullscreen")
+    // console.log("closefullscreen")
     // this.elem = document.documentElement;
     if (this.document.exitFullscreen) {
       this.document.exitFullscreen();
@@ -467,7 +467,7 @@ export class AttemptcodingComponent implements OnInit {
     this.quesvisit.visit[this.questionno] = true
     this.quesvisit.visited = Object.keys(this.quesvisit.visit).length
     this.quesvisit.notvisited = this.totalques - this.quesvisit.visited
-    console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
+    // console.log("previous", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
   }
 
   next() {
@@ -478,7 +478,7 @@ export class AttemptcodingComponent implements OnInit {
     this.quesvisit.visit[this.questionno] = true
     this.quesvisit.visited = Object.keys(this.quesvisit.visit).length
     this.quesvisit.notvisited = this.totalques - this.quesvisit.visited
-    console.log("next", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
+    // console.log("next", this.quesvisit.visited, this.quesvisit.notvisited, this.totalques)
   }
 
   Endtest() {
@@ -495,7 +495,7 @@ export class AttemptcodingComponent implements OnInit {
     let rating = { mail: this.mail, starttime: this.starttime, endtime: new Date(), swaps: this.swaps, timeremained: `${this.minutes}.${this.seconds}`, topic: sessionStorage.getItem('topic'), organisation_id: sessionStorage.getItem('organisation_id'), quesvisit: this.quesvisit }
     this.commonservice.postrequest('http://localhost:4000/Practice/ratingstudent', rating).subscribe(
       (res: any) => {
-        console.log("helloooooo")
+        // console.log("helloooooo")
         this.testtimeout()
       })
 

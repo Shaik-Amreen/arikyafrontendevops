@@ -145,7 +145,7 @@ export class CodetopicdetailsComponent implements OnInit {
         if (res.tempratings.length > 0) { this.totalcount = res.ratings.length; this.editcode = false }
         else if (res.endson <= this.newdatetodatetimelocal()) { this.editcode = false }
         this.nodata = true
-        console.log("this.editcode", this.editcode, "--->", this.totalcount)
+        // console.log("this.editcode", this.editcode, "--->", this.totalcount)
       })
   }
 }

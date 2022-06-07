@@ -108,7 +108,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
     }
     this.commonservice.postrequest('http://localhost:4000/company/updatecompany', this.companydetails).subscribe(
       (res: any) => {
-        console.log("res image", res)
+        // console.log("res image", res)
       })
     evt.target.value = "";
   }

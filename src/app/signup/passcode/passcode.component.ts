@@ -33,7 +33,7 @@ export class PasscodeComponent implements OnInit {
           }
         }
       },
-      (err) => console.log(err)
+      (err: any) => console.log(err)
     )
   }
 

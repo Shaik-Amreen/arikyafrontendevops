@@ -47,7 +47,7 @@ export class DemotestudentComponent implements OnInit {
       if (this.keys.length !== 1) { alert("invalid format"); window.location.reload() }
       let data1: any = [];
       this.data.forEach((a: any) => {
-        console.log("a", a)
+        // console.log("a", a)
         if (a.length != 0) {
           data1.push(a)
         }

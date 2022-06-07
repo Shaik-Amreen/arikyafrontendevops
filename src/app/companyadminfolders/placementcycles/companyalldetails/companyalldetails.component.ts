@@ -163,7 +163,10 @@ export class CompanyalldetailsComponent implements OnInit {
 
 
   check(l: any) {
-    for (let e of this.hiringflow) { if (e.level.includes(l) == true) { console.log(e.level.includes(l)); return true; break; } }
+    for (let e of this.hiringflow) { if (e.level.includes(l) == true) {
+      //  console.log(e.level.includes(l)); 
+      return true; break; 
+    } }
   }
 
   toView(l: string) {
@@ -197,7 +200,7 @@ export class CompanyalldetailsComponent implements OnInit {
     this.mailstatus = 'SENDING MAIL';
     this.commonservice.postrequest('http://localhost:4000/placementstatus/sendmail', this.companydetails).subscribe(
       (res: any) => {
-        console.log(res)
+        // console.log(res)
 
         this.mailstatus = 'MAIL SENT'
       },
@@ -356,7 +359,7 @@ export class CompanyalldetailsComponent implements OnInit {
   singlestudentmail() {
     this.single = 'ADDING'
     this.commonservice.postrequest('http://localhost:4000/placementstatus/singlestudent', { organisation_id: sessionStorage.getItem("organisation_id"), ...this.companydetails, rollnumber: this.singlestudent }).subscribe(
-      (res: any) => { console.log("karthik", res); if (res.message == "success") { this.single = 'ADDED' } else if (res.message == "exist") { this.single = 'ALREADY EXIST' } },
+      (res: any) => {  if (res.message == "success") { this.single = 'ADDED' } else if (res.message == "exist") { this.single = 'ALREADY EXIST' } },
       (err: any) => console.log(err)
     )
   }

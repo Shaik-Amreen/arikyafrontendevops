@@ -76,10 +76,10 @@ export class LoginComponent implements OnInit {
   forget(f: NgForm) {
     this.mailerr = ''; f.value.mail = f.value.mail.toLowerCase()
     this.buttonMode = 'SENDING'; this.invalidotp = false
-    console.log("hellooo")
+    // console.log("hellooo")
     this.commonservice.postrequest('http://localhost:4000/findValidMail', f.value).subscribe(
       (res: any) => {
-        console.log(res, "forgot passwoprd")
+        // console.log(res, "forgot passwoprd")
         if (res.message !== "success") {
           this.mailerr = res.error; this.buttonMode = 'SEND OTP'; f.reset()
         }

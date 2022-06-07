@@ -46,7 +46,7 @@ export class StudentresultComponent implements OnInit {
       this.keys[0] = 'rollnumber'
       let data1: any = [];
       this.data.forEach((a: any) => {
-        console.log("a", a)
+        // console.log("a", a)
         if (a.length != 0) {
           data1.push(a)
         }

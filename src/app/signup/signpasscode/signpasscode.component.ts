@@ -158,7 +158,7 @@ export class SignpasscodeComponent implements OnInit {
       // console.log("signup work")
       this.commonservice.postrequest('http://localhost:4000/createusers', this.signUpForm.value).subscribe(
         (res: any) => {
-          console.log(res);
+          // console.log(res);
           if (res.message == 'success') {
             sessionStorage.setItem('mail', res.user);
             sessionStorage.setItem('token', res.token)

@@ -48,16 +48,16 @@ export class UploadstudentComponent implements OnInit {
       this.data = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
       this.keys = this.data.shift();
       if (this.keys.length !== 2) { alert("invalid format"); window.location.reload() }
-      console.log(this.data)
+      // console.log(this.data)
       let data1: any = [];
       this.data.forEach((a: any) => {
-        console.log("a", a)
+        // console.log("a", a)
         if (a.length != 0) {
           data1.push(a)
         }
       })
       this.data = data1
-      console.log("this.data", this.data)
+      // console.log("this.data", this.data)
       this.mapping = this.data.map((e: any) => {
         if (e.length != 0) {
           let obj: any = {};
@@ -66,14 +66,14 @@ export class UploadstudentComponent implements OnInit {
           this.keys.forEach((key: any, i: any) => {
             let a = (e[i] + '').trim()
             if (a.length != 0 && e[i]) {
-              console.log("obj", e[i])
+              // console.log("obj", e[i])
               obj[key] = e[i];
             }
           });
           return obj;
         }
       });
-      console.log("this.mapping", this.mapping)
+      // console.log("this.mapping", this.mapping)
       this.keys.forEach((value: any, key: any) => {
         this.objkey[key] = value.replace(/ /g, ' ')
       });
@@ -157,7 +157,7 @@ export class UploadstudentComponent implements OnInit {
     this.commonservice.postrequest('http://localhost:4000/Studentdata/createStudentdata',
       this.mapping).subscribe(
         (res: any) => {
-          console.log("res", res)
+          // console.log("res", res)
           this.mapping = []
           console.log("resssssssssss", res);
           this.mapping = []; this.saveMode = false; this.keys = [];
