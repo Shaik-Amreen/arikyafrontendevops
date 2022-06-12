@@ -11,11 +11,11 @@ export class CommonService {
   postrequest(url: any, data: any) {
     console.log(data, "dtayaiguduiqwiud")
     data = { data: btoa(JSON.stringify(data)) }
-    console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-    let response: any = this.http.post(url, data)
-    console.log(response, "response")
+    // console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    return this.http.post(url, data)
+    // console.log(response, "response")
     // return { message: "success" }
-    return response.data
+    // return response.data
   }
 
 }
