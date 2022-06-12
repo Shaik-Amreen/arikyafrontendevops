@@ -15,7 +15,7 @@ export class CompanyusersdataComponent implements OnInit {
   nodata = false
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
     this.commonservice.postrequest('http://localhost:4000/facultydetails/finddata', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
-      (res: any) => {  this.facdata = res; this.nodata = true },
+      (res: any) => { this.facdata = res; this.nodata = true },
       (err: any) => console.log(err)
     );
     // console.log(this.mail)

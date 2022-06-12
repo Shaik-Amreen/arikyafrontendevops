@@ -25,7 +25,7 @@ export class TrainingComponent implements OnInit {
         }
         this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardquizdata', { ... this.compare, type: 'quiz' }).subscribe(
           (res: any) => {
-             this.data = res;
+            this.data = res;
 
           })
         this.commonservice.postrequest('http://localhost:4000/Dashboard/dashboardcodedata', { ...this.compare, type: 'code' }).subscribe(
@@ -165,7 +165,7 @@ export class TrainingComponent implements OnInit {
 
   setOptions() {
 
-    console.log(this.totaldata.message, this.codedata.message, this.data.message,"this.totaldata.message, this.codedata.message, this.data.message")
+    console.log(this.totaldata.message, this.codedata.message, this.data.message, "this.totaldata.message, this.codedata.message, this.data.message")
     let opt = [this.totaldata.message, this.codedata.message, this.data.message]
     let optkey = ['OVERALL', 'CODING ', 'QUIZ']
 

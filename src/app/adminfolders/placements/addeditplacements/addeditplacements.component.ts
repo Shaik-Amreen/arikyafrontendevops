@@ -18,7 +18,7 @@ export class AddeditplacementsComponent implements OnInit {
 
 
     if (sessionStorage.getItem('editplacements') == 'yes') {
-     
+
       this.commonservice.postrequest('http://localhost:4000/Placement/findonePlacement', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: sessionStorage.getItem('placementcyclename') }).subscribe(
         (res: any) => {
           res = res.docs

@@ -8,7 +8,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./quiztopics.component.css']
 })
 export class QuiztopicsComponent implements OnInit {
-  topics: any = [0]; viewRating: any = []; date: any = new Date().toISOString();currentValuecharts:any=[]
+  topics: any = [0]; viewRating: any = []; date: any = new Date().toISOString(); currentValuecharts: any = []
   currentValue: any = []; quizsubmit = false
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService, @Inject(DOCUMENT) private document: any) {
 

@@ -18,7 +18,7 @@ export class StudentoffersComponent implements OnInit {
   constructorcall() {
     this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
-        res=res.reverse()
+        res = res.reverse()
         this.overdata = res;
         // console.log(this.overdata, "offeresssssssssss data");
         this.overdata.forEach((e: { placed: string; offerletter: string }) => {

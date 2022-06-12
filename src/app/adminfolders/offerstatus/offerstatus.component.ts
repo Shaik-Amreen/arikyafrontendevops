@@ -25,7 +25,7 @@ export class OfferstatusComponent implements OnInit {
   }
   fetch() {
     this.showDownload = false
-   
+
     this.commonservice.postrequest('http://localhost:4000/placementstatus/singlemultipleoffers', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: this.placementcycle }).subscribe(
       (res: any) => {
         this.offerdata = res

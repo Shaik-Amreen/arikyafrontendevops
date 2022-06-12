@@ -107,7 +107,7 @@ export class SignpasscodeComponent implements OnInit {
   btech = ['cse', 'ece', 'eee', 'mech', 'civil', 'cst']; role: any = sessionStorage.getItem('role')
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
     // console.log(this.role);
-    if (this.role == 'admin' || this.role == 'faculty' || this.role=='technicaltrainer') { this.modedata = this.adminsignup }
+    if (this.role == 'admin' || this.role == 'faculty' || this.role == 'technicaltrainer') { this.modedata = this.adminsignup }
     else if (this.role == 'student') { this.modedata = this.studentsignup }
     else { this.modedata = ['company'] }
     // console.log(this.modedata)
@@ -162,7 +162,7 @@ export class SignpasscodeComponent implements OnInit {
           if (res.message == 'success') {
             sessionStorage.setItem('mail', res.user);
             sessionStorage.setItem('token', res.token)
-            if (this.role == 'admin' || this.role=='technicaltrainer') { this.router.navigate(['/admin']) }
+            if (this.role == 'admin' || this.role == 'technicaltrainer') { this.router.navigate(['/admin']) }
             else if (this.role == 'student') { this.router.navigate(['/studentform']) }
             else if (this.role == 'faculty') { this.router.navigate(['/faculty']) }
           }

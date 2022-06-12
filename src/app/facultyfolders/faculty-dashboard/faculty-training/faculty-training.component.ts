@@ -118,7 +118,7 @@ export class FacultyTrainingComponent implements OnInit {
   view(e: any, f: any) {
     (e == 'quiz') ? (this.viewdata = this.data.data[f], this.type = 'QUIZ', this.dept = f) :
       (e == 'code') ? (this.viewdata = this.codedata.data[f], this.type = 'CODE', this.dept = f) :
-        (e == 'overall') ? (this.viewdata = this.totaldata.data[f], this.type = 'OVERALL', this.dept = f, this.totallen = this.viewdata): null
+        (e == 'overall') ? (this.viewdata = this.totaldata.data[f], this.type = 'OVERALL', this.dept = f, this.totallen = this.viewdata) : null
   }
   //download data
   exportexcel(): void {

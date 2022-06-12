@@ -46,7 +46,7 @@ export class StudentNavbarComponent implements OnInit {
               this.firstname = sessionStorage.getItem('firstname')
               this.pId = this.firstname.charAt(0)
               // console.log(response,"llllllllllllllllll")
-              response = response.data1 .filter((r: any) => r[r.placementcyclename] != '')
+              response = response.data1.filter((r: any) => r[r.placementcyclename] != '')
               if (response.length != 0) {
                 this.content.splice(1, 0, { label: "Offers", rlink: "/student/offers", icon: 'bx bx-buildings' })
               }

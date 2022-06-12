@@ -16,7 +16,7 @@ export class UsersdataComponent implements OnInit {
   nodata = false
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
     this.commonservice.postrequest('http://localhost:4000/facultydetails/finddata', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
-      (res: any) => {  this.facdata = res; this.nodata = true },
+      (res: any) => { this.facdata = res; this.nodata = true },
       (err: any) => console.log(err)
     );
     // console.log(this.mail)
@@ -47,7 +47,7 @@ export class UsersdataComponent implements OnInit {
 
   access() {
     this.commonservice.postrequest('http://localhost:4000/updateuser', { quizaccess: this.quizaccess, codeaccess: this.codeaccess, ...this.userSignUpForm.value }).subscribe(
-      (res: any) => { 
+      (res: any) => {
         // console.log(res, 1234567890) 
       },
       (err: any) => console.log(err)
@@ -59,7 +59,7 @@ export class UsersdataComponent implements OnInit {
     this.commonservice.postrequest('http://localhost:4000/updateuser', this.userSignUpForm.value).subscribe(
       (res: any) => {
         //  console.log(res)
-       },
+      },
       (err: any) => console.log(err)
     )
   }

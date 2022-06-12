@@ -27,9 +27,9 @@ export class StudentprofileComponent implements OnInit {
       profilepic: new FormControl(""),
     });
 
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') ,query2:"placementstatusmail",query3:"stdprofilerating"}).subscribe(
+    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), query2: "placementstatusmail", query3: "stdprofilerating" }).subscribe(
       (res: any) => {
-        console.log("all data",res)
+        console.log("all data", res)
         this.course = res.data.course
         this.getdata = true
         this.data = res.data;

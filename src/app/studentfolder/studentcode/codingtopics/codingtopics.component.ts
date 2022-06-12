@@ -10,7 +10,7 @@ import { DOCUMENT } from '@angular/common';
 
 export class CodingtopicsComponent implements OnInit {
 
-  topics: any = [0]; viewRating: any = [];currentValuecharts:any=[];
+  topics: any = [0]; viewRating: any = []; currentValuecharts: any = [];
   searchtopic: any = ''
   currentValue: any = []; codesubmit: any = false
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService, @Inject(DOCUMENT) private document: any) {
@@ -34,7 +34,7 @@ export class CodingtopicsComponent implements OnInit {
 
         this.topics.forEach((data: any) => {
           let s;
-          console.log(data,"data")
+          console.log(data, "data")
           if (data.ratings) { s = data.ratings.filter((r: any) => r.mail == sessionStorage.getItem('mail')); }
           if (s && s.length > 0 && s[0].starttime != "-") {
             this.viewRating.push(true);
@@ -42,7 +42,7 @@ export class CodingtopicsComponent implements OnInit {
             this.currentValuecharts.push(parseFloat(s[0].main).toFixed(2))
           }
           else {
-            if(new Date() >= new Date(data.startson)){
+            if (new Date() >= new Date(data.startson)) {
               if (new Date() >= new Date(data.startson) && new Date() <= new Date(data.endson)) {
                 this.viewRating.push(false)
               }

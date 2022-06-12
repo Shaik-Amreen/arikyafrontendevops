@@ -54,15 +54,16 @@ export class LoginComponent implements OnInit {
       this.signin = "Signing... In"
       this.commonservice.postrequest('http://localhost:4000/findoneusers', this.formgroupdata.value).subscribe(
         (res1: any) => {
+          console.log(res1)
           this.signin = "Sign In";
           // console.log("signinworks", res1);
           (res1.status == 'error') ? this.errorMessage = res1.error :
-            sessionStorage.setItem('mail', this.formgroupdata.value.mail); 
-            sessionStorage.setItem('token', res1.token); 
-            // sessionStorage.setItem('role',res1.role)
-            sessionStorage.setItem('organisation_id', res1.organisation_id);
+            sessionStorage.setItem('mail', this.formgroupdata.value.mail);
+          sessionStorage.setItem('token', res1.token);
+          // sessionStorage.setItem('role',res1.role)
+          sessionStorage.setItem('organisation_id', res1.organisation_id);
           // console.log(this.formgroupdata.value.mail, res1.token, res1.organisation_id);
-          (res1.role == 'admin' || res1.role=='technicaltrainer') ? this.router.navigate(['/admin']) : (res1.role == 'student') ? ((res1.login == '') ? this.router.navigate(['/studentform']) : this.router.navigate(['/student/studenthome'])) : (res1.role == 'faculty') ? this.router.navigate(['/faculty/home']) : null
+          (res1.role == 'admin' || res1.role == 'technicaltrainer') ? this.router.navigate(['/admin']) : (res1.role == 'student') ? ((res1.login == '') ? this.router.navigate(['/studentform']) : this.router.navigate(['/student/studenthome'])) : (res1.role == 'faculty') ? this.router.navigate(['/faculty/home']) : null
         },
         (err: any) => console.log(err)
       )
@@ -72,7 +73,7 @@ export class LoginComponent implements OnInit {
   viewforgotpass: any = true
   changeMode() { this.mail = ''; this.viewforgotpass = !this.viewforgotpass }
   buttonMode = 'SEND OTP';
-  
+
   forget(f: NgForm) {
     this.mailerr = ''; f.value.mail = f.value.mail.toLowerCase()
     this.buttonMode = 'SENDING'; this.invalidotp = false

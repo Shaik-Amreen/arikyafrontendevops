@@ -247,9 +247,9 @@ export class AddeditcodeComponent implements OnInit {
     if (sessionStorage.getItem('editcode') == 'yes') { url = 'http://localhost:4000/Practice/editcodequiz' }
     else { url = 'http://localhost:4000/Practice/uploadpractice' }
     let comparedate = new Date(this.datekill)
-    if (comparedate > startson) {  document.getElementById("startson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
-    else if (endson <= startson) {  document.getElementById("endson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
-    else if (this.timerror != '') {  document.getElementById("totaltime")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
+    if (comparedate > startson) { document.getElementById("startson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
+    else if (endson <= startson) { document.getElementById("endson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
+    else if (this.timerror != '') { document.getElementById("totaltime")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
     else if (this.final.status == 'VALID') {
       // console.log("this.final.status,this.ques.status----------->", this.final.value.startson)
       // this.final.value.startson = startson.toISOString()
