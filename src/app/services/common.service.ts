@@ -9,8 +9,6 @@ export class CommonService {
 
 
   postrequest(url: any, data: any) {
-    console.log(data, "dtayaiguduiqwiud")
-    data = { data: btoa(JSON.stringify(data)) }
     // console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     return this.http.post(url, data)
     // console.log(response, "response")
