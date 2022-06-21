@@ -24,10 +24,11 @@ export class QuiztopicslistComponent implements OnInit {
     }
     this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
       (res: any) => {
-        // console.log(res)
+        // console.log(res,"happyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
 
 
-        this.quiztopics = res; this.len2 = res.length; this.quiztopics.reverse(); this.nodata = true
+        this.quiztopics = res.data; this.len2 = res.length;
+         this.quiztopics.reverse(); this.nodata = true
       })
   }
   ngOnInit(): void {
