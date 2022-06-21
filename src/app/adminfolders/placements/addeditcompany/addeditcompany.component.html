@@ -63,15 +63,8 @@
             <span *ngIf="k.tags=='combine'">
                 <span class="row" *ngIf="k.subof!='stipend'">
                     <span class="{{k.cname}}" *ngFor="let c of k.fields"><br />
-
                         <span *ngIf="c.tags=='input'">
                             <strong>{{c.label}}</strong><br>
-
-
-
-
-
-
                             <input class="form-control shadow-none" id="{{c.formname}}" style="background-color: #fff;"
                                 [readOnly]="c.formname=='placementcyclename'"
                                 [ngClass]="addcompanyform.controls[c.formname].status=='INVALID' && companyform==true ? 'form-control  shadow-none invalidstyle' : 'form-control  shadow-none'"
@@ -83,7 +76,6 @@
                                         *ngIf="(d.companyname.toLowerCase()).includes(addcompanyform.value.companyname.toLowerCase()) && addcompanyform.value.companyname!=''">{{d.companyname}}</button>
                                 </span>
                             </div>
-
                             <!-- <span style="color: #a5081a;"
                                 *ngIf="addcompanyform.controls[c.formname].status=='INVALID' && companyform==true">
                                 please fill this field
@@ -98,6 +90,7 @@
                                 </span>
                                 <!-- {{addcompanyform.controls[c.formname].errors|json}} -->
                                 <span *ngIf="addcompanyform.controls[c.formname].errors?.min">
+                                    <span *ngIf="addcompanyform.value.ongoingbacklogs > addcompanyform.value.totalbacklogs">It must be atleast{{addcompanyform.value.ongoingbacklogs}}</span>
                                     {{c.patternerror}}
                                 </span>
                                 <span *ngIf="addcompanyform.controls[c.formname].errors?.max">

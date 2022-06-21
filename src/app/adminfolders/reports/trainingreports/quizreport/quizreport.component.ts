@@ -64,7 +64,7 @@ export class QuizreportComponent implements OnInit {
   gettopics() {
     this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
       (res: any) => {
-        res = res.filter((e: any) => new Date(e.startson) <= new Date())
+        res = res.data.filter((e: any) => new Date(e.startson) <= new Date())
         this.topics = res;
         this.display = false
         // console.log("this.topics", this.topics)

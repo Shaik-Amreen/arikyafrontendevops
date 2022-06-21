@@ -27,7 +27,7 @@ export class QuiztopicsComponent implements OnInit {
             sessionStorage.removeItem("quizsubmit")
           }, 4000)
         }
-        this.topics = res;
+        this.topics = res.data;
         this.topics = this.topics.filter((to: any) => new Date() >= new Date(to.startson))
         // console.log("res", res)
         this.topics.forEach((data: any) => {

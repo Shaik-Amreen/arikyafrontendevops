@@ -28,7 +28,7 @@ export class CodingtopicsComponent implements OnInit {
             sessionStorage.removeItem("codesubmit")
           }, 5000)
         }
-        this.topics = res;
+        this.topics = res.data;
         // console.log(res)
         this.topics = this.topics.filter((to: any) => new Date() >= new Date(to.startson))
 

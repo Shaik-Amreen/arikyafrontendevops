@@ -13,7 +13,7 @@ export class CompanyquiztopiclistComponent implements OnInit {
   constructor(private commonservice: CommonService, private router: Router) {
 
     this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', { organisation_id: sessionStorage.getItem("organisation_id"), type: 'quiz' }).subscribe(
-      (res: any) => { this.quiztopics = res; this.len2 = res.length; this.quiztopics.reverse(); this.nodata = true })
+      (res: any) => {res=res.data; this.quiztopics = res; this.len2 = res.length; this.quiztopics.reverse(); this.nodata = true })
   }
   ngOnInit(): void {
   }

@@ -235,9 +235,8 @@ export class AddeditcompanyComponent implements OnInit {
 
         this.commonservice.postrequest('http://localhost:4000/placementstatus/getHiring', d).subscribe(
           (response: any) => {
-
+            console.log(response,"response")
             this.alreadydata = response
-
           })
 
         let uniquedata = 0;
@@ -429,7 +428,7 @@ export class AddeditcompanyComponent implements OnInit {
           (res: any) => {
             this.commonservice.postrequest('http://localhost:4000/notification/postadminoti', temp).subscribe(
               (res1: any) => {
-                // console.log(res)
+                console.log(res)
                 if (res.message == 'success') { this.router.navigate(['/admin/placements/placementsdetails']); sessionStorage.setItem("successpopup", 'success') }
                 else { this.errorMsg = 'Company already exists in this cycle' }
               },
@@ -440,7 +439,6 @@ export class AddeditcompanyComponent implements OnInit {
         );
       }
     }
-
     else if (parseInt(this.addcompanyform.value.ongoingbacklogs) > parseInt(this.addcompanyform.value.totalbacklogs)) {
       document.getElementById('ongoingbacklogs')?.scrollIntoView({ behavior: "smooth", block: 'center' });
     }

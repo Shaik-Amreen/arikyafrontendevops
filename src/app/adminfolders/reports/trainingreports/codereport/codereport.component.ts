@@ -66,7 +66,7 @@ export class CodereportComponent implements OnInit {
   gettopics() {
     this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
       (res: any) => {
-        this.topics = res;
+        this.topics = res.data;
         this.display = false
         // console.log("this.topics", this.topics)
       }
