@@ -369,57 +369,52 @@ export class AdminstudentprofileComponent implements OnInit {
         this.data.yearofjoining = parseInt(res.data.yearofjoining)
         this.data.profilepic == '' ? this.data.profilepic = "../../../../assets/user.png" : null;
         this.image = this.data.profilepic
+        this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', {
+          organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail')
+        }).subscribe(
+          (rescheck: any) => {
+            this.overdata = rescheck;
+            this.overdata.forEach((a: any) => {
+              if (a.offerstatus == 'yes') { this.offers++ }
+              if (a.registered == 'yes') { this.applications++ }
+            });
+            // console.log("checkmailnumber", rescheck);
+            this.overdata1 = { ...rescheck.ac, ...rescheck.data }
+            this.showdata = true
+
+
+            this.commonservice.postrequest('http://localhost:4000/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("studentmail") }).subscribe(
+              (respro: any) => {
+                // console.log("respro.data", respro)
+                this.stdrates = true
+                this.stdallcodedata = respro.stdallcodedata
+                this.stdallquizdata = respro.stdallquizdata
+                this.stdallratedata = respro.stdallratedata
+                this.stdeachcoderate = respro.stdeachcoderate
+                this.stdeachquizrate = respro.stdeachquizrate
+                this.stdeachcoderate.forEach((s: any) => {
+                  this.codetopics.push(s.topic)
+
+                  this.coderate.push(s.main)
+                })
+                this.stdeachquizrate.forEach((s: any) => {
+                  this.quiztopics.push(s.topic)
+                  this.quizrate.push(s.main)
+                })
+
+                this.setOptions()
+              })
+          },
+          (err: any) => console.log(err)
+        );
         // console.log("this.images:", this.image)
         this.nodata = true
       })
 
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
-      (res: any) => {
-
-        // console.log("this.overdata", res); 
-        this.overdata = res;
-
-        this.overdata.forEach((a: any) => {
-          if (a.offerstatus == 'yes') { this.offers++ }
-          if (a.registered == 'yes') { this.applications++ }
-        });
-      },
-      (err: any) => console.log(err)
-    );
     this.getdata = true
 
     // console.log(this.getdata, "llllllllllllllllll")
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', {
-      organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('studentmail')
-    }).subscribe(
-      (res: any) => {
-        // console.log("checkmailnumber", res);
-        this.overdata1 = { ...res.ac, ...res.data }
-        this.showdata = true
-      },
-      (err: any) => console.log(err)
-    );
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("studentmail") }).subscribe(
-      (res: any) => {
-        // console.log("res.data", res)
-        this.stdrates = true
-        this.stdallcodedata = res.stdallcodedata
-        this.stdallquizdata = res.stdallquizdata
-        this.stdallratedata = res.stdallratedata
-        this.stdeachcoderate = res.stdeachcoderate
-        this.stdeachquizrate = res.stdeachquizrate
-        this.stdeachcoderate.forEach((s: any) => {
-          this.codetopics.push(s.topic)
 
-          this.coderate.push(s.main)
-        })
-        this.stdeachquizrate.forEach((s: any) => {
-          this.quiztopics.push(s.topic)
-          this.quizrate.push(s.main)
-        })
-
-        this.setOptions()
-      })
   }
 
   notyet: any; all: any; stdrates = false; allLength: any

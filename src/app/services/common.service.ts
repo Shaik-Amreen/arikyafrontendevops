@@ -12,6 +12,8 @@ export class CommonService {
 
   postrequest(url: any, data: any) {
 
+    // console.log(url,"urrrllll")
+
     if (url == 'http://localhost:4000/verify') {
       return this.http.post(url, data)
     }
@@ -21,20 +23,19 @@ export class CommonService {
   }
 
   postText(url: string, data: any): Observable<any> {
-
     const body = window.btoa(JSON.stringify(data));
-
     return this.handleResponse(
       this.http.post(url, { data: body }).pipe(map((res: any) => {
         let response: any = window.atob(res.data);
         response = JSON.parse(response);
+        // console.log(response,"responseeeeeeeeeeeeeee","urlllllllllll",url,body,"data")
         return response;
       }))
     )
   }
 
   handleResponse(res: any) {
-    console.log(res)
+    // console.log(res)
     return res
   }
 
