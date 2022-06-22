@@ -1,41 +1,49 @@
-import { HttpClient } from '@angular/common/http'; import { CommonService } from '../../../services/common.service';
+import { HttpClient } from '@angular/common/http';
+import { CommonService } from '../../../services/common.service';
 import { Component, Input } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-viewcompletedquizzes',
   templateUrl: './viewcompletedquizzes.component.html',
-  styleUrls: ['./viewcompletedquizzes.component.css']
+  styleUrls: ['./viewcompletedquizzes.component.css'],
 })
 export class ViewcompletedquizzesComponent {
-
-  quizdata: any = []; score: any = 0; topic: any = sessionStorage.getItem('topic');
-  quizdetails: any; starttime: any; startdate: any; endtime: any; enddate: any
+  quizdata: any = [];
+  score: any = 0;
+  topic: any = sessionStorage.getItem('topic');
+  quizdetails: any;
+  starttime: any;
+  startdate: any;
+  endtime: any;
+  enddate: any;
   constructor(private http: HttpClient, private commonservice: CommonService) {
-    this.commonservice.postrequest('http://localhost:4000/Practice/viewattemptedquiz', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), topic: sessionStorage.getItem('topic') }).subscribe(
-      (res: any) => {
-        this.score = res.data
-        // console.log(res, "ressssssssssssssss")
-        this.quizdata = res.data.attemptedquiz;
-        // console.log(this.quizdata, ";;;;;;;;;;;;;;;;;;;")
-        this.quizdetails = res.details
-        // console.log(this.score.endtime, this.score.starttime)
-        if (this.score.starttime = "-") {
-          this.starttime = ""
-          this.startdate = "Not Attempted"
-          this.endtime = ""
-          this.enddate = "Not Attempted"
-          this.score.rank = "-"
-        }
-        else {
-          this.starttime = new Date(this.score.starttime).toLocaleTimeString()
-          this.startdate = new Date(this.score.starttime).toLocaleDateString()
-          this.endtime = new Date(this.score.endtime).toLocaleTimeString()
-          this.enddate = new Date(this.score.endtime).toLocaleDateString()
-        }
-        // console.log("this.quizdetails", this.quizdetails);
-        // console.log("this.quizdata", this.quizdata);
+    this.commonservice
+      .postrequest('http://localhost:4000/Practice/viewattemptedquiz', {
+        organisation_id: sessionStorage.getItem('organisation_id'),
+        mail: sessionStorage.getItem('mail'),
+        topic: sessionStorage.getItem('topic'),
       })
+      .subscribe((res: any) => {
+        // console.log(res.data,"res.data")
+        res.data = JSON.parse(res.data);
+        // console.log(res.data, 'ressssssssssssssss');
+        this.score = res.data;
+        this.quizdata = res.data.attemptedquiz;
+        this.quizdetails = res.details;
+        if ((this.score.starttime == '-')) {
+          this.starttime = '';
+          this.startdate = 'Not Attempted';
+          this.endtime = '';
+          this.enddate = 'Not Attempted';
+          this.score.rank = '-';
+        } else {
+          this.starttime = new Date(this.score.starttime).toLocaleTimeString();
+          this.startdate = new Date(this.score.starttime).toLocaleDateString();
+          this.endtime = new Date(this.score.endtime).toLocaleTimeString();
+          this.enddate = new Date(this.score.endtime).toLocaleDateString();
+        }
+      });
   }
 
   editorConfig: AngularEditorConfig = {
@@ -58,7 +66,7 @@ export class ViewcompletedquizzesComponent {
       { class: 'arial', name: 'Arial' },
       { class: 'times-new-roman', name: 'Times New Roman' },
       { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
     ],
     customClasses: [
       {
@@ -67,7 +75,7 @@ export class ViewcompletedquizzesComponent {
       },
       {
         name: 'redText',
-        class: 'redText'
+        class: 'redText',
       },
       {
         name: 'titleText',
@@ -99,7 +107,7 @@ export class ViewcompletedquizzesComponent {
         'insertUnorderedList',
         'insertOrderedList',
         'heading',
-        'fontName'
+        'fontName',
       ],
       [
         'fontSize',
@@ -113,11 +121,10 @@ export class ViewcompletedquizzesComponent {
         'insertHorizontalRule',
         'removeFormat',
         'toggleEditorMode',
-      ]
-    ]
+      ],
+    ],
   };
 }
-
 
 // attempt(){
 //    this.commonservice.postrequest('http://localhost:4000/Practice/viewattemptedquiz',{ organisation_id: sessionStorage.getItem("organisation_id"),rollno: "19691A0559", topicname: this.quiztopic }).subscribe(
