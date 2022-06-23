@@ -325,12 +325,12 @@
                                     style="background-color:  crimson;" (click)="removestu()">{{removestatus}}</button>
                                 <br>
                             </div>
-                            <div><strong>Included Companies:</strong>&nbsp;
+                            <div><strong *ngIf="companydetails.acceptedList.length>0">Included Companies:</strong>&nbsp;
                                 <span *ngFor="let company of companydetails.acceptedList;index as i;">
                                     {{i+1}}.{{company[0].companyname}}
                                 </span>
                             </div>
-                            <div><strong>Excluded Companies:</strong>&nbsp;
+                            <div><strong *ngIf="companydetails.rejectedList.length>0">Excluded Companies:</strong>&nbsp;
                                 <span *ngFor="let company of companydetails.rejectedList;index as i;">
                                     {{i+1}}.{{company[0].companyname}}
                                 </span>
