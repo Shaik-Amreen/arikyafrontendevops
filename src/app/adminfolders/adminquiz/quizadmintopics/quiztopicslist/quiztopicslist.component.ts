@@ -22,7 +22,7 @@ export class QuiztopicslistComponent implements OnInit {
         sessionStorage.removeItem("successpopup")
       }, 5000)
     }
-    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
+    this.commonservice.postrequest('/Practice/gettopics', this.compare).subscribe(
       (res: any) => {
         // console.log(res,"happyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
 

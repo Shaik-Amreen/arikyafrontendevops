@@ -190,7 +190,7 @@ export class AddeditcompanyComponent implements OnInit {
     })
     // console.log(this.addcompanyform)
     //for suggestions of company companyname
-    this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => this.data = res,
       (err: any) => console.log(err)
     )
@@ -225,7 +225,7 @@ export class AddeditcompanyComponent implements OnInit {
   alreadydata: any = []
   fillForm(d: any) {
     this.suggestions = false
-    this.commonservice.postrequest('http://localhost:4000/company/findcompany', d).subscribe(
+    this.commonservice.postrequest('/company/findcompany', d).subscribe(
       (res: any) => {
 
         for (let i of res.companydetails.eligibilties) {
@@ -233,7 +233,7 @@ export class AddeditcompanyComponent implements OnInit {
           this.deptstoredata.push(i[0].ff)
         }
 
-        this.commonservice.postrequest('http://localhost:4000/placementstatus/getHiring', d).subscribe(
+        this.commonservice.postrequest('/placementstatus/getHiring', d).subscribe(
           (response: any) => {
             console.log(response,"response")
             this.alreadydata = response
@@ -417,7 +417,7 @@ export class AddeditcompanyComponent implements OnInit {
         }
 
         let status = (sessionStorage.getItem('editcompany') == "yes") ? "modified " : 'added';
-        let url = (sessionStorage.getItem('editcompany') == "yes") ? 'http://localhost:4000/company/updatecompany' : 'http://localhost:4000/company/createcompany';
+        let url = (sessionStorage.getItem('editcompany') == "yes") ? '/company/updatecompany' : '/company/createcompany';
         let temp = {
           date: new Date(), organisation_id: sessionStorage.getItem('organisation_id'), doneby: sessionStorage.getItem('mail'),
           firstname: sessionStorage.getItem('firstname'),
@@ -426,7 +426,7 @@ export class AddeditcompanyComponent implements OnInit {
         // console.log("url,this.addcompanyform.value", url, this.addcompanyform.value)
         this.commonservice.postrequest(url, this.addcompanyform.value).subscribe(
           (res: any) => {
-            this.commonservice.postrequest('http://localhost:4000/notification/postadminoti', temp).subscribe(
+            this.commonservice.postrequest('/notification/postadminoti', temp).subscribe(
               (res1: any) => {
                 console.log(res)
                 if (res.message == 'success') { this.router.navigate(['/admin/placements/placementsdetails']); sessionStorage.setItem("successpopup", 'success') }
@@ -643,7 +643,7 @@ export class AddeditcompanyComponent implements OnInit {
     })
 
     //for suggestions of company companyname
-    this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { college_id: sessionStorage.getItem("college_id") }).subscribe(
+    this.commonservice.postrequest('/company/findallcompany', { college_id: sessionStorage.getItem("college_id") }).subscribe(
       (res: any) => this.data = res,
       (err: any) => console.log(err)
     )

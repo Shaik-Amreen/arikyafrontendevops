@@ -26,7 +26,7 @@ export class OverallcodequizComponent implements OnInit {
   }
 
   alldata() {
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/allcodequiztestratings', this.compare).subscribe(
+    this.commonservice.postrequest('/Dashboard/allcodequiztestratings', this.compare).subscribe(
       (res: any) => {
         this.overalldata = res.data;
         this.nodata = true

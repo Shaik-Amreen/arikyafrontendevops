@@ -41,7 +41,7 @@ export class CodereportComponent implements OnInit {
     this.loadstatus = true
     this.topic1 = t
     this.heading = t
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { ...this.compare, topic: this.topic1 }).subscribe(
+    this.commonservice.postrequest('/Dashboard/eachtestratings', { ...this.compare, topic: this.topic1 }).subscribe(
       (res: any) => {
         this.stdseachtest = res.data
         this.visibleData = res.data
@@ -52,7 +52,7 @@ export class CodereportComponent implements OnInit {
   }
 
   allcodeorquiztests() {
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', this.compare).subscribe(
+    this.commonservice.postrequest('/Dashboard/alltestratings', this.compare).subscribe(
       (res: any) => {
         // console.log(res)
         this.alldata = true
@@ -64,7 +64,7 @@ export class CodereportComponent implements OnInit {
   }
 
   gettopics() {
-    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
+    this.commonservice.postrequest('/Practice/gettopics', this.compare).subscribe(
       (res: any) => {
         this.topics = res.data;
         this.display = false

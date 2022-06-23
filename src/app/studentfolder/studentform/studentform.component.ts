@@ -293,7 +293,7 @@ export class StudentformComponent implements OnInit {
   formode: any = false
   constructor(private http: HttpClient, private commonservice: CommonService, private router: Router) {
     let form: any = {}
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         // console.log("res.data", res.data)
         if (res.data.dob == '') {
@@ -341,7 +341,7 @@ export class StudentformComponent implements OnInit {
     // console.log('heloooo')
     this.studentformvalue = true;
     if (this.studentdata.status == 'VALID') {
-      this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac', this.studentdata.value).subscribe(
+      this.commonservice.postrequest('/Studentdata/updatestudentdatac', this.studentdata.value).subscribe(
         (res: any) => {
           if (res.message == 'success') {
             this.displaypopup = true; this.popup = "Successfully submitted"; setTimeout(() => { this.displaypopup = false }, 5000);

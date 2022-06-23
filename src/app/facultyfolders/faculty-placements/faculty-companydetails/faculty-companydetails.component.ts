@@ -25,11 +25,11 @@ export class FacultyCompanydetailsComponent implements OnInit {
     sessionStorage.removeItem('editcompany')
 
     this.mailstatus = 'SEND MAIL'; this.addstatus = 'ADD STUDENTS'
-    this.commonservice.postrequest('http://localhost:4000/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+    this.commonservice.postrequest('/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (res: any) => {
         // console.log(res);
 
-        this.commonservice.postrequest('http://localhost:4000/placementstatus/eligible', res.companydetails).subscribe(
+        this.commonservice.postrequest('/placementstatus/eligible', res.companydetails).subscribe(
           (rese: any) => {
             // console.log(rese, "companydetails"); 
             this.nodata = true
@@ -37,7 +37,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
             this.placed = rese.edata.length
             if (new Date(res.companydetails.deadline) < new Date() && res.companydetails.deadline != 'not updated') {
               res.companydetails.status = 'closed';
-              this.commonservice.postrequest('http://localhost:4000/company/updatestatus', res.companydetails).subscribe(
+              this.commonservice.postrequest('/company/updatestatus', res.companydetails).subscribe(
                 (response: any) => {
                   // console.log(response)
                   this.companydetails = res.companydetails;
@@ -70,7 +70,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
   getWorkflow() {
     this.lastItem = false
 
-    this.commonservice.postrequest('http://localhost:4000/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+    this.commonservice.postrequest('/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (reset: any) => {
         // console.log("reset", reset)
 
@@ -106,7 +106,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
       this.image = event.target.result;
       this.companydetails.companylogo = (this.image);
     }
-    this.commonservice.postrequest('http://localhost:4000/company/updatecompany', this.companydetails).subscribe(
+    this.commonservice.postrequest('/company/updatecompany', this.companydetails).subscribe(
       (res: any) => {
         // console.log("res image", res)
       })
@@ -126,9 +126,9 @@ export class FacultyCompanydetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.commonservice.postrequest('http://localhost:4000/company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
+    this.commonservice.postrequest('/company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
       (res: any) => {
-        this.commonservice.postrequest('http://localhost:4000/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+        this.commonservice.postrequest('/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
           (rese: any) => {
             this.applicantslist = rese; this.allcom = res;
           },
@@ -161,7 +161,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
       this.companydetails.deadline = this.deadline;
       if (new Date(this.deadline) < new Date()) { this.companydetails.status = 'closed' }
       else { this.companydetails.status = 'opened' }
-      this.commonservice.postrequest('http://localhost:4000/company/updatestatus', this.companydetails).subscribe(
+      this.commonservice.postrequest('/company/updatestatus', this.companydetails).subscribe(
         (res: any) => {
           this.companydetails = res.data; this.ch = 0; this.getWorkflow()
         },
@@ -174,7 +174,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
 
   sendmail() {
     this.mailstatus = 'SENDING MAIL';
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/sendmail', this.companydetails).subscribe(
+    this.commonservice.postrequest('/placementstatus/sendmail', this.companydetails).subscribe(
       (res: any) => {
         console.log(res)
 
@@ -265,7 +265,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
   addstu() {
     this.companydetails.presentcompany = this.comselected;
     this.addstatus = 'ADDING'
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/addstu', this.companydetails).subscribe(
+    this.commonservice.postrequest('/placementstatus/addstu', this.companydetails).subscribe(
       (res: any) => {
         this.addstatus = 'ADDED STUDENTS'
       },
@@ -282,7 +282,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
 
     let data = { organisation_id: sessionStorage.getItem("organisation_id"), accepted: this.mapping, rejected: this.rejectedlist, lastItem: this.lastItem }
     // console.log("data---->", data)
-    this.commonservice.postrequest('http://localhost:4000/hiringstudent/posthiringstudent', data).subscribe(
+    this.commonservice.postrequest('/hiringstudent/posthiringstudent', data).subscribe(
       (res: any) => { this.getWorkflow(); this.saveButton = "SAVE"; this.mapping = []; this.keys = []; },
       (err: any) => console.log(err)
     )
@@ -290,7 +290,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
 
 
   updatethelist() {
-    this.commonservice.postrequest('http://localhost:4000/hiringstudent/hiringupdate', { organisation_id: sessionStorage.getItem("organisation_id"), accepted: this.mapping, rejected: this.rejectedlist, lastItem: this.lastItem }).subscribe(
+    this.commonservice.postrequest('/hiringstudent/hiringupdate', { organisation_id: sessionStorage.getItem("organisation_id"), accepted: this.mapping, rejected: this.rejectedlist, lastItem: this.lastItem }).subscribe(
       (res: any) => { this.saveButton = "SAVE"; this.mapping = []; this.keys = []; this.setedit = false; this.getWorkflow() },
       (err: any) => console.log(err)
     )
@@ -335,7 +335,7 @@ export class FacultyCompanydetailsComponent implements OnInit {
 
   singlestudentmail() {
     this.single = 'ADDING'
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/singlestudent', { organisation_id: sessionStorage.getItem("organisation_id"), ...this.companydetails, rollnumber: this.singlestudent }).subscribe(
+    this.commonservice.postrequest('/placementstatus/singlestudent', { organisation_id: sessionStorage.getItem("organisation_id"), ...this.companydetails, rollnumber: this.singlestudent }).subscribe(
       (res: any) => { console.log("karthik", res); if (res.message == "success") { this.single = 'ADDED' } else if (res.message == "exist") { this.single = 'ALREADY EXIST' } },
       (err: any) => console.log(err)
     )

@@ -24,7 +24,7 @@ export class ContactComponent implements OnInit {
 
   send() {
     if (this.feedback.status == 'VALID') {
-      this.commonservice.postrequest('http://localhost:4000/feedback', this.feedback.value).subscribe(
+      this.commonservice.postrequest('/feedback', this.feedback.value).subscribe(
         (res: any) => {
           this.route.navigate(['/arikya'])
         })

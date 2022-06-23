@@ -16,7 +16,7 @@ export class StudentoffersComponent implements OnInit {
   }
 
   constructorcall() {
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         res = res.reverse()
         this.overdata = res;
@@ -63,7 +63,7 @@ export class StudentoffersComponent implements OnInit {
     if (this.offerstatus == 'accepted') { c.placed = "yes" }
     if (this.offerstatus == 'rejected') { c.placed = "no" }
 
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), companyname: c.companyname, offerletter: this.base64Output, offerstatus: this.offerstatus, mail: sessionStorage.getItem('mail'), verifiedoffer: 'no', placed: c.placed }).subscribe(
+    this.commonservice.postrequest('/placementstatus/updateofferletter', { organisation_id: sessionStorage.getItem("organisation_id"), companyname: c.companyname, offerletter: this.base64Output, offerstatus: this.offerstatus, mail: sessionStorage.getItem('mail'), verifiedoffer: 'no', placed: c.placed }).subscribe(
       (res: any) => {
         // console.log("it works2");
         // console.log(res)

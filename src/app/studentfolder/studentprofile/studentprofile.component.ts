@@ -27,7 +27,7 @@ export class StudentprofileComponent implements OnInit {
       profilepic: new FormControl(""),
     });
 
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), query2: "placementstatusmail", query3: "stdprofilerating" }).subscribe(
+    this.commonservice.postrequest('/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail'), query2: "placementstatusmail", query3: "stdprofilerating" }).subscribe(
       (res: any) => {
         console.log("all data", res)
         this.course = res.data.course
@@ -63,7 +63,7 @@ export class StudentprofileComponent implements OnInit {
       }
     )
 
-    // this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    // this.commonservice.postrequest('/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
     //   (res: any) => {
     //     console.log("this.overdata-data2", res); 
     //     this.overdata = res;
@@ -77,7 +77,7 @@ export class StudentprofileComponent implements OnInit {
     //   (err: any) => console.log(err)
     // );
 
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("mail") }).subscribe(
+    this.commonservice.postrequest('/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("mail") }).subscribe(
       (res: any) => {
         console.log("res.data-data3", res)
         this.nodata[2] = true
@@ -127,7 +127,7 @@ export class StudentprofileComponent implements OnInit {
     this.data.profilepic = this.image;
     this.saveimg = "saving..."
     this.data.organisation_id = sessionStorage.getItem("organisation_id")
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac', this.data).subscribe(
+    this.commonservice.postrequest('/Studentdata/updatestudentdatac', this.data).subscribe(
       (res: any) => {
         this.imagemodal = "none"
         this.saveimg = "save"
@@ -153,7 +153,7 @@ export class StudentprofileComponent implements OnInit {
       profilepic: new FormControl(""),
     });
 
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         this.course = res.data.course
         this.getdata = true
@@ -176,7 +176,7 @@ export class StudentprofileComponent implements OnInit {
       }
     )
 
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('/placementstatus/checkmailnumber', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         // console.log("this.overdata", res); this.overdata = res;
         this.applications = 0; this.offers = 0;
@@ -188,7 +188,7 @@ export class StudentprofileComponent implements OnInit {
       (err: any) => console.log(err)
     );
 
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("mail") }).subscribe(
+    this.commonservice.postrequest('/Dashboard/stdprofilerating', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem("mail") }).subscribe(
       (res: any) => {
         // console.log("res.data", res)
 

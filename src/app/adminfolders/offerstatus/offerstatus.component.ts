@@ -16,7 +16,7 @@ export class OfferstatusComponent implements OnInit {
   dataForExcel: any = []
   showDownload = false
   constructor(private commonservice: CommonService, public ete: ExportExcelService) {
-    this.commonservice.postrequest('http://localhost:4000/Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (resp: any) => {
         this.placementdata = resp
       },
@@ -26,7 +26,7 @@ export class OfferstatusComponent implements OnInit {
   fetch() {
     this.showDownload = false
 
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/singlemultipleoffers', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: this.placementcycle }).subscribe(
+    this.commonservice.postrequest('/placementstatus/singlemultipleoffers', { organisation_id: sessionStorage.getItem('organisation_id'), placementcyclename: this.placementcycle }).subscribe(
       (res: any) => {
         this.offerdata = res
         this.showDownload = true

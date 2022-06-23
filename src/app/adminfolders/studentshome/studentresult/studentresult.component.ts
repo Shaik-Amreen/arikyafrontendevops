@@ -87,7 +87,7 @@ export class StudentresultComponent implements OnInit {
       element.rollnumber = element.rollnumber.toString().toLowerCase()
     });
     // console.log(this.mapping)
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatemarks', { organisation_id: sessionStorage.getItem("organisation_id"), data: this.mapping, sem: this.sem }).subscribe(
+    this.commonservice.postrequest('/Studentdata/updatemarks', { organisation_id: sessionStorage.getItem("organisation_id"), data: this.mapping, sem: this.sem }).subscribe(
       (res: any) => { this.savingMode = 'Saved'; this.mapping = []; this.saveMode = false; this.keys = []; this.validata = false; this.display = true; setTimeout(() => { this.display = false }, 5000) },
       (err: any) => console.log(err)
     );

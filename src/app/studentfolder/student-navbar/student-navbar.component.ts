@@ -32,13 +32,13 @@ export class StudentNavbarComponent implements OnInit {
 
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
 
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
 
         // console.log("res.data.firstname", res.data.firstname)
         if (res.data) {
           sessionStorage.setItem('firstname', res.data.firstname)
-          this.commonservice.postrequest('http://localhost:4000/Studentdata/studentplacementinterest', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+          this.commonservice.postrequest('/Studentdata/studentplacementinterest', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
             (response: any) => {
 
               // console.log(response, "HEeloooooooooooooooooo ia mmmm response")
@@ -68,7 +68,7 @@ export class StudentNavbarComponent implements OnInit {
 
 
 
-    this.commonservice.postrequest('http://localhost:4000/verify', 'verify').subscribe(
+    this.commonservice.postrequest('/verify', 'verify').subscribe(
       (res: any) => {
         // console.log(res);
         (res.status !== 'success') ? this.router.navigate(['/login']) : null
@@ -77,7 +77,7 @@ export class StudentNavbarComponent implements OnInit {
     );
 
     // let mail = sessionStorage.getItem('mail')
-    // this.commonservice.postrequest('http://localhost:4000/facultydetails/findoneAdmin', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': mail }).subscribe(
+    // this.commonservice.postrequest('/facultydetails/findoneAdmin', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': mail }).subscribe(
     //   (res: any) => {
     //     if (res.admindata == null) { this.router.navigate(['/login']) }
     //     if (res.admindata.role != 'admin') { this.router.navigate(['/login']) }
@@ -88,7 +88,7 @@ export class StudentNavbarComponent implements OnInit {
 
 
 
-    // this.commonservice.postrequest('http://localhost:4000/verify', 'verify').subscribe(
+    // this.commonservice.postrequest('/verify', 'verify').subscribe(
     //   (res: any) => {
     //     (res.status !== 'success') ? this.router.navigate(['/login']) : null
     //   },
@@ -100,7 +100,7 @@ export class StudentNavbarComponent implements OnInit {
   combinedata: any = []
   collegeName: any = ''
   ngOnInit(): void {
-    this.commonservice.postrequest('http://localhost:4000/data/findcollegename', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
+    this.commonservice.postrequest('/data/findcollegename', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
       (res: any) => {
         // console.log(res, ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
         this.collegeName = res.organisation
@@ -111,7 +111,7 @@ export class StudentNavbarComponent implements OnInit {
   }
 
   notification() {
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         // console.log("notifyacceptreject", res)
         this.comnotify = res.data1
@@ -122,7 +122,7 @@ export class StudentNavbarComponent implements OnInit {
       },
       (err: any) => console.log(err)
     );
-    this.commonservice.postrequest('http://localhost:4000/notification/findadminoti', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/notification/findadminoti', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         res.forEach((e: any) => {
           (e.doneby == sessionStorage.getItem('mail')) ? e.firstname = 'You' : null
@@ -132,7 +132,7 @@ export class StudentNavbarComponent implements OnInit {
       },
       (err: any) => console.log(err)
     );
-    this.commonservice.postrequest('http://localhost:4000/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         // console.log("findnotifications--------------------11111",res)
         this.all = res.filter((e: any) => e.mail == sessionStorage.getItem('mail'))
@@ -196,7 +196,7 @@ export class StudentNavbarComponent implements OnInit {
     c.verified = d
     c.verifiedby = sessionStorage.getItem('firstname')
     c.verifiedbymail = sessionStorage.getItem('mail')
-    this.commonservice.postrequest('http://localhost:4000/notification/updatenotifications', c).subscribe(
+    this.commonservice.postrequest('/notification/updatenotifications', c).subscribe(
       (res: any) => {
 
       },
@@ -215,7 +215,7 @@ export class StudentNavbarComponent implements OnInit {
   acceptnot(c: any, d: any) {
 
     c.verifiedoffer = d
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/adminplaced', c).subscribe(
+    this.commonservice.postrequest('/placementstatus/adminplaced', c).subscribe(
       (res: any) => {
         // console.log(res)
       },

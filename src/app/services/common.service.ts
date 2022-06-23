@@ -6,19 +6,19 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CommonService {
+   baseurl:any="http://localhost:4000";
 
   constructor(private http: HttpClient) { }
-
-
+ 
   postrequest(url: any, data: any) {
 
     // console.log(url,"urrrllll")
 
-    if (url == 'http://localhost:4000/verify') {
-      return this.http.post(url, data)
+    if (url == '/verify') {
+      return this.http.post(this.baseurl+url, data)
     }
     else {
-      return this.postText(url, data)
+      return this.postText(this.baseurl+url, data)
     }
   }
 

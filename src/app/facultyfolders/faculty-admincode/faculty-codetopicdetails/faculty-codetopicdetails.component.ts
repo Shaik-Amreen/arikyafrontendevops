@@ -19,7 +19,7 @@ export class FacultyCodetopicdetailsComponent implements OnInit {
   editcode: any = true; totalcount: any = 0
   quizdata: any = []; marks: any = 0; topic: any = sessionStorage.getItem('topic'); data: any; type = "code"
   constructor(private commonservice: CommonService, private router: Router) {
-    this.commonservice.postrequest('http://localhost:4000/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "code" }).subscribe(
+    this.commonservice.postrequest('/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "code" }).subscribe(
       (res: any) => {
         this.endson = res.endson
         this.data = res;
@@ -124,7 +124,7 @@ export class FacultyCodetopicdetailsComponent implements OnInit {
 
   updatendate() {
     this.data.endson = new Date(this.endson)
-    this.commonservice.postrequest('http://localhost:4000/Practice/editcodequiz', this.data).subscribe((res: any) => {
+    this.commonservice.postrequest('/Practice/editcodequiz', this.data).subscribe((res: any) => {
       this.endedit = false
     }, (err: any) => { console.log(err) })
   }

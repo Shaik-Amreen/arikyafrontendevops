@@ -24,7 +24,7 @@ export class CodetopicslistComponent implements OnInit {
         sessionStorage.removeItem("successpopup")
       }, 5000)
     }
-    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
+    this.commonservice.postrequest('/Practice/gettopics', this.compare).subscribe(
       (res1: any) => {
         this.codetopics = res1.data; this.len1 = res1.length; this.nodata = true;
       })

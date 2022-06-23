@@ -33,7 +33,7 @@ export class AdminprofileComponent implements OnInit {
     this.profile = new FormGroup({
       profilepic: new FormControl(""),
     });
-    this.commonservice.postrequest('http://localhost:4000/facultydetails/findoneAdmin',
+    this.commonservice.postrequest('/facultydetails/findoneAdmin',
       { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
         (res: any) => {
           // console.log("admindata", res.admindata);
@@ -89,7 +89,7 @@ export class AdminprofileComponent implements OnInit {
     this.data.profilepic = this.image;
     this.data.organisation_id = sessionStorage.getItem("organisation_id")
     // console.log(this.data.profilepic, this.data.value)
-    this.commonservice.postrequest('http://localhost:4000/facultydetails/updateAdmin',
+    this.commonservice.postrequest('/facultydetails/updateAdmin',
       this.data).subscribe(
         (res: any) => {
           this.imagemodal = "none"
@@ -116,7 +116,7 @@ export class AdminprofileComponent implements OnInit {
       this.usereditform.value.mail = sessionStorage.getItem('mail');
       this.usereditform.value.organisation_id = sessionStorage.getItem("organisation_id")
       // console.log(this.usereditform.value)
-      this.commonservice.postrequest('http://localhost:4000/facultydetails/updateAdmin', this.usereditform.value).subscribe(
+      this.commonservice.postrequest('/facultydetails/updateAdmin', this.usereditform.value).subscribe(
         (res: any) => {
           if (res.msg == "success") {
             this.saveit = false

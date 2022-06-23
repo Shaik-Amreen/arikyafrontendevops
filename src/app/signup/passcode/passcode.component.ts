@@ -14,7 +14,7 @@ export class PasscodeComponent implements OnInit {
   }
 
   save() {
-    this.commonservice.postrequest('http://localhost:4000/data/findcollegeaccess', { passcode: this.passcode }).subscribe(
+    this.commonservice.postrequest('/data/findcollegeaccess', { passcode: this.passcode }).subscribe(
       (res: any) => {
 
         if (res.message == 'error') {

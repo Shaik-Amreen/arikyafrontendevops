@@ -131,7 +131,7 @@ export class AttemptcodingComponent implements OnInit {
       this.elem.msRequestFullscreen();
     }
     // console.log("hello")
-    this.commonservice.postrequest('http://localhost:4000/Practice/getcodetestquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: 'code', mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('/Practice/getcodetestquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: 'code', mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         // console.log("hello")
         this.get = true;
@@ -225,7 +225,7 @@ export class AttemptcodingComponent implements OnInit {
           this.question = this.ques.questions[0];
 
 
-          // this.commonservice.postrequest('http://localhost:4000/Practice/getime', { mail: this.mail, organisation_id: sessionStorage.getItem("organisation_id"), topic: this.ques.topic, date: new Date() }).subscribe(
+          // this.commonservice.postrequest('/Practice/getime', { mail: this.mail, organisation_id: sessionStorage.getItem("organisation_id"), topic: this.ques.topic, date: new Date() }).subscribe(
           //   (resp: any) => {
 
           //     this.startTime = resp.data
@@ -240,7 +240,7 @@ export class AttemptcodingComponent implements OnInit {
             this.timer()
           }, 1000);
 
-          this.commonservice.postrequest('http://localhost:4000/Practice/savecode',
+          this.commonservice.postrequest('/Practice/savecode',
             { compare: this.ques, quesvisit: this.quesvisit, ans: this.ans, mail: this.mail, starttime: this.starttime, endtime: new Date(), swaps: this.swaps, timeremained: `${this.minutes}.${this.seconds}`, topic: sessionStorage.getItem('topic'), organisation_id: sessionStorage.getItem('organisation_id'), firstime: 'no' }).subscribe(
               (resp: any) => {
               }, (errp: any) => { })
@@ -263,7 +263,7 @@ export class AttemptcodingComponent implements OnInit {
   }
 
   savecode() {
-    this.commonservice.postrequest('http://localhost:4000/Practice/savecode',
+    this.commonservice.postrequest('/Practice/savecode',
       { compare: this.ques, quesvisit: this.quesvisit, ans: this.ans, mail: this.mail, starttime: this.starttime, endtime: new Date(), swaps: this.swaps, timeremained: `${this.minutes}.${this.seconds}`, topic: sessionStorage.getItem('topic'), organisation_id: sessionStorage.getItem('organisation_id'), firstime: 'no' }).subscribe(
         (resp: any) => {
           this.ques.endson = resp.endson
@@ -297,7 +297,7 @@ export class AttemptcodingComponent implements OnInit {
   }
 
   updateswaps() {
-    this.commonservice.postrequest('http://localhost:4000/Practice/updateswaps',
+    this.commonservice.postrequest('/Practice/updateswaps',
       { mail: this.mail, starttime: this.starttime, endtime: new Date(), swaps: this.swaps, timeremained: `${this.minutes}.${this.seconds}`, topic: sessionStorage.getItem('topic'), organisation_id: sessionStorage.getItem('organisation_id'), type: 'code', quesvisit: this.quesvisit }).subscribe(
         (resp: any) => {
           // mail: this.mail, starttime: this.starttime, endtime: new Date(), swaps: this.swaps, timeremained: `${this.minutes}.${this.seconds}`, topic: sessionStorage.getItem('topic'), organisation_id: sessionStorage.getItem('organisation_id')
@@ -359,7 +359,7 @@ export class AttemptcodingComponent implements OnInit {
     // console.log(myDiv, "divvvvvvvvvvvvvvvvvvvv")
     // console.log(this.codeModel, this.editorOptions)
     // console.log('helllll', this.ans[this.questionno - 1], this.mail, this.question, sessionStorage.getItem('topic'))
-    this.commonservice.postrequest('http://localhost:4000/Practice/savecode',
+    this.commonservice.postrequest('/Practice/savecode',
       { compare: this.ques, ans: this.ans, mail: this.mail, organisation_id: sessionStorage.getItem("organisation_id"), firstime: 'no', starttime: this.starttime, endtime: new Date(), swaps: this.swaps, timeremained: `${this.minutes}.${this.seconds}`, topic: sessionStorage.getItem('topic'), type: 'code', quesvisit: this.quesvisit }).subscribe(
         (resp: any) => {
           if (myDiv) {
@@ -369,7 +369,7 @@ export class AttemptcodingComponent implements OnInit {
           // console.log(this.language)
           // console.log(this.codeModel)
           // console.log(this.editorOptions)
-          this.commonservice.postrequest('http://localhost:4000/Practice/testanswer', { organisation_id: sessionStorage.getItem("organisation_id"), ans: this.ans[this.questionno - 1], mail: this.mail, question: this.question[0], paramvalues: this.paramvalues[this.questionno - 1], paramconditions: this.paramconditions[this.questionno - 1], topic: sessionStorage.getItem('topic'), language: this.language }).subscribe(
+          this.commonservice.postrequest('/Practice/testanswer', { organisation_id: sessionStorage.getItem("organisation_id"), ans: this.ans[this.questionno - 1], mail: this.mail, question: this.question[0], paramvalues: this.paramvalues[this.questionno - 1], paramconditions: this.paramconditions[this.questionno - 1], topic: sessionStorage.getItem('topic'), language: this.language }).subscribe(
             (res: any) => {
               // console.log(res,"res")
               this.showtest = true
@@ -493,7 +493,7 @@ export class AttemptcodingComponent implements OnInit {
     clearInterval(this.clock);
     clearInterval(this.tempcode)
     let rating = { mail: this.mail, starttime: this.starttime, endtime: new Date(), swaps: this.swaps, timeremained: `${this.minutes}.${this.seconds}`, topic: sessionStorage.getItem('topic'), organisation_id: sessionStorage.getItem('organisation_id'), quesvisit: this.quesvisit }
-    this.commonservice.postrequest('http://localhost:4000/Practice/ratingstudent', rating).subscribe(
+    this.commonservice.postrequest('/Practice/ratingstudent', rating).subscribe(
       (res: any) => {
         // console.log("helloooooo")
         this.testtimeout()
@@ -502,7 +502,7 @@ export class AttemptcodingComponent implements OnInit {
     // this.resultview = true;
     // console.log(this.quiz)
     //topiname,list of question and result updated to respective studentdata and result tables by rollno
-    //  this.commonservice.postrequest('http://localhost:4000/student/results',{topicname :this.topicname,questions : this.quiz['questions'],result : this.result,endtime : this.quiz['endtime']}).subscribe(
+    //  this.commonservice.postrequest('/student/results',{topicname :this.topicname,questions : this.quiz['questions'],result : this.result,endtime : this.quiz['endtime']}).subscribe(
     //     res=>{
     //       console.log(res.msg);
     //     })

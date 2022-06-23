@@ -47,7 +47,7 @@ export class CompanyaddeditcodeComponent implements OnInit {
       'endson': new FormControl('', Validators.required)
     })
     if (sessionStorage.getItem('editcodequiz') == 'yes') {
-      this.commonservice.postrequest('http://localhost:4000/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "code" }).subscribe(
+      this.commonservice.postrequest('/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "code" }).subscribe(
         (res: any) => {
           this.data = res; console.log(res, "kkkkkkkkkkkkkkkkkkkkkkkkkkkk"); this.final.patchValue(this.data);
           this.data.questions.forEach((e: any, i: any) => {
@@ -234,10 +234,10 @@ export class CompanyaddeditcodeComponent implements OnInit {
     });
 
     this.final.value.organisation_id = sessionStorage.getItem("organisation_id")
-    let url = 'http://localhost:4000/'
+    let url = '/'
 
-    if (sessionStorage.getItem('editcodequiz') == 'yes') { url = 'http://localhost:4000/Practice/editcodequiz' }
-    else { url = 'http://localhost:4000/Practice/uploadpractice' }
+    if (sessionStorage.getItem('editcodequiz') == 'yes') { url = '/Practice/editcodequiz' }
+    else { url = '/Practice/uploadpractice' }
 
     if (this.final.status == 'VALID') {
 

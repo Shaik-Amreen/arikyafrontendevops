@@ -37,7 +37,7 @@ export class StudentdocumentsComponent implements OnInit {
     this.graduationmarksheetsaved = false; this.uploadgraduationmarksheet = false;
 
 
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('/Studentdata/findstudentdetails', { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         this.data = res.data;
         if (this.data.resume == '') {
@@ -99,7 +99,7 @@ export class StudentdocumentsComponent implements OnInit {
   save(s: any) {
     this.data[s] = this.base64Output
     // console.log("this.data", this.data)
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/storefiles', { organisation_id: sessionStorage.getItem("organisation_id"), filename: s, filedata: this.base64Output, mail: sessionStorage.getItem('mail') }).subscribe(
+    this.commonservice.postrequest('/Studentdata/storefiles', { organisation_id: sessionStorage.getItem("organisation_id"), filename: s, filedata: this.base64Output, mail: sessionStorage.getItem('mail') }).subscribe(
       (res: any) => {
         this.closestatus = false
         this.constructorcall()

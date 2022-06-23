@@ -40,7 +40,7 @@ export class QuizreportComponent implements OnInit {
     this.loadstatus = true
     this.topic1 = t
     this.heading = t
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/eachtestratings', { ...this.compare, topic: this.topic1 }).subscribe(
+    this.commonservice.postrequest('/Dashboard/eachtestratings', { ...this.compare, topic: this.topic1 }).subscribe(
       (res: any) => {
         this.stdseachtest = res.data
         this.visibleData = res.data
@@ -51,7 +51,7 @@ export class QuizreportComponent implements OnInit {
   }
 
   allcodeorquiztests() {
-    this.commonservice.postrequest('http://localhost:4000/Dashboard/alltestratings', this.compare).subscribe(
+    this.commonservice.postrequest('/Dashboard/alltestratings', this.compare).subscribe(
       (res: any) => {
         this.alldata = true
         this.nodata = true
@@ -62,7 +62,7 @@ export class QuizreportComponent implements OnInit {
   }
 
   gettopics() {
-    this.commonservice.postrequest('http://localhost:4000/Practice/gettopics', this.compare).subscribe(
+    this.commonservice.postrequest('/Practice/gettopics', this.compare).subscribe(
       (res: any) => {
         res = res.data.filter((e: any) => new Date(e.startson) <= new Date())
         this.topics = res;

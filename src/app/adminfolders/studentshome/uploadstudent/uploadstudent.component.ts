@@ -154,7 +154,7 @@ export class UploadstudentComponent implements OnInit {
     for (let c of this.mapping) { c.course = course[0]; c.currentyear = course[1] }
     this.savingMode = 'Saving';
     // console.log("this.mapping", this.mapping)
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/createStudentdata',
+    this.commonservice.postrequest('/Studentdata/createStudentdata',
       this.mapping).subscribe(
         (res: any) => {
           // console.log("res", res)

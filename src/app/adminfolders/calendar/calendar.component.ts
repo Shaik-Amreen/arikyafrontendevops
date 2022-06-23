@@ -14,7 +14,7 @@ export class CalendarComponent implements OnInit {
       this.compare.role = 'technicaltrainer'
       this.compare.createdby = sessionStorage.getItem('mail')
     }
-    this.commonservice.postrequest('http://localhost:4000/company/findcalcompany', this.compare).subscribe(
+    this.commonservice.postrequest('/company/findcalcompany', this.compare).subscribe(
       (res: any) => {
         this.eventData = res;
       },

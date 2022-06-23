@@ -23,10 +23,10 @@ export class StudentcompanyComponent implements OnInit {
 
     sessionStorage.removeItem('editcompany')
     this.mailstatus = 'SEND MAIL'; this.addstatus = 'ADD STUDENTS'
-    this.commonservice.postrequest('http://localhost:4000/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+    this.commonservice.postrequest('/company/findcompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (res: any) => {
         // console.log(res);
-        this.commonservice.postrequest('http://localhost:4000/placementstatus/eligible', res.companydetails).subscribe(
+        this.commonservice.postrequest('/placementstatus/eligible', res.companydetails).subscribe(
           (rese: any) => {
             // console.log(rese, "companydetails"); 
             this.nodata = true
@@ -34,7 +34,7 @@ export class StudentcompanyComponent implements OnInit {
             this.placed = rese.edata.length
             if (new Date(res.companydetails.deadline) < new Date() && res.companydetails.deadline != 'not updated') {
               res.companydetails.status = 'closed';
-              this.commonservice.postrequest('http://localhost:4000/company/updatestatus', res.companydetails).subscribe(
+              this.commonservice.postrequest('/company/updatestatus', res.companydetails).subscribe(
                 (response: any) => {
                   // console.log(response)
                   this.companydetails = res.companydetails;
@@ -68,7 +68,7 @@ export class StudentcompanyComponent implements OnInit {
   lastItem: any
   getWorkflow() {
     this.lastItem = false
-    this.commonservice.postrequest('http://localhost:4000/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+    this.commonservice.postrequest('/hiringstudent/findcompanywise', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
       (reset: any) => {
         // console.log("reset", reset)
         reset = reset.reverse()
@@ -119,7 +119,7 @@ export class StudentcompanyComponent implements OnInit {
     this.saveimg = "saving..."
     this.companydetails.companylogo = (this.image);
     this.companydetails.organisation_id = sessionStorage.getItem("organisation_id")
-    this.commonservice.postrequest('http://localhost:4000/company/updatecompany', this.companydetails).subscribe(
+    this.commonservice.postrequest('/company/updatecompany', this.companydetails).subscribe(
       (res: any) => {
         // console.log("res image", res)
         this.imagemodal = "none"
@@ -148,9 +148,9 @@ export class StudentcompanyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.commonservice.postrequest('http://localhost:4000/company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
+    this.commonservice.postrequest('/company/findacompany', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename") }).subscribe(
       (res: any) => {
-        this.commonservice.postrequest('http://localhost:4000/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
+        this.commonservice.postrequest('/placementstatus/applicants', { organisation_id: sessionStorage.getItem("organisation_id"), placementcyclename: sessionStorage.getItem("placementcyclename"), companyname: sessionStorage.getItem('companyname') }).subscribe(
           (rese: any) => {
             this.applicantslist = rese; this.allcom = res;
           },

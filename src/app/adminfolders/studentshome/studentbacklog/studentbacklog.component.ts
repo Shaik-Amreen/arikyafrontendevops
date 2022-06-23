@@ -79,7 +79,7 @@ export class StudentbacklogComponent implements OnInit {
     this.mapping.forEach((element: any) => {
       element.rollnumber = element.rollnumber.toLowerCase()
     });
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatebacklogs', { organisation_id: sessionStorage.getItem("organisation_id"), data: this.mapping }).subscribe(
+    this.commonservice.postrequest('/Studentdata/updatebacklogs', { organisation_id: sessionStorage.getItem("organisation_id"), data: this.mapping }).subscribe(
       (res: any) => { this.savingMode = 'Saved'; this.mapping = []; this.saveMode = false; this.keys = []; this.display = true; setTimeout(() => { this.display = false }, 5000) },
       (err: any) => console.log(err)
     );

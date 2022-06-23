@@ -18,7 +18,7 @@ export class ForgotpasswordComponent implements OnInit {
   }
 
   onsubmit(f: NgForm) {
-    this.commonservice.postrequest('http://localhost:4000/changepassword', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': sessionStorage.getItem('mail')?.toLocaleLowerCase(), 'password': f.value.password }).subscribe(
+    this.commonservice.postrequest('/changepassword', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': sessionStorage.getItem('mail')?.toLocaleLowerCase(), 'password': f.value.password }).subscribe(
       (res: any) => { if (res.message == 'success') { this.router.navigate(['/login']) } },
       (err: any) => console.log(err)
     )

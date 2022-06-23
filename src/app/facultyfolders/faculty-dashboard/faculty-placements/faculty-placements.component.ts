@@ -17,7 +17,7 @@ export class FacultyPlacementsComponent implements OnInit {
   companycategory = ["comnotregistercompany", "offeredcompany", "placedcompany", "comregistercompany"]
   campusplacementdata: any = []; campusplacementdatadeptwise: any = {}; companyplacementdata: any = []; companyplacements: any = []
   constructor(private commonservice: CommonService, public ete: ExportExcelService) {
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/dashboardcampusreports', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
+    this.commonservice.postrequest('/Studentdata/dashboardcampusreports', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
       (ress: any) => {
 
         // console.log(ress, "resssssssssssssssss")
@@ -84,7 +84,7 @@ export class FacultyPlacementsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/getAllCompanyNames', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
+    this.commonservice.postrequest('/Studentdata/getAllCompanyNames', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
       (res: any) => {
         // console.log(res, "helloooooooooooooooooooooooooooooooooooooooooooo") 
       })

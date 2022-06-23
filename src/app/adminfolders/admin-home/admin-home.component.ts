@@ -19,7 +19,7 @@ export class AdminHomeComponent implements OnInit {
         sessionStorage.removeItem("successpopup")
       }, 5000)
     }
-    this.commonservice.postrequest('http://localhost:4000/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/company/findallcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         // console.log(res);
         if (res.length != 0) {
@@ -29,9 +29,9 @@ export class AdminHomeComponent implements OnInit {
         else {
           this.data = []
         }
-        this.commonservice.postrequest('http://localhost:4000/Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+        this.commonservice.postrequest('/Placement/findPlacement', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
           (resp: any) => {
-            this.commonservice.postrequest('http://localhost:4000/Studentdata/pendinginvitations', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+            this.commonservice.postrequest('/Studentdata/pendinginvitations', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
               (resc: any) => {
                 // console.log(resp, ";;;;;;;;;;;;;;;;;;;;;;;;");
                 resp = resp.filter((e: any) => new Date(e.todate) > new Date())
@@ -74,7 +74,7 @@ export class AdminHomeComponent implements OnInit {
       mails.push(e.mail)
     });
     // console.log(mails)
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/homequery', { organisation_id: sessionStorage.getItem("organisation_id"), mails: mails, content: this.content }).subscribe(
+    this.commonservice.postrequest('/placementstatus/homequery', { organisation_id: sessionStorage.getItem("organisation_id"), mails: mails, content: this.content }).subscribe(
       (resc: any) => {
         this.buttonStatus = "SEND"
         this.content = ''

@@ -66,7 +66,7 @@ export class AdminNavbarComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
 
 
-    this.commonservice.postrequest('http://localhost:4000/facultydetails/findoneAdmin', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': this.mail }).subscribe(
+    this.commonservice.postrequest('/facultydetails/findoneAdmin', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': this.mail }).subscribe(
       (res: any) => {
         // console.log(res,"llllllllllllllllllllllll")
         if (res.admindata == null) { this.router.navigate(['/login']) }
@@ -119,7 +119,7 @@ export class AdminNavbarComponent implements OnInit {
 
 
 
-    this.commonservice.postrequest('http://localhost:4000/verify', 'verify').subscribe(
+    this.commonservice.postrequest('/verify', 'verify').subscribe(
       (res: any) => {
         (res.status !== 'success') ? this.router.navigate(['/login']) : null
       },
@@ -131,7 +131,7 @@ export class AdminNavbarComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log(sessionStorage.getItem('organisation_id'))
-    this.commonservice.postrequest('http://localhost:4000/data/findcollegename', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
+    this.commonservice.postrequest('/data/findcollegename', { organisation_id: sessionStorage.getItem('organisation_id') }).subscribe(
       (res: any) => {
         this.collegeName = res.organisation
       },
@@ -152,7 +152,7 @@ export class AdminNavbarComponent implements OnInit {
 
 
   allbell() {
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         // console.log("notify", res)
 
@@ -166,7 +166,7 @@ export class AdminNavbarComponent implements OnInit {
   }
 
   allenvelop() {
-    this.commonservice.postrequest('http://localhost:4000/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         this.notyet = res.filter((e: any) => e.verified == 'notyet')
         res.forEach((e: any) => {
@@ -184,7 +184,7 @@ export class AdminNavbarComponent implements OnInit {
   }
 
   alloffers() {
-    this.commonservice.postrequest('http://localhost:4000/notification/findadminoti', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/notification/findadminoti', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         // console.log("res", res.reverse())
         // console.log("res.reverse", res)
@@ -272,7 +272,7 @@ export class AdminNavbarComponent implements OnInit {
       this.data[field] = value
       if (check.length == 1) { this.data.verified = 'yes' }
     }
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentdatac',
+    this.commonservice.postrequest('/Studentdata/updatestudentdatac',
       this.data).subscribe(
         (res: any) => {
           if (res.message == "success") {
@@ -282,7 +282,7 @@ export class AdminNavbarComponent implements OnInit {
         })
 
 
-    this.commonservice.postrequest('http://localhost:4000/notification/updatenotifications', c).subscribe(
+    this.commonservice.postrequest('/notification/updatenotifications', c).subscribe(
       (res: any) => { },
       (err: any) => console.log(err)
     );
@@ -298,7 +298,7 @@ export class AdminNavbarComponent implements OnInit {
 
   acceptnot(c: any, d: any) {
     c.verifiedoffer = d
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/adminplaced', c).subscribe(
+    this.commonservice.postrequest('/placementstatus/adminplaced', c).subscribe(
       (res: any) => {
 
       },

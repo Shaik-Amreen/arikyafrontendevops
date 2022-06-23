@@ -34,7 +34,7 @@ export class CompanyaddusersComponent implements OnInit {
     this.formvalue = true;
     this.formgroupdata.value.organisation_id = sessionStorage.getItem('organisation_id');
     // console.log(this.formgroupdata)
-    this.commonservice.postrequest('http://localhost:4000/data/postcollegeaccess', this.formgroupdata.value).subscribe(
+    this.commonservice.postrequest('/data/postcollegeaccess', this.formgroupdata.value).subscribe(
       (res: any) => {
         this.formgroupdata.reset();
         this.router.navigate(['/admin/users'])

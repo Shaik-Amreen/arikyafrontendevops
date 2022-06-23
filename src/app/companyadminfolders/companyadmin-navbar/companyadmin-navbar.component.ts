@@ -65,7 +65,7 @@ export class CompanyadminNavbarComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, private commonservice: CommonService) {
 
 
-    this.commonservice.postrequest('http://localhost:4000/facultydetails/findoneAdmin', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': this.mail }).subscribe(
+    this.commonservice.postrequest('/facultydetails/findoneAdmin', { organisation_id: sessionStorage.getItem("organisation_id"), 'mail': this.mail }).subscribe(
       (res: any) => {
         if (res.admindata == null) { this.router.navigate(['/login']) }
         if (res.admindata.role != 'companyadmin') { this.router.navigate(['/login']) }
@@ -77,7 +77,7 @@ export class CompanyadminNavbarComponent implements OnInit {
 
 
 
-    this.commonservice.postrequest('http://localhost:4000/verify', 'verify').subscribe(
+    this.commonservice.postrequest('/verify', 'verify').subscribe(
       (res: any) => {
         (res.status !== 'success') ? this.router.navigate(['/login']) : null
       },
@@ -88,7 +88,7 @@ export class CompanyadminNavbarComponent implements OnInit {
   placenotify: any = []
 
   ngOnInit(): void {
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/placementstatus/notifyacceptreject', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         // console.log("notify", res)
         this.comnotify = res.data1
@@ -100,7 +100,7 @@ export class CompanyadminNavbarComponent implements OnInit {
       (err: any) => console.log(err)
     );
 
-    this.commonservice.postrequest('http://localhost:4000/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/notification/findnotifications', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res1: any) => {
         let res = res1.docs
         this.notyet = res.filter((e: any) => e.verified == 'notyet')
@@ -117,7 +117,7 @@ export class CompanyadminNavbarComponent implements OnInit {
       (err: any) => console.log(err)
     );
 
-    this.commonservice.postrequest('http://localhost:4000/notification/findadminoti', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/notification/findadminoti', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         // console.log("res", res.reverse())
         // console.log("res.reverse", res)
@@ -197,7 +197,7 @@ export class CompanyadminNavbarComponent implements OnInit {
     c.verifiedby = sessionStorage.getItem('firstname')
     c.verifiedbymail = sessionStorage.getItem('mail')
 
-    this.commonservice.postrequest('http://localhost:4000/notification/updatenotifications', c).subscribe(
+    this.commonservice.postrequest('/notification/updatenotifications', c).subscribe(
       (res: any) => {
 
       },
@@ -216,7 +216,7 @@ export class CompanyadminNavbarComponent implements OnInit {
   acceptnot(c: any, d: any) {
 
     c.verifiedoffer = d
-    this.commonservice.postrequest('http://localhost:4000/placementstatus/adminplaced', c).subscribe(
+    this.commonservice.postrequest('/placementstatus/adminplaced', c).subscribe(
       (res: any) => {
         // console.log(res)
       },

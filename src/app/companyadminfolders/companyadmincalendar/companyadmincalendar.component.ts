@@ -10,7 +10,7 @@ import { View, EventSettingsModel } from '@syncfusion/ej2-angular-schedule'
 export class CompanyadmincalendarComponent implements OnInit {
   eventData: any[] = [0]; a: any = { Subject: '', StartTime: new Date(), EndTime: new Date() }
   constructor(private http: HttpClient, private commonservice: CommonService, private router: Router) {
-    this.commonservice.postrequest('http://localhost:4000/company/findcalcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
+    this.commonservice.postrequest('/company/findcalcompany', { organisation_id: sessionStorage.getItem("organisation_id") }).subscribe(
       (res: any) => {
         this.eventData = res;
       },

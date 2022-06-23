@@ -44,7 +44,7 @@ export class AddeditcodeComponent implements OnInit {
     })
     if (sessionStorage.getItem('editcode') == 'yes') {
 
-      this.commonservice.postrequest('http://localhost:4000/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "code" }).subscribe(
+      this.commonservice.postrequest('/Practice/getquestions', { organisation_id: sessionStorage.getItem("organisation_id"), topic: sessionStorage.getItem('topic'), type: "code" }).subscribe(
         (res: any) => {
           this.data = res;
           // console.log("adfffffffffffffffffffffffffffffb", this.data.startson, "2222222222", new Date(this.data.startson), "3333333333333", new Date(this.data.startson).toISOString().slice(0, 16));
@@ -243,9 +243,9 @@ export class AddeditcodeComponent implements OnInit {
       this.timerror = 'Please extend the last date'
     }
     this.final.value.organisation_id = sessionStorage.getItem("organisation_id")
-    let url = 'http://localhost:4000/'
-    if (sessionStorage.getItem('editcode') == 'yes') { url = 'http://localhost:4000/Practice/editcodequiz' }
-    else { url = 'http://localhost:4000/Practice/uploadpractice' }
+    let url = '/'
+    if (sessionStorage.getItem('editcode') == 'yes') { url = '/Practice/editcodequiz' }
+    else { url = '/Practice/uploadpractice' }
     let comparedate = new Date(this.datekill)
     if (comparedate > startson) { document.getElementById("startson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
     else if (endson <= startson) { document.getElementById("endson")?.scrollIntoView({ behavior: "smooth", block: 'center' }); }
@@ -341,8 +341,8 @@ export class AddeditcodeComponent implements OnInit {
       setTimeout(() => { this.display = false }, 4000)
     }
     // console.log(this.final, this.errors, this.timerror)
-    // if (sessionStorage.getItem('editcode') == 'yes') { url = 'http://localhost:4000/Practice/editcodequiz' }
-    // else { url = 'http://localhost:4000/Practice/uploadpractice' }
+    // if (sessionStorage.getItem('editcode') == 'yes') { url = '/Practice/editcodequiz' }
+    // else { url = '/Practice/uploadpractice' }
     // console.log(this.final)
     // if (this.final.status == 'VALID') {
     //   this.commonservice.postrequest(url, this.final.value).subscribe(

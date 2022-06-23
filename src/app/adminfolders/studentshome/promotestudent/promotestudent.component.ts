@@ -14,7 +14,7 @@ export class PromotestudentComponent implements OnInit {
   }
 
   promotestudents() {
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatestudentyear', { organisation_id: sessionStorage.getItem("organisation_id"), course: this.course, currentyear: this.currentyear, present: this.present }).subscribe(
+    this.commonservice.postrequest('/Studentdata/updatestudentyear', { organisation_id: sessionStorage.getItem("organisation_id"), course: this.course, currentyear: this.currentyear, present: this.present }).subscribe(
       (res: any) => { this.promote = 2; this.display = true; setTimeout(() => { this.display = false }, 5000) },
       (err: any) => console.log(err)
     );

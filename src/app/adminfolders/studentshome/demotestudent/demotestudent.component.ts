@@ -73,7 +73,7 @@ export class DemotestudentComponent implements OnInit {
   }
 
   demotestudents() {
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatedemoteyear', { organisation_id: sessionStorage.getItem("organisation_id"), course: this.course, currentyear: this.currentyear, present: this.present }).subscribe(
+    this.commonservice.postrequest('/Studentdata/updatedemoteyear', { organisation_id: sessionStorage.getItem("organisation_id"), course: this.course, currentyear: this.currentyear, present: this.present }).subscribe(
       (res: any) => { this.demote = 2; this.display = true; setTimeout(() => { this.display = false }, 5000) },
       (err: any) => console.log(err)
     );
@@ -86,7 +86,7 @@ export class DemotestudentComponent implements OnInit {
     this.mapping.forEach((element: any) => {
       element.rollnumber = element.rollnumber.toLowerCase()
     });
-    this.commonservice.postrequest('http://localhost:4000/Studentdata/updatedemoteyearstudent', { organisation_id: sessionStorage.getItem('organisation_id'), data: this.mapping }).subscribe(
+    this.commonservice.postrequest('/Studentdata/updatedemoteyearstudent', { organisation_id: sessionStorage.getItem('organisation_id'), data: this.mapping }).subscribe(
       (res: any) => { this.demote = 2; this.savingMode = "Demoted"; this.mapping = []; this.saveMode = false; this.keys = []; this.validata = false; this.display = true; setTimeout(() => { this.display = false }, 5000) },
       (err: any) => console.log(err)
     );

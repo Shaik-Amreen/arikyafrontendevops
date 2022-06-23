@@ -34,7 +34,7 @@ export class FacultyAdminprofileComponent implements OnInit {
     this.profile = new FormGroup({
       profilepic: new FormControl(""),
     });
-    this.commonservice.postrequest('http://localhost:4000/facultydetails/findoneAdmin',
+    this.commonservice.postrequest('/facultydetails/findoneAdmin',
       { organisation_id: sessionStorage.getItem("organisation_id"), mail: sessionStorage.getItem('mail') }).subscribe(
         (res: any) => {
           // console.log("admindata", res.admindata);
@@ -74,7 +74,7 @@ export class FacultyAdminprofileComponent implements OnInit {
       this.image = event.target.result;
       this.data.profilepic = this.image;
       // console.log(this.data.profilepic, this.data.value)
-      this.commonservice.postrequest('http://localhost:4000/facultydetails/updateAdmin',
+      this.commonservice.postrequest('/facultydetails/updateAdmin',
         this.data.value).subscribe(
           (res: any) => {
             // console.log("resimg", res)
@@ -89,7 +89,7 @@ export class FacultyAdminprofileComponent implements OnInit {
 
     this.usereditform.value.mail = sessionStorage.getItem('mail');
     // console.log(this.usereditform.value)
-    this.commonservice.postrequest('http://localhost:4000/facultydetails/updateAdmin', this.usereditform.value).subscribe(
+    this.commonservice.postrequest('/facultydetails/updateAdmin', this.usereditform.value).subscribe(
       (res: any) => {
         if (res.msg == "success") {
           alert('SUCCESSFULLY UPDATED');
