@@ -255,7 +255,7 @@
                                 <div style="display: flex;">
                                     <input class="form-control shadow-none" [(ngModel)]="singlestudent"
                                         (click)="single='ADD';addstudent={};showStudent=false" width="50vw" />&nbsp;
-                                    <button *ngIf="singlestudent.length==10" (click)="fetchstudent()"
+                                    <button *ngIf="singlestudent.length==10" (click)="addstatus = 'ADD STUDENTS'; removestatus = 'REMOVE STUDENTS';fetchstudent();"
                                         style="background-color: #00b0ff;" class="btn btn-primary">Fetch</button>
                                 </div><br />
                                 <span *ngIf="showStudent">
@@ -372,21 +372,27 @@
                         style="max-height:'90vh';border-radius:2px;background-color: #fff;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;padding: 1rem;padding-left: 2rem;text-align: center;">
                         <div>
                             <span style="color:#00b0ff;font-weight: 600;">{{placed}} PLACED </span><br>
-                            <span style="color:#00b0ff;font-weight: 600;">{{registered}} APPLICANTS&nbsp;
+                            <span style="color:#00b0ff;font-weight: 600;">
+                                <span *ngIf="registered>=0">{{registered}}</span> 
+                                <span *ngIf="registered<0">0</span>
+                                APPLICANTS&nbsp;
                                 <span *ngIf="eligible">
                                     <i style="font-size: 0.8rem;color: green; cursor: pointer;"
                                         class='bx bx-plus-circle'
                                         (click)="hierarchylevel='';rollnos=[];addapplicantmodal();"></i>&nbsp;
-                                    <i style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
+                                    <i style="font-size: 0.8rem;color: red;cursor: pointer;" *ngIf="registered" class='bx bx-minus-circle'
                                         (click)="removeapplicantmodal();rollnos=[]"></i>
                                 </span>
                             </span><br>
-                            <span style="color:#a5081a;font-weight: 600;">{{eligible}} ELIGIBLE&nbsp;
+                            <span style="color:#a5081a;font-weight: 600;">
+                                <span *ngIf="eligible>=0">{{eligible}}</span> 
+                                <span *ngIf="eligible<0">0</span> 
+                                ELIGIBLE&nbsp;
                                 <span>
                                     <i style="font-size: 0.8rem;color: green; cursor: pointer;"
                                         class='bx bx-plus-circle'
                                         (click)="updateeligibility=true;rollnos=[];hierarchylevel='';addapplicantmodal();"></i>&nbsp;
-                                    <i style="font-size: 0.8rem;color: red;cursor: pointer;" class='bx bx-minus-circle'
+                                    <i style="font-size: 0.8rem;color: red;cursor: pointer;" *ngIf="eligible" class='bx bx-minus-circle'
                                         (click)="updateeligibility=true;removeapplicantmodal();rollnos=[]"></i>
                                 </span>
                             </span><br>
@@ -608,8 +614,7 @@
                                             </span>
                                             <a *ngIf="mapping.length==0" (click)="file1.click()"
                                                 style="background: #fff;border-bottom: 1px solid #00B0FF;cursor: pointer;color: #00B0FF;font-size: 0.65rem;">
-                                                <strong>Click
-                                                    to upload qualified students in above level</strong></a>
+                                                <strong>Click to upload qualified students in above level</strong></a>
                                             <br><br>
                                             <div style="max-height:50vh" class="table-responsive">
                                                 <table class="table table-bordered"
@@ -652,14 +657,6 @@
                                     <div *ngIf="i==currentIndex && !nodataupload"
                                         style="padding: 0.5rem;border-radius: 10px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                                         <i class="bx bxs-show"></i><strong>{{level.level}}
-
-
-
-
-
-
-
-
                                         </strong><br />
                                         <span style="font-size: 0.7rem;">{{level.sub}}</span><br />
                                         <span>
