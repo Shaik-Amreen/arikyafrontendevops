@@ -23,7 +23,10 @@ export class CommonService {
   }
 
   postText(url: string, data: any): Observable<any> {
-    const body = window.btoa(JSON.stringify(data));
+      // var b64 = window.btoa(unescape(encodeURIComponent(str)))
+      // var str2 = decodeURIComponent(escape(window.atob(b64)));
+    // const body = window.btoa((JSON.stringify(data)));
+    const body = window.btoa(unescape(encodeURIComponent(JSON.stringify(data))));
     return this.handleResponse(
       this.http.post(url, { data: body }).pipe(map((res: any) => {
         let response: any = window.atob(res.data);
